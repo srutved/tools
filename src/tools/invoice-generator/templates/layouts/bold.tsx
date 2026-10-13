@@ -15,7 +15,7 @@ import {
   PaymentBlock,
   SummarySection,
 } from "../parts";
-import { INK, tint } from "../theme";
+import { INK, tint } from "@/lib/document/theme";
 import type { LayoutProps } from "../types";
 
 /** Oversized title and an "amount due" panel, so the essentials are impossible to miss. */

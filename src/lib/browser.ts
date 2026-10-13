@@ -21,12 +21,24 @@ export function toFileName(text: string, fallback = "document") {
   return cleaned || fallback;
 }
 
+export interface ImageOptions {
+  /** Longest side of the result in pixels. */
+  maxSize?: number;
+  /** Crop to a centred square (profile photos). */
+  square?: boolean;
+  /** PNG keeps transparency (logos); JPEG is far smaller for photos. */
+  type?: "image/png" | "image/jpeg";
+}
+
 /**
- * Reads an image file and returns it as a PNG data URL no larger than maxSize × maxSize.
- * Downscaling keeps localStorage small, and PNG output also converts formats like SVG or WebP
+ * Reads an image file and returns it as a data URL no larger than maxSize × maxSize.
+ * Downscaling keeps localStorage small, and re-encoding also converts formats like SVG or WebP
  * into one that PDFs can embed.
  */
-export function imageFileToDataUrl(file: File, maxSize = 400): Promise<string> {
+export function imageFileToDataUrl(
+  file: File,
+  { maxSize = 400, square = false, type = "image/png" }: ImageOptions = {},
+): Promise<string> {
   return new Promise((resolve, reject) => {
     if (!file.type.startsWith("image/")) {
       reject(new Error("Please choose an image file."));
@@ -35,13 +47,25 @@ export function imageFileToDataUrl(file: File, maxSize = 400): Promise<string> {
     const url = URL.createObjectURL(file);
     const image = new window.Image();
     image.onload = () => {
-      const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
+      // Source rectangle: the whole image, or its centred square.
+      const side = Math.min(image.width, image.height);
+      const sw = square ? side : image.width;
+      const sh = square ? side : image.height;
+      const sx = (image.width - sw) / 2;
+      const sy = (image.height - sh) / 2;
+      const scale = Math.min(1, maxSize / Math.max(sw, sh));
       const canvas = document.createElement("canvas");
-      canvas.width = Math.max(1, Math.round(image.width * scale));
-      canvas.height = Math.max(1, Math.round(image.height * scale));
-      canvas.getContext("2d")?.drawImage(image, 0, 0, canvas.width, canvas.height);
+      canvas.width = Math.max(1, Math.round(sw * scale));
+      canvas.height = Math.max(1, Math.round(sh * scale));
+      const context = canvas.getContext("2d");
+      if (context && type === "image/jpeg") {
+        // JPEG has no transparency: paint transparent areas white rather than black.
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      context?.drawImage(image, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL("image/png"));
+      resolve(canvas.toDataURL(type, 0.88));
     };
     image.onerror = () => {
       URL.revokeObjectURL(url);

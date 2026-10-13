@@ -2,29 +2,35 @@
 
 import { Copy, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { formatMoney } from "@/lib/currency";
-import { formatDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
-import { computeInvoice } from "../lib/calculations";
-import type { SavedInvoice } from "../store";
 
-interface InvoiceListProps {
-  invoices: SavedInvoice[];
+export interface DocumentListItem {
+  id: string;
+  title: string;
+  /** Second line, e.g. amount and date. */
+  details: string;
+  updatedAt: number;
+}
+
+interface DocumentListProps {
+  items: DocumentListItem[];
   activeId: string | null;
+  /** Singular noun for labels and the empty state, e.g. "invoice". */
+  noun: string;
   onOpen: (id: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-/** "My invoices": everything saved on this device, newest first. */
-export function InvoiceList({ invoices, activeId, onOpen, onDuplicate, onDelete }: InvoiceListProps) {
-  if (invoices.length === 0) {
-    return <p className="py-8 text-center text-muted">No saved invoices yet.</p>;
+/** A tool's saved documents ("My invoices", "My resumes"), newest first. */
+export function DocumentList({ items, activeId, noun, onOpen, onDuplicate, onDelete }: DocumentListProps) {
+  if (items.length === 0) {
+    return <p className="py-8 text-center text-muted">No saved {noun}s yet.</p>;
   }
 
   return (
     <ul className="divide-y divide-border">
-      {invoices.map(({ id, invoice, updatedAt }) => {
+      {items.map(({ id, title, details, updatedAt }) => {
         const active = id === activeId;
         return (
           <li key={id} className="flex items-center gap-3 py-3">
@@ -38,13 +44,9 @@ export function InvoiceList({ invoices, activeId, onOpen, onDuplicate, onDelete 
             >
               <FileText className="size-5 shrink-0 text-brand" aria-hidden />
               <span className="min-w-0">
-                <span className="block truncate font-semibold">
-                  {invoice.number || "Untitled"} · {invoice.to.name || "No client yet"}
-                </span>
+                <span className="block truncate font-semibold">{title}</span>
                 <span className="block text-xs text-muted">
-                  {formatMoney(computeInvoice(invoice).totals.total, invoice.currency)} ·{" "}
-                  {invoice.issueDate ? formatDate(invoice.issueDate) : "No date"} · edited{" "}
-                  {new Date(updatedAt).toLocaleDateString()}
+                  {details} · edited {new Date(updatedAt).toLocaleDateString()}
                   {active && " · open now"}
                 </span>
               </span>
@@ -53,7 +55,7 @@ export function InvoiceList({ invoices, activeId, onOpen, onDuplicate, onDelete 
               variant="ghost"
               size="icon"
               onClick={() => onDuplicate(id)}
-              aria-label={`Duplicate invoice ${invoice.number}`}
+              aria-label={`Duplicate ${noun} ${title}`}
             >
               <Copy />
             </Button>
@@ -61,7 +63,7 @@ export function InvoiceList({ invoices, activeId, onOpen, onDuplicate, onDelete 
               variant="ghost"
               size="icon"
               onClick={() => onDelete(id)}
-              aria-label={`Delete invoice ${invoice.number}`}
+              aria-label={`Delete ${noun} ${title}`}
             >
               <Trash2 className="text-danger" />
             </Button>

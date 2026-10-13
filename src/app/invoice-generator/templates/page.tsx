@@ -1,68 +1,31 @@
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { JsonLd } from "@/components/seo/json-ld";
-import { SITE, toolUrl } from "@/config/site";
-import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo";
+import { TemplatesPage } from "@/components/tool/templates-page";
+import { toolUrl } from "@/config/site";
+import { buildMetadata } from "@/lib/seo";
 import { TemplatesShowcase } from "@/tools/invoice-generator/components/templates-showcase";
 import { INVOICE_TEMPLATES } from "@/tools/invoice-generator/templates";
+import { getTool } from "@/tools/registry";
 
-const url = toolUrl("invoice-generator/templates");
+const tool = getTool("invoice-generator");
 const description =
   "Browse free, professional invoice templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF in any currency, with GST or VAT.";
 
 export const metadata = buildMetadata({
   title: `${INVOICE_TEMPLATES.length} Free Invoice Templates - Download as PDF`,
   description,
-  url,
+  url: toolUrl(`${tool.slug}/templates`),
 });
 
 export default function InvoiceTemplatesPage() {
   return (
-    <main className="flex-1">
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Srutved", url: SITE.url },
-          { name: "Tools", url: toolUrl() },
-          { name: "Invoice Generator", url: toolUrl("invoice-generator") },
-          { name: "Templates", url },
-        ])}
-      />
-      <JsonLd
-        data={collectionPageJsonLd({
-          name: "Free Invoice Templates",
-          description,
-          url,
-          items: INVOICE_TEMPLATES.map((template) => ({
-            name: `${template.name} invoice template`,
-            url: `${toolUrl("invoice-generator")}?template=${template.id}`,
-          })),
-        })}
-      />
-      <section className="border-b border-border bg-gradient-to-br from-brand-soft to-white">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1 text-sm text-muted">
-            <Link href="/" className="hover:text-brand-strong">
-              Tools
-            </Link>
-            <ChevronRight className="size-4" aria-hidden />
-            <Link href="/invoice-generator" className="hover:text-brand-strong">
-              Invoice Generator
-            </Link>
-            <ChevronRight className="size-4" aria-hidden />
-            <span aria-current="page" className="font-medium text-foreground">
-              Templates
-            </span>
-          </nav>
-          <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">Free Invoice Templates</h1>
-          <p className="mt-3 max-w-3xl text-lg text-muted">
-            {INVOICE_TEMPLATES.length} professional designs, all free. Pick one, fill it in online and
-            download a PDF in seconds - no sign-up, no watermark.
-          </p>
-        </div>
-      </section>
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <TemplatesShowcase />
-      </section>
-    </main>
+    <TemplatesPage
+      tool={tool}
+      heading="Free Invoice Templates"
+      intro={`${INVOICE_TEMPLATES.length} professional designs, all free. Pick one, fill it in online and download a PDF in seconds - no sign-up, no watermark.`}
+      description={description}
+      itemNoun="invoice template"
+      templates={INVOICE_TEMPLATES}
+    >
+      <TemplatesShowcase />
+    </TemplatesPage>
   );
 }

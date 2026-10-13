@@ -12,7 +12,7 @@
  * the web target draws a 595 × 842 A4 page at 1pt = 1px and scales it to fit.
  */
 
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, type ComponentType, type ReactNode } from "react";
 
 /** A4 in points. The web target renders 1pt as 1px, then scales the page with CSS. */
 export const A4 = { width: 595, height: 842 } as const;
@@ -134,6 +134,9 @@ export interface DocumentPrimitives {
   Image: (props: ImageProps) => ReactNode;
   Link: (props: LinkProps) => ReactNode;
 }
+
+/** The page component of a render target: WebPage for screen, PdfPage for PDF. */
+export type PageComponent = ComponentType<{ style?: DocStyleProp; children: ReactNode }>;
 
 /** Flattens a style array, dropping falsy entries (lets templates write `[base, isActive && active]`). */
 export function flattenStyle(style: DocStyleProp | undefined): DocStyle {

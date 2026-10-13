@@ -12,7 +12,7 @@ import {
   PaymentBlock,
   SummarySection,
 } from "../parts";
-import { INK } from "../theme";
+import { INK } from "@/lib/document/theme";
 import type { LayoutProps } from "../types";
 
 /** Letterhead-style: your details top-left, title and dates top-right, accent rule beneath. */

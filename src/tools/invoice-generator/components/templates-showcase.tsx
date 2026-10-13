@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { TemplateGallery } from "./template-gallery";
+import { InvoiceTemplateGallery } from "./template-gallery";
 
 /** Template gallery with "Use this template" links into the editor. */
 export function TemplatesShowcase() {
   return (
-    <TemplateGallery
+    <InvoiceTemplateGallery
       renderAction={(template) => (
         <Link
           href={`/invoice-generator?template=${template.id}`}

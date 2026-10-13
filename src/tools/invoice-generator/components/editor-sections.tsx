@@ -1,13 +1,13 @@
 "use client";
 
-import { ImagePlus, Plus, Trash2 } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import { useMemo } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { Field, FieldRow, FormSection } from "@/components/tool/form";
 import { NumberField, SelectField, TextAreaField, TextField } from "@/components/tool/form-fields";
+import { ImageField } from "@/components/tool/image-field";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
-import { imageFileToDataUrl } from "@/lib/browser";
 import { formatMoney, getCurrencyOptions, POPULAR_CURRENCIES } from "@/lib/currency";
 import { toFiniteNumber } from "@/lib/utils";
 import { createLineItem } from "../defaults";
@@ -33,62 +33,6 @@ function useInvoiceValue<K extends keyof Invoice>(name: K): Invoice[K] {
 
 /* ---------------------------------------------------------------- Your business */
 
-function LogoField() {
-  const { setValue } = useFormContext<Invoice>();
-  const logo = useInvoiceValue("logo");
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string>();
-
-  async function handleFile(file: File | undefined) {
-    if (!file) return;
-    try {
-      setValue("logo", await imageFileToDataUrl(file), { shouldDirty: true });
-      setError(undefined);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "That image could not be used.");
-    }
-  }
-
-  return (
-    <Field
-      label="Logo (optional)"
-      htmlFor="field-logo"
-      error={error}
-      hint="PNG, JPG, SVG or WebP. Stays on your device."
-    >
-      <div className="flex items-center gap-3">
-        <div className="flex h-14 w-28 items-center justify-center overflow-hidden rounded-md border border-dashed border-border bg-subtle">
-          {logo ? (
-            // eslint-disable-next-line @next/next/no-img-element -- user-supplied data URL
-            <img src={logo} alt="Your logo" className="max-h-full max-w-full object-contain" />
-          ) : (
-            <ImagePlus className="size-5 text-muted" aria-hidden />
-          )}
-        </div>
-        <input
-          ref={inputRef}
-          id="field-logo"
-          type="file"
-          accept="image/*"
-          className="sr-only"
-          onChange={(event) => {
-            void handleFile(event.target.files?.[0]);
-            event.target.value = "";
-          }}
-        />
-        <Button variant="outline" size="sm" onClick={() => inputRef.current?.click()}>
-          {logo ? "Change" : "Upload"}
-        </Button>
-        {logo && (
-          <Button variant="danger" size="sm" onClick={() => setValue("logo", "", { shouldDirty: true })}>
-            Remove
-          </Button>
-        )}
-      </div>
-    </Field>
-  );
-}
-
 function PartyFields({ party }: { party: "from" | "to" }) {
   const { setValue, getValues } = useFormContext<Invoice>();
   const taxMode = useInvoiceValue("taxMode");
@@ -101,14 +45,21 @@ function PartyFields({ party }: { party: "from" | "to" }) {
       <TextField<Invoice>
         name={`${party}.name`}
         label={isClient ? "Client name" : "Business name"}
+        placeholder={isClient ? "e.g. Northwind Traders Pvt Ltd" : "e.g. Aarav Design Studio"}
         autoComplete={isClient ? "off" : "organization"}
       />
-      <TextAreaField<Invoice> name={`${party}.address`} label="Address" rows={2} />
+      <TextAreaField<Invoice>
+        name={`${party}.address`}
+        label="Address"
+        rows={2}
+        placeholder={"e.g. 12 MG Road, Indiranagar\nBengaluru, Karnataka 560038"}
+      />
       <FieldRow>
         <TextField<Invoice>
           name={`${party}.taxId`}
           label={isGst && !(isClient && taxMode === "gst-export") ? "GSTIN" : "Tax ID (optional)"}
           hint={isGst && !isClient ? "Your state is filled in from your GSTIN." : "VAT, GST, EIN, ABN..."}
+          placeholder={isGst ? "e.g. 29ABCDE1234F1Z5" : "e.g. GB123456789"}
           rules={{
             onChange: (event) => {
               // A GSTIN starts with the state code, so fill the state in automatically.
@@ -128,12 +79,14 @@ function PartyFields({ party }: { party: "from" | "to" }) {
           name={`${party}.email`}
           label="Email"
           type="email"
+          placeholder={isClient ? "e.g. accounts@client.com" : "e.g. hello@yourbusiness.com"}
           autoComplete={isClient ? "off" : "email"}
         />
         <TextField<Invoice>
           name={`${party}.phone`}
           label="Phone"
           type="tel"
+          placeholder="e.g. +91 98765 43210"
           autoComplete={isClient ? "off" : "tel"}
         />
       </FieldRow>
@@ -144,7 +97,11 @@ function PartyFields({ party }: { party: "from" | "to" }) {
 export function BusinessSection() {
   return (
     <FormSection title="Your business" description="Saved on this device and reused for your next invoice.">
-      <LogoField />
+      <ImageField<Invoice>
+        name="logo"
+        label="Logo (optional)"
+        hint="PNG, JPG, SVG or WebP. Stays on your device."
+      />
       <PartyFields party="from" />
     </FormSection>
   );
@@ -168,7 +125,7 @@ export function DetailsSection() {
   return (
     <FormSection title="Invoice details">
       <FieldRow className="sm:grid-cols-3">
-        <TextField<Invoice> name="number" label="Invoice number" />
+        <TextField<Invoice> name="number" label="Invoice number" placeholder="e.g. INV-0001" />
         <TextField<Invoice> name="issueDate" label="Invoice date" type="date" />
         <TextField<Invoice> name="dueDate" label="Due date" type="date" />
       </FieldRow>
@@ -204,6 +161,7 @@ export function DetailsSection() {
         <TextField<Invoice>
           name="taxLabel"
           label="Tax name"
+          placeholder="e.g. VAT"
           hint="Shown on the invoice, e.g. VAT, Sales Tax, HST."
         />
       )}
@@ -220,6 +178,7 @@ export function DetailsSection() {
         <TextField<Invoice>
           name="lutNumber"
           label="LUT ARN (optional)"
+          placeholder="e.g. AD290324000123X"
           hint="Your Letter of Undertaking reference number."
         />
       )}
@@ -268,6 +227,7 @@ function LineItemRow({
                 inputMode="decimal"
                 min={0}
                 step="any"
+                placeholder="1"
                 {...register(`items.${index}.quantity`, { valueAsNumber: true })}
               />
             </Field>
@@ -278,6 +238,7 @@ function LineItemRow({
                 inputMode="decimal"
                 min={0}
                 step="any"
+                placeholder="0.00"
                 {...register(`items.${index}.unitPrice`, { valueAsNumber: true })}
               />
             </Field>
@@ -301,12 +262,17 @@ function LineItemRow({
                   min={0}
                   max={100}
                   step="any"
+                  placeholder="e.g. 20"
                   {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
                 />
               </Field>
             )}
             <Field label={isGst ? "HSN/SAC" : "Code"} htmlFor={id("code")}>
-              <Input id={id("code")} placeholder="Optional" {...register(`items.${index}.code`)} />
+              <Input
+                id={id("code")}
+                placeholder={isGst ? "e.g. 998314" : "Optional"}
+                {...register(`items.${index}.code`)}
+              />
             </Field>
           </div>
           <p className="text-right text-sm text-muted">
@@ -355,6 +321,7 @@ export function ItemsSection() {
       <NumberField<Invoice>
         name="discount"
         label="Discount (flat amount)"
+        placeholder="0.00"
         hint="Applied before tax."
         className="sm:w-1/2"
       />
@@ -376,7 +343,7 @@ export function PaymentSection() {
         <TextField<Invoice>
           name="payment.upiId"
           label="UPI ID"
-          placeholder="yourname@bank"
+          placeholder="e.g. yourname@okhdfcbank"
           hint="Adds a scan-to-pay UPI QR code with the exact amount."
         />
       )}
@@ -384,16 +351,28 @@ export function PaymentSection() {
         name="payment.paymentLink"
         label="Payment link"
         type="url"
-        placeholder="https://paypal.me/yourname"
+        placeholder="e.g. https://paypal.me/yourname"
         hint="PayPal, Stripe, Wise or any payment page."
       />
       <FieldRow>
-        <TextField<Invoice> name="payment.bankName" label="Bank name" />
-        <TextField<Invoice> name="payment.accountName" label="Account holder" />
+        <TextField<Invoice> name="payment.bankName" label="Bank name" placeholder="e.g. HDFC Bank" />
+        <TextField<Invoice>
+          name="payment.accountName"
+          label="Account holder"
+          placeholder="e.g. Aarav Design Studio"
+        />
       </FieldRow>
       <FieldRow>
-        <TextField<Invoice> name="payment.accountNumber" label="Account number / IBAN" />
-        <TextField<Invoice> name="payment.bankCode" label={isInr ? "IFSC" : "SWIFT / BIC / Routing"} />
+        <TextField<Invoice>
+          name="payment.accountNumber"
+          label="Account number / IBAN"
+          placeholder={isInr ? "e.g. 50200012345678" : "e.g. GB29 NWBK 6016 1331 9268 19"}
+        />
+        <TextField<Invoice>
+          name="payment.bankCode"
+          label={isInr ? "IFSC" : "SWIFT / BIC / Routing"}
+          placeholder={isInr ? "e.g. HDFC0001234" : "e.g. NWBKGB2L"}
+        />
       </FieldRow>
     </FormSection>
   );
@@ -404,8 +383,18 @@ export function PaymentSection() {
 export function NotesSection() {
   return (
     <FormSection title="Notes & terms">
-      <TextAreaField<Invoice> name="notes" label="Notes" rows={2} />
-      <TextAreaField<Invoice> name="terms" label="Terms & conditions" rows={2} />
+      <TextAreaField<Invoice>
+        name="notes"
+        label="Notes"
+        rows={2}
+        placeholder="e.g. Thank you for your business!"
+      />
+      <TextAreaField<Invoice>
+        name="terms"
+        label="Terms & conditions"
+        rows={2}
+        placeholder="e.g. Payment due within 14 days. Late payments incur 2% monthly interest."
+      />
     </FormSection>
   );
 }

@@ -7,6 +7,8 @@ export interface ToolDefinition {
   tagline: string;
   icon: LucideIcon;
   status: "live" | "coming-soon";
+  /** Extra public pages under the tool, e.g. ["templates"] for /<slug>/templates. */
+  subPages?: string[];
 }
 
 /**
@@ -20,13 +22,15 @@ export const TOOLS: ToolDefinition[] = [
     tagline: "Professional invoices in any currency, with GST, VAT and UPI QR codes.",
     icon: ReceiptText,
     status: "live",
+    subPages: ["templates"],
   },
   {
     slug: "resume-builder",
     name: "Resume Builder",
-    tagline: "ATS-friendly resumes with free PDF download and no watermark.",
+    tagline: "ATS-friendly resumes in 15 templates, with free PDF download and no watermark.",
     icon: FileText,
-    status: "coming-soon",
+    status: "live",
+    subPages: ["templates"],
   },
   {
     slug: "contract-generator",

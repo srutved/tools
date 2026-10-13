@@ -12,7 +12,7 @@ import {
   PaymentBlock,
   SummarySection,
 } from "../parts";
-import { tint } from "../theme";
+import { tint } from "@/lib/document/theme";
 import type { LayoutProps } from "../types";
 
 /** Full-width colour band header, then parties side by side in soft cards. */

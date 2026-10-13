@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { get, useFormContext, type FieldValues, type Path, type RegisterOptions } from "react-hook-form";
 import { Input, Select, Textarea } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { describedBy, Field } from "./form";
 
 /**
@@ -37,11 +38,14 @@ export function TextField<T extends FieldValues>({
   placeholder,
   autoComplete,
   inputMode,
+  list,
 }: BaseFieldProps<T> & {
   type?: "text" | "email" | "tel" | "url" | "date";
   placeholder?: string;
   autoComplete?: string;
   inputMode?: "text" | "email" | "tel" | "url" | "numeric";
+  /** Id of a <datalist> with suggestions. */
+  list?: string;
 }) {
   const { form, error, id, aria } = useFieldState<T>(name);
   return (
@@ -51,6 +55,7 @@ export function TextField<T extends FieldValues>({
         placeholder={placeholder}
         autoComplete={autoComplete}
         inputMode={inputMode}
+        list={list}
         {...aria}
         {...form.register(name, rules)}
       />
@@ -115,5 +120,28 @@ export function SelectField<T extends FieldValues>({
         {children}
       </Select>
     </Field>
+  );
+}
+
+export function CheckboxField<T extends FieldValues>({
+  name,
+  label,
+  className,
+  rules,
+}: Omit<BaseFieldProps<T>, "hint">) {
+  const { form, id } = useFieldState<T>(name);
+  return (
+    <label
+      htmlFor={id}
+      className={cn("flex cursor-pointer items-center gap-2 text-sm font-semibold", className)}
+    >
+      <input
+        id={id}
+        type="checkbox"
+        className="size-4 rounded border-border accent-brand"
+        {...form.register(name, rules)}
+      />
+      {label}
+    </label>
   );
 }

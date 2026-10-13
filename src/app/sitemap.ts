@@ -9,11 +9,13 @@ import { LIVE_TOOLS } from "@/tools/registry";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: toolUrl(), changeFrequency: "weekly", priority: 0.8 },
-    ...LIVE_TOOLS.map((tool) => ({
-      url: toolUrl(tool.slug),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    })),
-    { url: toolUrl("invoice-generator/templates"), changeFrequency: "monthly", priority: 0.7 },
+    ...LIVE_TOOLS.flatMap((tool) => [
+      { url: toolUrl(tool.slug), changeFrequency: "weekly" as const, priority: 0.9 },
+      ...(tool.subPages ?? []).map((page) => ({
+        url: toolUrl(`${tool.slug}/${page}`),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
+    ]),
   ];
 }

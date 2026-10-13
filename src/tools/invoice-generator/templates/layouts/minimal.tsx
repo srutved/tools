@@ -14,7 +14,7 @@ import {
   PaymentBlock,
   SummarySection,
 } from "../parts";
-import { INK } from "../theme";
+import { INK } from "@/lib/document/theme";
 import type { LayoutProps } from "../types";
 
 /** Quiet and spacious: thin rules, no fills, the accent reserved for the amount due. */

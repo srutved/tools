@@ -10,7 +10,7 @@ Free, open-source business tools for freelancers and small businesses, live at
 | Tool                                                                 | Status        |
 | -------------------------------------------------------------------- | ------------- |
 | [Invoice Generator](https://www.srutved.com/tools/invoice-generator) | ✅ Live       |
-| Resume Builder                                                       | 🛠 Coming soon |
+| [Resume Builder](https://www.srutved.com/tools/resume-builder)       | ✅ Live       |
 | Contract Generator                                                   | 🛠 Coming soon |
 
 ## Invoice Generator
@@ -23,6 +23,18 @@ Free, open-source business tools for freelancers and small businesses, live at
 - Logo upload, discounts, payment links and bank details
 - Saved invoice history: reopen, duplicate or delete
 - Responsive: a split editor and live preview on desktop, Edit/Preview tabs on mobile
+
+## Resume Builder
+
+- 15 templates: five layouts (Classic, Modern, Executive, Sidebar, Split), each in three styles
+- ATS-friendly single-column layouts, labelled in the template gallery
+- Experience, education, skills, projects, certifications and languages
+- Custom sections in three formats (entries, bullet list or paragraph), placed in either column
+- Custom personal details (nationality, visa status...) next to the contact details
+- Rename, reorder or hide any section
+- Optional round profile photo on the templates designed for one
+- Clickable email, phone and links in the PDF
+- Saved resumes: duplicate one to tailor it for each job
 
 ## Tech stack
 
@@ -53,19 +65,24 @@ src/
 ├─ app/                     Routes only - thin files that compose components
 │  ├─ page.tsx              /tools hub, generated from the tool registry
 │  ├─ invoice-generator/    Tool page + /templates gallery page
+│  ├─ resume-builder/       Tool page + /templates gallery page
 │  └─ sitemap.ts            /tools/sitemap.xml
 ├─ components/
 │  ├─ ui/                   Design-system primitives (Button, Input, Dialog…)
 │  ├─ layout/               Site header and footer
-│  ├─ tool/                 Shared tool shell: page layout, editor/preview workspace, form fields
-│  └─ document/             Scaled A4 page preview
+│  ├─ tool/                 Shared tool shell: page layout, editor/preview workspace, toolbar,
+│  │                        form fields, repeatable entry lists, template gallery, saved-document list
+│  └─ document/             Scaled A4 page preview and the live preview card
 ├─ lib/
-│  ├─ document/             Render-once document primitives (web + PDF targets)
+│  ├─ document/             Render-once document primitives (web + PDF targets) and shared theme
+│  ├─ saved-documents.ts    Local storage of each tool's saved documents
 │  ├─ currency.ts, amount-in-words.ts, date.ts, storage.ts, seo.ts …
 ├─ shared/                  Data shared across tools (business profile)
-├─ hooks/                   Shared React hooks
+├─ hooks/                   Shared hooks, incl. use-document-library (autosave, new, open,
+│                           duplicate, delete) and use-pdf-export (validate, download, print)
 └─ tools/
    ├─ registry.ts           Every tool; drives the hub, navigation and sitemap
+   ├─ resume-builder/       Same structure as the invoice generator
    └─ invoice-generator/    One self-contained folder per tool
       ├─ schema.ts          Zod schemas (stored drafts vs. export validation)
       ├─ lib/               Pure business logic + unit tests (tax, totals, UPI, GST)
@@ -89,17 +106,23 @@ So the preview and the downloaded PDF can't drift apart. The primitives also fix
 every text node, embedded Noto fonts (with ₹, €, ¥ and more), and rows and totals that never split
 across a page break.
 
+Every resume template is rendered to a real PDF in the test suite (`templates/pdf.test.ts`), with a
+short and a multi-page resume. Set `PDF_OUT=<folder>` to write the files out and check them by eye.
+
 ### Adding a template
 
-Add an entry to `src/tools/invoice-generator/templates/registry.ts`. A template is a layout plus a
-theme (accent colour, font and table style), so most new looks need no layout code at all.
+Add an entry to the tool's `templates/registry.ts`, e.g.
+`src/tools/invoice-generator/templates/registry.ts`. A template is a layout plus a
+theme (accent colour and font, plus table style for invoices), so most new looks need no layout code.
 
 ### Adding a tool
 
 1. Create `src/tools/<tool-name>/` with its schema, logic, components and `content.ts`.
 2. Register it in `src/tools/registry.ts`. The hub, header, footer and sitemap pick it up automatically.
 3. Add `src/app/<tool-name>/page.tsx`, which wraps your tool in the shared `<ToolPage>`.
-4. Reuse `ToolWorkspace`, the form fields, `ScaledPage` and the document primitives for a consistent UI.
+4. Reuse the shared building blocks for a consistent UI: `ToolWorkspace`, `DocumentToolbar`, the form fields and
+   `EntryList`, `useDocumentLibrary`, `usePdfExport`, `TemplateGallery`, `TemplatesPage` and the document primitives.
+   The resume builder is a compact example of a tool built from them.
 
 ## Deployment
 

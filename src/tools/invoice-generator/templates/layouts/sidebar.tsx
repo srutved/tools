@@ -11,7 +11,7 @@ import {
   PaymentBlock,
   SummarySection,
 } from "../parts";
-import { tint } from "../theme";
+import { tint } from "@/lib/document/theme";
 import type { LayoutProps } from "../types";
 
 export const SIDEBAR_WIDTH = 170;

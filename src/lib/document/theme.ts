@@ -1,3 +1,5 @@
+import type { DocFont } from "./primitives";
+
 /** Neutral colours shared by every template, so only the accent varies between them. */
 export const INK = {
   text: "#1f2937",
@@ -6,6 +8,15 @@ export const INK = {
   border: "#e5e7eb",
   surface: "#f9fafb",
 } as const;
+
+/** The look every document template shares; tools extend it with their own options. */
+export interface DocumentTheme {
+  /** Brand colour for headings, highlights and coloured areas. */
+  accent: string;
+  /** Text colour that reads well on top of `accent`. */
+  onAccent: string;
+  font: DocFont;
+}
 
 /** Mixes a hex colour with white. `amount` 0 → original colour, 1 → white. */
 export function tint(hex: string, amount: number): string {

@@ -1,15 +1,10 @@
-import type { DocFont } from "@/lib/document/primitives";
+import type { DocumentTheme } from "@/lib/document/theme";
 import type { ComputedInvoice } from "../lib/calculations";
 import type { Invoice } from "../schema";
 
 export type LayoutId = "classic" | "modern" | "minimal" | "sidebar" | "bold";
 
-export interface TemplateTheme {
-  /** Brand colour for headings, highlights and table headers. */
-  accent: string;
-  /** Text colour that reads well on top of `accent`. */
-  onAccent: string;
-  font: DocFont;
+export interface TemplateTheme extends DocumentTheme {
   table: "striped" | "lined" | "boxed";
 }
 

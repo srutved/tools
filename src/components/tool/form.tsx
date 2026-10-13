@@ -1,3 +1,4 @@
+import { TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -75,4 +76,17 @@ export const describedBy = (id: string) => `${id}-description`;
 /** Responsive grid for placing fields side by side. */
 export function FieldRow({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn("grid gap-4 sm:grid-cols-2", className)}>{children}</div>;
+}
+
+/** A message above the form, e.g. when fields need fixing before export. */
+export function FormAlert({ children }: { children: ReactNode }) {
+  return (
+    <p
+      role="alert"
+      className="flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm font-medium text-amber-900"
+    >
+      <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+      {children}
+    </p>
+  );
 }

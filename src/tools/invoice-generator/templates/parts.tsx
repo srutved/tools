@@ -12,7 +12,7 @@ import { Image, Link, Text, View, type DocStyle } from "@/lib/document/primitive
 import type { Party } from "@/shared/business-profile";
 import { stateName } from "../lib/gst";
 import type { Invoice } from "../schema";
-import { INK, tint } from "./theme";
+import { INK, tint } from "@/lib/document/theme";
 import type { LayoutProps, TemplateTheme } from "./types";
 
 export const PAGE_PADDING = 40;

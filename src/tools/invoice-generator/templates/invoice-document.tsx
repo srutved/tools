@@ -1,7 +1,7 @@
 "use client";
 
-import type { ComponentType, ReactNode } from "react";
-import type { DocStyle, DocStyleProp } from "@/lib/document/primitives";
+import type { ComponentType } from "react";
+import type { DocStyle, PageComponent } from "@/lib/document/primitives";
 import type { ComputedInvoice } from "../lib/calculations";
 import type { Invoice } from "../schema";
 import { BoldLayout } from "./layouts/bold";
@@ -32,9 +32,6 @@ const LAYOUTS: Record<LayoutId, { Component: ComponentType<LayoutProps>; page: D
   },
   bold: { Component: BoldLayout, page: { padding: PAGE_PADDING } },
 };
-
-/** The page component of a render target: WebPage for screen, PdfPage for PDF. */
-export type PageComponent = ComponentType<{ style?: DocStyleProp; children: ReactNode }>;
 
 interface InvoiceDocumentProps {
   invoice: Invoice;
