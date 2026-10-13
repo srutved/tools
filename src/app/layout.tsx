@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Mulish, Noto_Sans, Noto_Serif } from "next/font/google";
+import { SiteAnalytics } from "@/components/layout/analytics";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SITE } from "@/config/site";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         {children}
         <SiteFooter />
+        <SiteAnalytics />
       </body>
     </html>
   );

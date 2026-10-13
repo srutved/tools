@@ -6,7 +6,7 @@ Thanks for helping! Bug reports, template ideas and pull requests are all welcom
 
 ```bash
 npm install
-npm run dev   # http://localhost:3000/tools
+npm run dev   # http://localhost:3200/tools
 ```
 
 Node.js 20.9 or newer is required.

@@ -36,7 +36,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000/tools](http://localhost:3000/tools). The app lives under the `/tools` base path.
+Open [http://localhost:3200/tools](http://localhost:3200/tools). The app lives under the `/tools` base path.
 
 | Script           | What it does                            |
 | ---------------- | --------------------------------------- |

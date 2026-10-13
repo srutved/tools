@@ -9,6 +9,7 @@
 
 import { Document, Font, Image, Link, Page, pdf, Text, View, type Styles } from "@react-pdf/renderer";
 import type { ReactElement, ReactNode } from "react";
+import { BASE_PATH } from "@/config/site";
 import {
   DEFAULT_FONT_SIZE,
   DEFAULT_LINE_HEIGHT,
@@ -20,7 +21,7 @@ import {
 } from "./primitives";
 
 // Served from /public/fonts (under the /tools basePath). Noto covers ₹, €, £, ¥, ₦, ₩ and more.
-const FONT_BASE = "/tools/fonts";
+const FONT_BASE = `${BASE_PATH}/fonts`;
 const FONT_FAMILIES = { sans: "Noto Sans", serif: "Noto Serif" } as const;
 
 let fontsRegistered = false;

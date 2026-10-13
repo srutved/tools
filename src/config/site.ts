@@ -1,4 +1,10 @@
 /** Public URLs and brand constants. The app is served under {@link SITE.toolsUrl} via basePath. */
+/**
+ * The app is served at srutved.com/tools through a rewrite on the main site, so every route and asset
+ * lives under this base path. Used by next.config.ts, the PDF font loader and analytics.
+ */
+export const BASE_PATH = "/tools";
+
 export const SITE = {
   name: "Srutved Tools",
   company: "Srutved",
