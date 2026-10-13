@@ -3,16 +3,15 @@ import Link from "next/link";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/card";
 import { SITE, toolUrl } from "@/config/site";
-import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
-import { TOOLS } from "@/tools/registry";
+import { LIVE_TOOLS, TOOLS } from "@/tools/registry";
 
-export const metadata = buildMetadata({
-  title: "Free Online Business Tools - Invoice Generator, Resume Builder & More",
-  description:
-    "Free, open-source tools for freelancers and small businesses: invoice generator with GST, VAT and any currency, resume builder and contract generator. No sign-up, no watermark.",
-  url: toolUrl(),
-});
+const title = "Free Online Business Tools - Invoice Generator, Resume Builder & More";
+const description =
+  "Free, open-source tools for freelancers and small businesses: invoice generator with GST, VAT and any currency, resume builder and contract generator. No sign-up, no watermark.";
+
+export const metadata = buildMetadata({ title, description, url: toolUrl() });
 
 export default function ToolsHubPage() {
   return (
@@ -22,6 +21,14 @@ export default function ToolsHubPage() {
           { name: "Srutved", url: SITE.url },
           { name: "Tools", url: toolUrl() },
         ])}
+      />
+      <JsonLd
+        data={collectionPageJsonLd({
+          name: "Free Business Tools",
+          description,
+          url: toolUrl(),
+          items: LIVE_TOOLS.map((tool) => ({ name: tool.name, url: toolUrl(tool.slug) })),
+        })}
       />
       <section className="border-b border-border bg-gradient-to-br from-brand-soft to-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">

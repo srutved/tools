@@ -13,5 +13,10 @@ export interface ToolContent {
   intro: string;
   howItWorks: { title: string; text: string }[];
   features: { title: string; text: string }[];
+  /**
+   * Short articles answering what people search for around the tool ("invoice format",
+   * "GST invoice requirements"...). Genuinely helpful text is what earns search rankings.
+   */
+  guide?: { heading: string; paragraphs: string[]; bullets?: string[] }[];
   faqs: Faq[];
 }

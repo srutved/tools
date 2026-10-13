@@ -1,7 +1,7 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const INVOICE_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Invoice Generator - GST, VAT & 150+ Currencies, PDF Download",
+  metaTitle: "Free Invoice Generator - GST, VAT & Any Currency, PDF Download",
   metaDescription:
     "Create professional invoices free in seconds. 15 templates, any currency, India GST (CGST/SGST/IGST), VAT, UPI QR codes and instant PDF download. No sign-up, no watermark.",
   heading: "Free Invoice Generator",
@@ -53,6 +53,42 @@ export const INVOICE_GENERATOR_CONTENT: ToolContent = {
     {
       title: "Your invoice history",
       text: "Every invoice is saved on your device. Reopen, duplicate or delete them any time.",
+    },
+  ],
+  guide: [
+    {
+      heading: "What should an invoice include?",
+      paragraphs: [
+        "A clear invoice gets paid faster. Whatever your country, a professional invoice should include:",
+      ],
+      bullets: [
+        "Your business name, address and contact details, plus your tax ID (GSTIN, VAT number) if you're registered",
+        "Your client's name and address, and their tax ID for business-to-business invoices",
+        "A unique invoice number, the invoice date and the payment due date",
+        "Each product or service with quantity, rate and amount",
+        "Subtotal, any discount, tax broken down by rate, and the total due",
+        "How to pay: bank details, UPI ID or a payment link",
+      ],
+    },
+    {
+      heading: "GST invoice format in India",
+      paragraphs: [
+        "A GST-registered business must title the document 'Tax Invoice' and show its GSTIN, the client's GSTIN (for B2B supplies), the place of supply, and the HSN or SAC code for each item.",
+        "Tax depends on where the supply happens. If you and your client are in the same state, the invoice charges CGST and SGST, each at half the GST rate. If you're in different states, it charges IGST at the full rate. This generator works it out automatically from your state and the place of supply.",
+      ],
+    },
+    {
+      heading: "How to invoice international clients",
+      paragraphs: [
+        "Bill in your client's currency - USD, EUR, GBP, AED or any other - so they see exactly what they owe. Include your bank's SWIFT code or a payment link such as PayPal, Stripe or Wise.",
+        "Indian freelancers and businesses exporting services can supply them without charging GST under a Letter of Undertaking (LUT). Choose 'India export under LUT' and add your LUT reference, and the required declaration is printed on the invoice.",
+      ],
+    },
+    {
+      heading: "Invoice, quote and receipt: what's the difference?",
+      paragraphs: [
+        "A quote (or estimate) is sent before the work, to agree on a price. An invoice is sent after delivering the work, to request payment. A receipt confirms that payment has been received. Use this tool to create the invoice, and keep a copy of every PDF you send for your records.",
+      ],
     },
   ],
   faqs: [

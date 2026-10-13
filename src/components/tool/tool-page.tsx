@@ -88,6 +88,24 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
           ))}
         </ul>
 
+        {content.guide?.map((article) => (
+          <article key={article.heading} className="mt-16">
+            <h2 className="text-2xl font-bold">{article.heading}</h2>
+            <div className="mt-4 space-y-4 leading-relaxed text-gray-700">
+              {article.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              {article.bullets && (
+                <ul className="list-disc space-y-1.5 pl-5">
+                  {article.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
+
         <h2 className="mt-16 text-2xl font-bold">Frequently asked questions</h2>
         <div className="mt-6 space-y-3">
           {content.faqs.map((faq) => (

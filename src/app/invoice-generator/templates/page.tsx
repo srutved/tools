@@ -1,20 +1,43 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { JsonLd } from "@/components/seo/json-ld";
+import { SITE, toolUrl } from "@/config/site";
+import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo";
 import { TemplatesShowcase } from "@/tools/invoice-generator/components/templates-showcase";
-import { toolUrl } from "@/config/site";
-import { buildMetadata } from "@/lib/seo";
 import { INVOICE_TEMPLATES } from "@/tools/invoice-generator/templates";
+
+const url = toolUrl("invoice-generator/templates");
+const description =
+  "Browse free, professional invoice templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF in any currency, with GST or VAT.";
 
 export const metadata = buildMetadata({
   title: `${INVOICE_TEMPLATES.length} Free Invoice Templates - Download as PDF`,
-  description:
-    "Browse free, professional invoice templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF in any currency, with GST or VAT.",
-  url: toolUrl("invoice-generator/templates"),
+  description,
+  url,
 });
 
 export default function InvoiceTemplatesPage() {
   return (
     <main className="flex-1">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Srutved", url: SITE.url },
+          { name: "Tools", url: toolUrl() },
+          { name: "Invoice Generator", url: toolUrl("invoice-generator") },
+          { name: "Templates", url },
+        ])}
+      />
+      <JsonLd
+        data={collectionPageJsonLd({
+          name: "Free Invoice Templates",
+          description,
+          url,
+          items: INVOICE_TEMPLATES.map((template) => ({
+            name: `${template.name} invoice template`,
+            url: `${toolUrl("invoice-generator")}?template=${template.id}`,
+          })),
+        })}
+      />
       <section className="border-b border-border bg-gradient-to-br from-brand-soft to-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1 text-sm text-muted">

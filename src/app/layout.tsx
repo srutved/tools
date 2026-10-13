@@ -22,14 +22,32 @@ const docSerif = Noto_Serif({
   display: "swap",
 });
 
+// Site-wide defaults. Each page sets its own title, description and canonical URL via buildMetadata;
+// favicons, the web manifest and social images come from file conventions in src/app.
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
+  // Includes the /tools base path: Next.js resolves generated image URLs (opengraph-image) against
+  // metadataBase without adding basePath, so without it previews would point at srutved.com/<page>.
+  metadataBase: new URL(`${SITE.toolsUrl}/`),
   title: { default: `Free Business Tools | ${SITE.name}`, template: `%s | ${SITE.name}` },
   description: SITE.description,
+  applicationName: SITE.name,
+  authors: [{ name: SITE.company, url: SITE.url }],
+  creator: SITE.company,
+  publisher: SITE.company,
+  category: "business",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  openGraph: { siteName: SITE.name, locale: SITE.locale, type: "website" },
+  twitter: { card: "summary_large_image", site: SITE.social.xHandle },
+  appleWebApp: { title: SITE.name, capable: true, statusBarStyle: "default" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#22c55e",
+  themeColor: SITE.themeColor,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
