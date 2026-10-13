@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Matches the main srutved.com site: green brand colour, Mulish UI font,
+ * warm off-white background. Components use these tokens rather than raw colours.
+ */
+@theme inline {
+  --font-sans: var(--font-mulish), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --color-background: #fffefc;
+  --color-foreground: #111827;
+  --color-muted: #6b7280;
+  --color-subtle: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-ring: #22c55e;
+
+  --color-brand: #22c55e;
+  --color-brand-strong: #16a34a;
+  --color-brand-soft: #f0fdf4;
+  --color-brand-foreground: #ffffff;
+
+  --color-danger: #dc2626;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Native date inputs inherit the UI font instead of the browser default. */
+input[type="date"] {
+  font-family: inherit;
+}
