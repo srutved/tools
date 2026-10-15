@@ -1,7 +1,9 @@
+import type { DocumentKind } from "./lib/document-kind";
 import type { Invoice } from "./schema";
 
 /** Realistic example data used for template thumbnails and the templates gallery page. */
 export const SAMPLE_INVOICE: Invoice = {
+  kind: "invoice",
   templateId: "classic-slate",
   number: "INV-0042",
   issueDate: "2026-10-01",
@@ -59,3 +61,17 @@ export const SAMPLE_INVOICE: Invoice = {
   notes: "Thank you for your business!",
   terms: "Payment due within 14 days.",
 };
+
+/** The sample as an invoice or a quotation. */
+export function sampleFor(kind: DocumentKind): Invoice {
+  if (kind === "invoice") return SAMPLE_INVOICE;
+  return {
+    ...SAMPLE_INVOICE,
+    kind,
+    number: "QT-0042",
+    dueDate: "2026-10-31",
+    payment: { ...SAMPLE_INVOICE.payment, upiId: "" },
+    notes: "Thank you for the opportunity. We look forward to working with you.",
+    terms: "This quotation is valid for 30 days. 50% advance on acceptance, balance on delivery.",
+  };
+}

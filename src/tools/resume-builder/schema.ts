@@ -141,22 +141,27 @@ export type CustomSection = z.infer<typeof customSectionSchema>;
  */
 export const customSectionKey = (id: string) => `custom:${id}`;
 
+/** The person's name and contact details. Shared with the cover letter builder. */
+export const basicsSchema = z.object({
+  name: z.string().max(80),
+  /** Job title or one-line pitch, e.g. "Senior Frontend Engineer". */
+  headline: z.string().max(120),
+  email: z.string().max(120),
+  phone: z.string().max(40),
+  location: z.string().max(80),
+  /** Square JPEG data URL, already downscaled. Only some templates show it. */
+  photo: z.string(),
+  links: z.array(linkSchema),
+  /** Extra details such as date of birth or nationality, where employers expect them. */
+  details: z.array(personalDetailSchema),
+});
+
+export type Basics = z.infer<typeof basicsSchema>;
+
 /** Shape of a saved resume. Lenient on purpose: drafts are allowed to be incomplete. */
 export const resumeSchema = z.object({
   templateId: z.string(),
-  basics: z.object({
-    name: z.string().max(80),
-    /** Job title or one-line pitch, e.g. "Senior Frontend Engineer". */
-    headline: z.string().max(120),
-    email: z.string().max(120),
-    phone: z.string().max(40),
-    location: z.string().max(80),
-    /** Square JPEG data URL, already downscaled. Only some templates show it. */
-    photo: z.string(),
-    links: z.array(linkSchema),
-    /** Extra details such as date of birth or nationality, where employers expect them. */
-    details: z.array(personalDetailSchema),
-  }),
+  basics: basicsSchema,
   summary: z.string().max(1500),
   experience: z.array(experienceSchema),
   education: z.array(educationSchema),

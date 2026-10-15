@@ -42,6 +42,15 @@ describe("invoice store", () => {
         activeId: "x",
         documents: [{ id: "x", updatedAt: 5, data: SAMPLE_INVOICE }],
       });
+
+      // Invoices saved before quotations existed have no kind; they still load, as invoices.
+      const withoutKind: Partial<typeof SAMPLE_INVOICE> = { ...SAMPLE_INVOICE };
+      delete withoutKind.kind;
+      storage.set(
+        "srutved-tools/v1/invoice-generator/invoices",
+        JSON.stringify({ activeId: "y", documents: [{ id: "y", updatedAt: 6, data: withoutKind }] }),
+      );
+      expect(invoiceStore.load().documents[0]?.data).toEqual(SAMPLE_INVOICE);
     } finally {
       Reflect.deleteProperty(globalThis, "window");
     }

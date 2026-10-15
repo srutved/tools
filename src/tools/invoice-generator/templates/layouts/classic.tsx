@@ -3,6 +3,7 @@
 import { Text, View } from "@/lib/document/primitives";
 import {
   documentTitle,
+  labelsFor,
   hasPaymentDetails,
   ItemsTable,
   Logo,
@@ -44,7 +45,7 @@ export function ClassicLayout({ invoice, computed, qrCode, theme }: LayoutProps)
 
       <View style={{ borderBottomWidth: 1.5, borderBottomColor: theme.accent, marginVertical: 16 }} />
 
-      <PartyBlock invoice={invoice} party={invoice.to} title="Bill to" />
+      <PartyBlock invoice={invoice} party={invoice.to} title={labelsFor(invoice).clientHeading} />
 
       <ItemsTable invoice={invoice} computed={computed} theme={theme} />
       <SummarySection invoice={invoice} computed={computed} theme={theme} />

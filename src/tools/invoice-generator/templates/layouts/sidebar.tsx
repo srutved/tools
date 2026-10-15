@@ -3,6 +3,7 @@
 import { Text, View } from "@/lib/document/primitives";
 import {
   documentTitle,
+  labelsFor,
   ItemsTable,
   Logo,
   MetaTable,
@@ -93,7 +94,7 @@ export function SidebarLayout({ invoice, computed, qrCode, theme }: LayoutProps)
       </View>
 
       <View style={{ marginTop: 20 }}>
-        <PartyBlock invoice={invoice} party={invoice.to} title="Bill to" />
+        <PartyBlock invoice={invoice} party={invoice.to} title={labelsFor(invoice).clientHeading} />
       </View>
 
       <ItemsTable invoice={invoice} computed={computed} theme={theme} compact />

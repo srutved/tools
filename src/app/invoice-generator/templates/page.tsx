@@ -25,7 +25,7 @@ export default function InvoiceTemplatesPage() {
       itemNoun="invoice template"
       templates={INVOICE_TEMPLATES}
     >
-      <TemplatesShowcase />
+      <TemplatesShowcase toolSlug={tool.slug} />
     </TemplatesPage>
   );
 }

@@ -3,6 +3,7 @@
 import { Text, View } from "@/lib/document/primitives";
 import {
   documentTitle,
+  labelsFor,
   hasPaymentDetails,
   ItemsTable,
   Label,
@@ -42,7 +43,7 @@ export function MinimalLayout({ invoice, computed, qrCode, theme }: LayoutProps)
           <MetaTable invoice={invoice} align="left" />
         </View>
         <View style={{ alignItems: "flex-end" }}>
-          <Label>Amount due</Label>
+          <Label>{labelsFor(invoice).totalHeading}</Label>
           <Text style={{ fontSize: 20, lineHeight: 1.2, fontWeight: 700, color: theme.accent }}>
             {money(invoice, computed.totals.total)}
           </Text>

@@ -1,12 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FilePlus2, LoaderCircle, Sparkles } from "lucide-react";
+import { FilePlus2, LoaderCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm, useWatch, type Control } from "react-hook-form";
 import { PreviewCard } from "@/components/document/preview-card";
 import { DocumentList } from "@/components/tool/document-list";
 import { DocumentToolbar } from "@/components/tool/document-toolbar";
+import { ExampleBanner } from "@/components/tool/example-banner";
 import { FormAlert } from "@/components/tool/form";
 import { ToolWorkspace, type WorkspaceTab } from "@/components/tool/tool-workspace";
 import { Button } from "@/components/ui/button";
@@ -120,7 +121,7 @@ function ResumeBuilderApp() {
         editor={
           <form onSubmit={(event) => event.preventDefault()} noValidate className="space-y-4">
             {alert && <FormAlert>{alert}</FormAlert>}
-            <ExampleBanner control={form.control} onLoad={loadExample} />
+            <ResumeExampleBanner control={form.control} onLoad={loadExample} />
             <PersonalSection />
             <SummarySection />
             <ExperienceSection />
@@ -193,20 +194,11 @@ function ResumeBuilderApp() {
  * Offers sample content while the resume is completely empty, so the preview isn't a blank page.
  * Hidden as soon as anything is typed, because loading the example replaces the form.
  */
-function ExampleBanner({ control, onLoad }: { control: Control<Resume>; onLoad: () => void }) {
+function ResumeExampleBanner({ control, onLoad }: { control: Control<Resume>; onLoad: () => void }) {
   const resume = useWatch({ control }) as Resume;
   const prepared = useMemo(() => prepareResume(resume), [resume]);
   if (prepared.name || prepared.headline || prepared.contacts.length || prepared.sections.length) return null;
-  return (
-    <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/30 bg-brand-soft p-4">
-      <p className="text-sm">
-        <span className="font-bold">Not sure where to start?</span> Load an example and edit it into your own.
-      </p>
-      <Button variant="outline" size="sm" onClick={onLoad}>
-        <Sparkles /> Load example
-      </Button>
-    </div>
-  );
+  return <ExampleBanner noun="resume" onLoad={onLoad} />;
 }
 
 function ResumePreview({ control }: { control: Control<Resume> }) {

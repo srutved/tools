@@ -4,6 +4,7 @@ import { createElement } from "react";
 import { toFileName } from "@/lib/browser";
 import { generateQrDataUrl } from "@/lib/qr";
 import { computeInvoice } from "./lib/calculations";
+import { kindLabels } from "./lib/document-kind";
 import type { Invoice } from "./schema";
 import { InvoiceDocument } from "./templates/invoice-document";
 
@@ -16,10 +17,11 @@ export async function renderInvoicePdf(invoice: Invoice): Promise<{ blob: Blob; 
   ]);
 
   const blob = await renderPdf({
-    title: `Invoice ${invoice.number}`,
+    title: `${kindLabels(invoice.kind).title} ${invoice.number}`,
     author: invoice.from.name,
     children: createElement(InvoiceDocument, { invoice, computed, qrCode, Page: PdfPage }),
   });
 
-  return { blob, fileName: `${toFileName(`Invoice-${invoice.number}`, "Invoice")}.pdf` };
+  const name = kindLabels(invoice.kind).fileName;
+  return { blob, fileName: `${toFileName(`${name}-${invoice.number}`, name)}.pdf` };
 }

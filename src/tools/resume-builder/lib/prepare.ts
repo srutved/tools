@@ -160,16 +160,13 @@ const keep = <T extends object>(entries: T[] | undefined) =>
   (entries ?? []).filter((entry) => !isBlankEntry(entry));
 const text = (value: string | undefined) => (value ?? "").trim();
 
-/**
- * Lenient about missing fields, because the live preview renders while the user is still typing.
- */
-export function prepareResume(resume: Resume): PreparedResume {
-  const basics = resume.basics ?? ({} as Partial<Resume["basics"]>);
+/** Email, phone, location, links and custom details as clickable contact items. */
+export function buildContacts(basics: Partial<Resume["basics"]>): ContactItem[] {
   const email = text(basics.email);
   const phone = text(basics.phone);
   const location = text(basics.location);
 
-  const contacts: ContactItem[] = [
+  return [
     ...(email ? [{ kind: "email" as const, text: email, href: `mailto:${email}` }] : []),
     ...(phone ? [{ kind: "phone" as const, text: phone, href: `tel:${phone.replace(/[^\d+]/g, "")}` }] : []),
     ...(location ? [{ kind: "location" as const, text: location }] : []),
@@ -185,6 +182,14 @@ export function prepareResume(resume: Resume): PreparedResume {
       .filter((detail) => text(detail.value))
       .map((detail) => ({ kind: "detail" as const, text: text(detail.value), label: text(detail.label) })),
   ];
+}
+
+/**
+ * Lenient about missing fields, because the live preview renders while the user is still typing.
+ */
+export function prepareResume(resume: Resume): PreparedResume {
+  const basics = resume.basics ?? ({} as Partial<Resume["basics"]>);
+  const contacts = buildContacts(basics);
 
   const prepared: Omit<PreparedResume, "sections"> = {
     name: text(basics.name),

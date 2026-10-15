@@ -2,6 +2,7 @@ import { amountInWords } from "@/lib/amount-in-words";
 import { getCurrencyDecimals } from "@/lib/currency";
 import { roundTo, toFiniteNumber } from "@/lib/utils";
 import type { Invoice, LineItem } from "../schema";
+import { kindLabels } from "./document-kind";
 import { buildUpiUri, isValidUpiId } from "./upi";
 
 export interface ComputedLine extends LineItem {
@@ -113,12 +114,12 @@ export function computeInvoice(invoice: Invoice): ComputedInvoice {
 
   const upiId = invoice.payment.upiId.trim();
   const upiUri =
-    invoice.currency === "INR" && total > 0 && isValidUpiId(upiId)
+    kindLabels(invoice.kind).showsPayment && invoice.currency === "INR" && total > 0 && isValidUpiId(upiId)
       ? buildUpiUri({
           upiId,
           payeeName: invoice.from.name || upiId,
           amount: total,
-          note: invoice.number ? `Invoice ${invoice.number}` : undefined,
+          note: invoice.number ? `${kindLabels(invoice.kind).title} ${invoice.number}` : undefined,
         })
       : null;
 

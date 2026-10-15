@@ -11,6 +11,7 @@ import { Input, Select } from "@/components/ui/input";
 import { formatMoney, getCurrencyOptions, POPULAR_CURRENCIES } from "@/lib/currency";
 import { toFiniteNumber } from "@/lib/utils";
 import { createLineItem } from "../defaults";
+import { kindLabels } from "../lib/document-kind";
 import { GST_RATES, INDIAN_STATES, stateCodeFromGstin } from "../lib/gst";
 import type { Invoice } from "../schema";
 
@@ -29,6 +30,11 @@ function StateOptions() {
 
 function useInvoiceValue<K extends keyof Invoice>(name: K): Invoice[K] {
   return useWatch<Invoice, K>({ name });
+}
+
+/** Wording for the document being edited (invoice or quotation). */
+function useLabels() {
+  return kindLabels(useInvoiceValue("kind"));
 }
 
 /* ---------------------------------------------------------------- Your business */
@@ -96,7 +102,10 @@ function PartyFields({ party }: { party: "from" | "to" }) {
 
 export function BusinessSection() {
   return (
-    <FormSection title="Your business" description="Saved on this device and reused for your next invoice.">
+    <FormSection
+      title="Your business"
+      description="Saved on this device and reused for your next invoice or quotation."
+    >
       <ImageField<Invoice>
         name="logo"
         label="Logo (optional)"
@@ -108,26 +117,28 @@ export function BusinessSection() {
 }
 
 export function ClientSection() {
+  const labels = useLabels();
   return (
-    <FormSection title="Bill to">
+    <FormSection title={labels.clientHeading}>
       <PartyFields party="to" />
     </FormSection>
   );
 }
 
-/* ---------------------------------------------------------------- Invoice details */
+/* ---------------------------------------------------------------- Document details */
 
 export function DetailsSection() {
+  const labels = useLabels();
   const taxMode = useInvoiceValue("taxMode");
   const currencies = useMemo(() => getCurrencyOptions(), []);
   const popular = currencies.filter((option) => POPULAR_CURRENCIES.includes(option.code));
 
   return (
-    <FormSection title="Invoice details">
+    <FormSection title={labels.detailsSection}>
       <FieldRow className="sm:grid-cols-3">
-        <TextField<Invoice> name="number" label="Invoice number" placeholder="e.g. INV-0001" />
-        <TextField<Invoice> name="issueDate" label="Invoice date" type="date" />
-        <TextField<Invoice> name="dueDate" label="Due date" type="date" />
+        <TextField<Invoice> name="number" label={labels.numberField} placeholder={labels.numberPlaceholder} />
+        <TextField<Invoice> name="issueDate" label={labels.dateField} type="date" />
+        <TextField<Invoice> name="dueDate" label={labels.dueField} type="date" />
       </FieldRow>
       <FieldRow>
         <SelectField<Invoice>

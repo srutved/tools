@@ -4,6 +4,7 @@ import { formatDate } from "@/lib/date";
 import { Text, View } from "@/lib/document/primitives";
 import {
   documentTitle,
+  labelsFor,
   hasPaymentDetails,
   ItemsTable,
   Label,
@@ -41,14 +42,14 @@ export function BoldLayout({ invoice, computed, qrCode, theme }: LayoutProps) {
           {invoice.number && <Text style={{ color: INK.muted, marginTop: 4 }}>{`# ${invoice.number}`}</Text>}
         </View>
         <View style={{ backgroundColor: theme.accent, padding: 14, borderRadius: 6, width: 180 }}>
-          <Label color={tint(theme.accent, 0.7)}>Amount due</Label>
+          <Label color={tint(theme.accent, 0.7)}>{labelsFor(invoice).totalHeading}</Label>
           <Text style={{ fontSize: 18, lineHeight: 1.25, fontWeight: 700, color: theme.onAccent }}>
             {money(invoice, computed.totals.total)}
           </Text>
           {invoice.dueDate && (
             <Text
               style={{ color: tint(theme.accent, 0.75), marginTop: 4 }}
-            >{`Due ${formatDate(invoice.dueDate)}`}</Text>
+            >{`${labelsFor(invoice).dueShort} ${formatDate(invoice.dueDate)}`}</Text>
           )}
         </View>
       </View>
@@ -58,7 +59,7 @@ export function BoldLayout({ invoice, computed, qrCode, theme }: LayoutProps) {
           <PartyBlock invoice={invoice} party={invoice.from} title="From" />
         </View>
         <View style={column}>
-          <PartyBlock invoice={invoice} party={invoice.to} title="Bill to" />
+          <PartyBlock invoice={invoice} party={invoice.to} title={labelsFor(invoice).clientHeading} />
         </View>
         <View>
           <Label>Details</Label>

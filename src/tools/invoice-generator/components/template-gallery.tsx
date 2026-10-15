@@ -5,7 +5,8 @@ import { ScaledPage } from "@/components/document/scaled-page";
 import { TemplateGallery } from "@/components/tool/template-gallery";
 import { WebPage } from "@/lib/document/web";
 import { computeInvoice } from "../lib/calculations";
-import { SAMPLE_INVOICE } from "../sample";
+import type { DocumentKind } from "../lib/document-kind";
+import { sampleFor } from "../sample";
 import type { Invoice } from "../schema";
 import { INVOICE_TEMPLATES, InvoiceDocument, type InvoiceTemplate } from "../templates";
 
@@ -28,15 +29,19 @@ const GALLERY_TEMPLATES = INVOICE_TEMPLATES.map((template) => ({
 interface InvoiceTemplateGalleryProps {
   /** The user's invoice, so thumbnails show their own data; falls back to sample data. */
   invoice?: Invoice;
+  /** Which sample to show before the user has content. */
+  kind?: DocumentKind;
   selectedId?: string;
   onSelect?: (template: InvoiceTemplate) => void;
   renderAction?: (template: InvoiceTemplate) => ReactNode;
 }
 
-export function InvoiceTemplateGallery({ invoice, ...props }: InvoiceTemplateGalleryProps) {
+export function InvoiceTemplateGallery({ invoice, kind = "invoice", ...props }: InvoiceTemplateGalleryProps) {
   // Show the user's own invoice once it has some content; sample data reads better until then.
   const previewInvoice =
-    invoice && invoice.from.name && invoice.items.some((item) => item.description) ? invoice : SAMPLE_INVOICE;
+    invoice && invoice.from.name && invoice.items.some((item) => item.description)
+      ? invoice
+      : sampleFor(invoice?.kind ?? kind);
 
   return (
     <TemplateGallery

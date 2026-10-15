@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { paymentDetailsSchema, partySchema } from "@/shared/business-profile";
+import { DOCUMENT_KINDS } from "./lib/document-kind";
 import { isValidGstin } from "./lib/gst";
 import { isValidUpiId } from "./lib/upi";
 
@@ -27,6 +28,8 @@ export type LineItem = z.infer<typeof lineItemSchema>;
 
 /** Shape of a saved invoice. Lenient on purpose: drafts are allowed to be incomplete. */
 export const invoiceSchema = z.object({
+  /** Invoice or quotation: same data, different wording. */
+  kind: z.enum(DOCUMENT_KINDS),
   templateId: z.string(),
   number: z.string().max(40),
   issueDate: z.string(),

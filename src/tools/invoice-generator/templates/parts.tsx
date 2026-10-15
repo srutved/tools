@@ -10,6 +10,7 @@ import { formatMoney } from "@/lib/currency";
 import { formatDate } from "@/lib/date";
 import { Image, Link, Text, View, type DocStyle } from "@/lib/document/primitives";
 import type { Party } from "@/shared/business-profile";
+import { kindLabels } from "../lib/document-kind";
 import { stateName } from "../lib/gst";
 import type { Invoice } from "../schema";
 import { INK, tint } from "@/lib/document/theme";
@@ -27,10 +28,14 @@ export function pageStyle(theme: TemplateTheme): DocStyle {
 
 const isGstInvoice = (invoice: Invoice) => invoice.taxMode === "gst" || invoice.taxMode === "gst-export";
 
-/** Registered GST suppliers must title the document "Tax Invoice". */
+/** Registered GST suppliers must title invoices "Tax Invoice"; quotations are "Quotation". */
 export function documentTitle(invoice: Invoice): string {
-  return isGstInvoice(invoice) ? "Tax Invoice" : "Invoice";
+  const labels = kindLabels(invoice.kind);
+  return isGstInvoice(invoice) ? labels.gstTitle : labels.title;
 }
+
+/** Wording that depends on whether this is an invoice or a quotation. */
+export const labelsFor = (invoice: Invoice) => kindLabels(invoice.kind);
 
 export const money = (invoice: Invoice, amount: number) => formatMoney(amount, invoice.currency);
 
@@ -125,9 +130,9 @@ export function PartyBlock({
 
 export function metaRows(invoice: Invoice): { label: string; value: string }[] {
   const rows = [
-    { label: "Invoice No.", value: invoice.number },
-    { label: "Invoice Date", value: invoice.issueDate ? formatDate(invoice.issueDate) : "" },
-    { label: "Due Date", value: invoice.dueDate ? formatDate(invoice.dueDate) : "" },
+    { label: labelsFor(invoice).numberLabel, value: invoice.number },
+    { label: labelsFor(invoice).dateLabel, value: invoice.issueDate ? formatDate(invoice.issueDate) : "" },
+    { label: labelsFor(invoice).dueLabel, value: invoice.dueDate ? formatDate(invoice.dueDate) : "" },
   ];
   if (invoice.taxMode === "gst") {
     const code = invoice.placeOfSupply || invoice.to.stateCode;
@@ -438,6 +443,7 @@ export function SummarySection({
 /* ---------------------------------------------------------------- Payment */
 
 export function hasPaymentDetails(invoice: Invoice, qrCode: string | null): boolean {
+  if (!labelsFor(invoice).showsPayment) return false;
   const { payment } = invoice;
   return Boolean(qrCode || payment.upiId || payment.paymentLink || payment.accountNumber || payment.bankName);
 }

@@ -35,3 +35,15 @@ export function formatDate(iso: string): string {
     timeZone: "UTC",
   }).format(date);
 }
+
+/** "2026-10-13" → "13 October 2026", for letters. */
+export function formatLongDate(iso: string): string {
+  const date = parseIsoDate(iso);
+  if (!date) return iso;
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}

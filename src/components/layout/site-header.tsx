@@ -17,7 +17,7 @@ export function SiteHeader() {
           <nav aria-label="Tools" className="hidden items-center gap-1 md:flex">
             <Link
               href="/"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-muted hover:text-foreground"
+              className="rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap text-muted hover:text-foreground"
             >
               All tools
             </Link>
@@ -25,7 +25,8 @@ export function SiteHeader() {
               <Link
                 key={tool.slug}
                 href={`/${tool.slug}`}
-                className="rounded-md px-3 py-2 text-sm font-semibold text-muted hover:text-foreground"
+                // Every tool by name only where there's room; "All tools" covers narrower screens.
+                className="hidden rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap text-muted hover:text-foreground xl:block"
               >
                 {tool.name}
               </Link>

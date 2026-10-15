@@ -1,4 +1,4 @@
-import { FileSignature, FileText, ReceiptText, type LucideIcon } from "lucide-react";
+import { Calculator, FileSignature, FileText, Mail, ReceiptText, type LucideIcon } from "lucide-react";
 
 export interface ToolDefinition {
   slug: string;
@@ -25,10 +25,26 @@ export const TOOLS: ToolDefinition[] = [
     subPages: ["templates"],
   },
   {
+    slug: "quotation-generator",
+    name: "Quotation Generator",
+    tagline: "Quotes and estimates in any currency, with GST or VAT. Convert to an invoice in one click.",
+    icon: Calculator,
+    status: "live",
+    subPages: ["templates"],
+  },
+  {
     slug: "resume-builder",
     name: "Resume Builder",
     tagline: "ATS-friendly resumes in 15 templates, with free PDF download and no watermark.",
     icon: FileText,
+    status: "live",
+    subPages: ["templates"],
+  },
+  {
+    slug: "cover-letter-builder",
+    name: "Cover Letter Builder",
+    tagline: "Cover letters that match your resume template, filled in from your saved resume.",
+    icon: Mail,
     status: "live",
     subPages: ["templates"],
   },

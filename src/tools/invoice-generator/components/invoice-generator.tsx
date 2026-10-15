@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FilePlus2, LoaderCircle } from "lucide-react";
+import { ArrowRight, FilePlus2, LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm, useWatch, type Control } from "react-hook-form";
 import { PreviewCard } from "@/components/document/preview-card";
@@ -18,14 +19,16 @@ import { useQrCode } from "@/hooks/use-qr-code";
 import { formatMoney, guessCurrencyFromLocale } from "@/lib/currency";
 import { formatDate, todayIso } from "@/lib/date";
 import { WebPage } from "@/lib/document/web";
+import { upsertDocument } from "@/lib/saved-documents";
 import { createId } from "@/lib/utils";
 import { loadBusinessProfile, saveBusinessProfile } from "@/shared/business-profile";
-import { createInvoice } from "../defaults";
+import { createInvoice, quoteToInvoice } from "../defaults";
 import { renderInvoicePdf } from "../export";
 import { computeInvoice } from "../lib/calculations";
+import { kindLabels, type DocumentKind } from "../lib/document-kind";
 import { nextInvoiceNumber } from "../lib/invoice-number";
 import { invoiceExportSchema, type Invoice } from "../schema";
-import { invoiceStore } from "../store";
+import { invoiceStore, storeFor } from "../store";
 import { getTemplate, INVOICE_TEMPLATES, InvoiceDocument } from "../templates";
 import {
   BusinessSection,
@@ -37,24 +40,35 @@ import {
 } from "./editor-sections";
 import { InvoiceTemplateGallery } from "./template-gallery";
 
-/** Entry point. Renders a placeholder on the server; the editor itself needs the browser's storage. */
+/** The invoice generator. Renders a placeholder on the server; the editor needs browser storage. */
 export function InvoiceGenerator() {
+  return <BillingDocumentGenerator kind="invoice" />;
+}
+
+/** The quotation generator: the same engine, with quotation wording and no payment details. */
+export function QuoteGenerator() {
+  return <BillingDocumentGenerator kind="quote" />;
+}
+
+function BillingDocumentGenerator({ kind }: { kind: DocumentKind }) {
   const hydrated = useHydrated();
   if (!hydrated) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center bg-subtle/60 text-muted">
-        <LoaderCircle className="mr-2 size-5 animate-spin" aria-hidden /> Loading the invoice generator…
+        <LoaderCircle className="mr-2 size-5 animate-spin" aria-hidden /> Loading the {kindLabels(kind).noun}{" "}
+        generator…
       </div>
     );
   }
-  return <InvoiceGeneratorApp />;
+  return <BillingDocumentApp kind={kind} />;
 }
 
-function loadInitialState() {
+function loadInitialState(kind: DocumentKind) {
   const templateId = templateFromQuery(INVOICE_TEMPLATES);
-  return loadDocumentLibrary(invoiceStore, {
+  return loadDocumentLibrary(storeFor(kind), {
     create: () =>
       createInvoice({
+        kind,
         profile: loadBusinessProfile(),
         currency: guessCurrencyFromLocale(navigator.language),
         templateId,
@@ -63,11 +77,30 @@ function loadInitialState() {
   });
 }
 
-function InvoiceGeneratorApp() {
-  const [initial] = useState(loadInitialState);
+/** Creates an invoice from a quotation in the user's saved invoices and opens it. */
+function useConvertToInvoice() {
+  const router = useRouter();
+  return (quote: Invoice) => {
+    const invoices = invoiceStore.load();
+    const latest = invoices.documents[0]?.data.number;
+    const invoice = quoteToInvoice(quote, {
+      number: latest ? nextInvoiceNumber(latest) : "INV-0001",
+      profile: loadBusinessProfile(),
+    });
+    invoiceStore.save(upsertDocument(invoices, createId(), invoice));
+    router.push("/invoice-generator");
+  };
+}
+
+function BillingDocumentApp({ kind }: { kind: DocumentKind }) {
+  const labels = kindLabels(kind);
+  const plural = `${labels.noun}s`;
+  const store = storeFor(kind);
+  const [initial] = useState(() => loadInitialState(kind));
   const [tab, setTab] = useState<WorkspaceTab>("edit");
-  const [dialog, setDialog] = useState<"templates" | "invoices" | null>(null);
+  const [dialog, setDialog] = useState<"templates" | "library" | null>(null);
   const [alert, setAlert] = useState<string | null>(null);
+  const convertToInvoice = useConvertToInvoice();
 
   const form = useForm<Invoice>({
     resolver: zodResolver(invoiceExportSchema),
@@ -77,12 +110,12 @@ function InvoiceGeneratorApp() {
   });
 
   const library = useDocumentLibrary({
-    store: invoiceStore,
+    store,
     form,
     initial,
-    noun: "invoices",
+    noun: plural,
     setAlert,
-    // Remember the user's business details for their next invoice.
+    // Remember the user's business details for their next invoice or quotation.
     onSave: (invoice) =>
       saveBusinessProfile({ business: invoice.from, payment: invoice.payment, logo: invoice.logo }),
     onOpen: () => {
@@ -105,6 +138,7 @@ function InvoiceGeneratorApp() {
     const current = form.getValues();
     library.create(
       createInvoice({
+        kind,
         profile: loadBusinessProfile(),
         currency: current.currency,
         templateId: current.templateId,
@@ -124,13 +158,19 @@ function InvoiceGeneratorApp() {
   const handleDelete = (id: string) => {
     const number = library.collection.documents.find((doc) => doc.id === id)?.data.number;
     library.remove(id, {
-      label: `invoice ${number ?? ""}`.trim(),
+      label: `${labels.noun} ${number ?? ""}`.trim(),
       createFallback: () =>
-        createInvoice({ profile: loadBusinessProfile(), currency: form.getValues("currency") }),
+        createInvoice({ kind, profile: loadBusinessProfile(), currency: form.getValues("currency") }),
     });
   };
 
+  const handleConvert = () => {
+    library.flushSave();
+    convertToInvoice(form.getValues());
+  };
+
   const templateId = useWatch({ control: form.control, name: "templateId" });
+  const capitalised = `${labels.noun[0].toUpperCase()}${labels.noun.slice(1)}`;
 
   return (
     <FormProvider {...form}>
@@ -141,10 +181,10 @@ function InvoiceGeneratorApp() {
           <DocumentToolbar
             templateName={getTemplate(templateId).name}
             onTemplates={() => setDialog("templates")}
-            libraryLabel="My invoices"
+            libraryLabel={`My ${plural}`}
             libraryCount={library.collection.documents.length}
-            onLibrary={() => setDialog("invoices")}
-            newLabel="New invoice"
+            onLibrary={() => setDialog("library")}
+            newLabel={`New ${labels.noun}`}
             onNew={handleNew}
             busy={busy}
             onExport={exportPdf}
@@ -157,8 +197,19 @@ function InvoiceGeneratorApp() {
             <ClientSection />
             <DetailsSection />
             <ItemsSection />
-            <PaymentSection />
+            {labels.showsPayment && <PaymentSection />}
             <NotesSection />
+            {kind === "quote" && (
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/30 bg-brand-soft p-4">
+                <p className="text-sm">
+                  <span className="font-bold">Quotation accepted?</span> Turn it into an invoice with the same
+                  client and items.
+                </p>
+                <Button variant="outline" size="sm" onClick={handleConvert}>
+                  Convert to invoice <ArrowRight />
+                </Button>
+              </div>
+            )}
           </form>
         }
         preview={<InvoicePreview control={form.control} />}
@@ -171,6 +222,7 @@ function InvoiceGeneratorApp() {
           className="max-w-5xl"
         >
           <InvoiceTemplateGallery
+            kind={kind}
             invoice={form.getValues()}
             selectedId={templateId}
             onSelect={(template) => {
@@ -181,18 +233,18 @@ function InvoiceGeneratorApp() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={dialog === "invoices"} onOpenChange={(open) => setDialog(open ? "invoices" : null)}>
+      <Dialog open={dialog === "library"} onOpenChange={(open) => setDialog(open ? "library" : null)}>
         <DialogContent
-          title="My invoices"
+          title={`My ${plural}`}
           description="Saved automatically on this device. Clearing your browser data removes them."
           footer={
             <Button onClick={handleNew}>
-              <FilePlus2 /> New invoice
+              <FilePlus2 /> New {labels.noun}
             </Button>
           }
         >
           <DocumentList
-            noun="invoice"
+            noun={labels.noun}
             items={library.collection.documents.map(({ id, data: invoice, updatedAt }) => ({
               id,
               updatedAt,
@@ -206,6 +258,12 @@ function InvoiceGeneratorApp() {
             onDuplicate={handleDuplicate}
             onDelete={handleDelete}
           />
+          {kind === "quote" && library.collection.documents.length > 0 && (
+            <p className="mt-4 text-xs text-muted">
+              {capitalised}s are kept separately from invoices. Open one and use &quot;Convert to
+              invoice&quot; when it&apos;s accepted.
+            </p>
+          )}
         </DialogContent>
       </Dialog>
     </FormProvider>

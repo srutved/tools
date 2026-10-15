@@ -3,6 +3,7 @@
 import { Text, View } from "@/lib/document/primitives";
 import {
   documentTitle,
+  labelsFor,
   ItemsTable,
   Logo,
   MetaTable,
@@ -80,7 +81,7 @@ export function ModernLayout({ invoice, computed, qrCode, theme }: LayoutProps) 
           <PartyBlock invoice={invoice} party={invoice.from} title="From" />
         </View>
         <View style={card}>
-          <PartyBlock invoice={invoice} party={invoice.to} title="Bill to" />
+          <PartyBlock invoice={invoice} party={invoice.to} title={labelsFor(invoice).clientHeading} />
         </View>
       </View>
 
