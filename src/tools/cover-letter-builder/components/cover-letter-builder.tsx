@@ -14,13 +14,20 @@ import { ToolGate } from "@/components/tool/tool-gate";
 import { ToolWorkspace, type WorkspaceTab } from "@/components/tool/tool-workspace";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { loadDocumentLibrary, templateFromQuery, useDocumentLibrary } from "@/hooks/use-document-library";
+import {
+  exampleFromQuery,
+  loadDocumentLibrary,
+  templateFromQuery,
+  useDocumentLibrary,
+} from "@/hooks/use-document-library";
 import { usePdfExport } from "@/hooks/use-pdf-export";
+import { todayIso } from "@/lib/date";
 import { WebPage } from "@/lib/document/web";
 import type { Resume } from "@/tools/resume-builder/schema";
 import { resumeStore } from "@/tools/resume-builder/store";
 import { getTemplate, RESUME_TEMPLATES } from "@/tools/resume-builder/templates";
 import { copyBasics, createCoverLetter } from "../defaults";
+import { COVER_LETTER_EXAMPLES } from "../examples";
 import { renderCoverLetterPdf } from "../export";
 import { prepareCoverLetter } from "../lib/prepare";
 import { SAMPLE_COVER_LETTER } from "../sample";
@@ -46,9 +53,16 @@ function newLetter(templateId?: string): CoverLetter {
 
 function loadInitialState(query: URLSearchParams) {
   const templateId = templateFromQuery(query, RESUME_TEMPLATES);
+  const example = exampleFromQuery(query, COVER_LETTER_EXAMPLES);
   return loadDocumentLibrary(coverLetterStore, {
     create: () => newLetter(templateId),
     patch: (letter) => (templateId ? { ...letter, templateId } : letter),
+    // An example chosen on a landing page opens as a new letter next to the saved ones.
+    startWith: example && {
+      ...example.document,
+      basics: copyBasics(example.document.basics),
+      date: todayIso(),
+    },
   });
 }
 

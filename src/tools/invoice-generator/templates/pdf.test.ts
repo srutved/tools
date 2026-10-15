@@ -1,6 +1,7 @@
 /**
  * Renders every invoice template to a real PDF as both an invoice (with a UPI QR code) and a
- * quotation, so a template that crashes the PDF engine fails CI. Set PDF_OUT=<folder> to also
+ * quotation, plus every landing-page format example (each must fit on one page), so a template
+ * that crashes the PDF engine fails CI. Set PDF_OUT=<folder> to also
  * write the files out for a visual check.
  */
 
@@ -10,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { generateQrDataUrl } from "@/lib/qr";
+import { INVOICE_FORMATS, QUOTATION_FORMATS } from "../examples";
 import { computeInvoice } from "../lib/calculations";
 import { sampleFor } from "../sample";
 import type { Invoice } from "../schema";
@@ -62,6 +64,15 @@ describe("invoice templates render to PDF", () => {
       expect(text.match(/\/Type\s*\/Page\b/g)?.length ?? 0).toBeGreaterThan(1);
     }
   });
+
+  for (const format of [...INVOICE_FORMATS, ...QUOTATION_FORMATS]) {
+    it(`format: ${format.document.kind} ${format.slug}`, { timeout: 30_000 }, async () => {
+      const { pdf, text } = await render(format.document);
+      if (outDir) writeFileSync(join(outDir, `format-${format.document.kind}-${format.slug}.pdf`), pdf);
+      // Landing-page examples are short enough to fit on one A4 page.
+      expect(text.match(/\/Type\s*\/Page\b/g)?.length ?? 0).toBe(1);
+    });
+  }
 
   it("leaves the payment QR code off quotations", () => {
     expect(computeInvoice(sampleFor("invoice")).upiUri).not.toBeNull();

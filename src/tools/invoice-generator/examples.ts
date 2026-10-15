@@ -16,7 +16,7 @@ export const INVOICE_FORMATS_COLLECTION: UseCaseCollection = {
   noun: "invoice",
   metaTitle: "Invoice Formats by Profession - Free Examples to Edit & Download",
   metaDescription:
-    "Free invoice formats for freelancers, consultants, photographers, web designers, exporters and UK VAT. Open an example, edit it and download a PDF in any currency.",
+    "Free invoice formats for freelancers, consultants, photographers, video editors, interior designers, tutors, exporters and UK VAT. Edit an example and download a PDF.",
   intro:
     "Ready-made invoice examples for different kinds of work, with the right tax and payment details for each. Open one in the free invoice generator, add your details and download a PDF.",
 };
@@ -28,7 +28,7 @@ export const QUOTATION_FORMATS_COLLECTION: UseCaseCollection = {
   noun: "quotation",
   metaTitle: "Quotation Formats by Business - Free Examples to Edit & Download",
   metaDescription:
-    "Free quotation formats for website design, mobile app development, interior design and catering. Open an example, edit it and download a PDF quote.",
+    "Free quotation formats for website design, app development, interior design, catering, digital marketing, events, printing and construction. Edit an example and download a PDF.",
   intro:
     "Ready-made quotation examples for common projects, broken into clear line items. Open one in the free quotation generator, adjust the prices and download a PDF.",
 };
@@ -544,6 +544,315 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
       terms: "Payment due within 30 days of the invoice date.",
     }),
   },
+  {
+    slug: "consulting-hourly",
+    name: "Hourly Consulting (GST)",
+    summary: "Billing a client by the hour, with CGST and SGST.",
+    metaTitle: "Hourly Consulting Invoice Format With GST - Free Example",
+    metaDescription:
+      "An hourly consulting invoice format with GST: hours by activity, hourly rate, SAC code, CGST and SGST and the billing period. Edit it free and download a PDF.",
+    heading: "Hourly Consulting Invoice Format (With GST)",
+    intro:
+      "Consultants who bill by the hour need an invoice that shows where the time went. This GST tax invoice lists hours by activity for the month, at one hourly rate, and charges CGST and SGST because the client is in the same state.",
+    highlights: {
+      title: "What an hourly consulting invoice shows",
+      items: [
+        "The billing period the hours relate to",
+        "Hours for each activity, at your hourly rate",
+        "SAC code for the service (998311 for management consulting)",
+        "Your GSTIN and the client's, with the place of supply",
+        "CGST and SGST at 9% each for a client in your state",
+        "A reference to the timesheet or engagement letter",
+      ],
+    },
+    guide: [
+      {
+        heading: "Show the hours, not just the total",
+        paragraphs: [
+          "A single line reading '46 hours - ₹1,84,000' prompts questions. Break the hours into the main activities - site visits, analysis, workshops, calls - so the client can match them against what they saw happen, and send your timesheet with the invoice.",
+          "Use decimals for part hours (7.5 rather than 7 hours 30 minutes), and invoice on the same day each month so the client's accounts team knows when to expect it.",
+        ],
+      },
+      {
+        heading: "GST on consulting for a client in your state",
+        paragraphs: [
+          "For services to a GST-registered business, the place of supply is generally the client's location. When that's in your own state, you charge CGST and SGST at 9% each; when it's in another state, you charge IGST at 18% instead. The generator works this out from the two state codes.",
+        ],
+        bullets: [
+          "998311 - Management consulting",
+          "998312 - Business consulting, including public relations",
+          "998313 - IT consulting",
+          "998221 - Financial consulting",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is TDS deducted on the GST part of my invoice?",
+        answer:
+          "Not when GST is shown separately, as it is here. The client deducts TDS under section 194J on the fee excluding GST, and you can claim that TDS against your income tax.",
+      },
+      {
+        question: "Should I bill hourly or charge a fixed fee?",
+        answer:
+          "Hourly suits open-ended advisory work where the effort is hard to predict. For a well-defined deliverable, a fixed fee is often easier for the client to approve. Many consultants agree an hourly rate with a cap on hours each month.",
+      },
+    ],
+    document: document({
+      templateId: "classic-slate",
+      number: "AM/2026-27/019",
+      currency: "INR",
+      taxMode: "gst",
+      placeOfSupply: "27",
+      from: party(
+        "Aditya Mehta Advisory",
+        "504, Shree Krishna Tower, Andheri East\nMumbai, Maharashtra 400069",
+        {
+          taxId: "27ABMPM4567K1Z3",
+          email: "aditya@adityamehta.in",
+          phone: "+91 98201 34455",
+          stateCode: "27",
+        },
+      ),
+      to: party("Konkan Fresh Foods Pvt Ltd", "Plot 18, MIDC Wagle Estate\nThane, Maharashtra 400604", {
+        taxId: "27AADCK7788F1Z6",
+        stateCode: "27",
+      }),
+      payment: { accountName: "Aditya Mehta", ...INDIAN_BANK },
+      items: [
+        item("Supply chain review and warehouse visits, Bhiwandi (hours)", 22.5, 4000, 18, "998311"),
+        item("Inventory planning model and documentation (hours)", 18, 4000, 18, "998311"),
+        item("Weekly review calls with the leadership team (hours)", 5.5, 4000, 18, "998311"),
+      ],
+      notes: "Hours for 1-30 September 2026. The detailed timesheet is attached.",
+      terms: "Payment due within 15 days, as per the engagement letter dated 1 August 2026.",
+    }),
+  },
+  {
+    slug: "video-editor",
+    name: "Video Editor",
+    summary: "Freelance video editing, reels and thumbnails.",
+    metaTitle: "Video Editing Invoice Format - Free Template for Video Editors",
+    metaDescription:
+      "A video editing invoice format for freelancers: long-form edits, reels, colour grading, thumbnails and extra revisions, with UPI payment. Edit it free and download a PDF.",
+    heading: "Video Editing Invoice Format",
+    intro:
+      "Freelance video editors juggle long-form edits, reels, thumbnails and extra revision rounds. This invoice puts each on its own line, names the video it relates to and adds a UPI QR code so creators and brands can pay in seconds.",
+    highlights: {
+      title: "What to list on a video editing invoice",
+      items: [
+        "The video title or project name in each description",
+        "Final runtime and format (long-form, reel, short)",
+        "Reels and shorts cut from the same footage as a separate line",
+        "Colour grading, sound clean-up and thumbnails",
+        "Extra revision rounds beyond those included",
+        "UPI ID and bank details for quick payment",
+      ],
+    },
+    guide: [
+      {
+        heading: "Per video, per minute or per hour?",
+        paragraphs: [
+          "Most editors quote per finished video for YouTube and social content, because clients find a fixed price easy to approve. Per-minute pricing suits long-form work where runtimes vary, and hourly billing suits open-ended jobs such as sorting through hours of event footage.",
+          "Whichever you choose, put the basis in the description - '14-minute final cut' or 'reels, 30-45 seconds each' - so the client sees what they paid for.",
+        ],
+      },
+      {
+        heading: "Spell out revisions, music and project files",
+        paragraphs: ["Small editing jobs cause disputes over the same few things. Settle them in the terms:"],
+        bullets: [
+          "How many revision rounds are included, and the price of each extra one",
+          "Whether licensed music or stock footage is included or billed at cost",
+          "Whether you hand over the project file and raw footage, or only the final export",
+          "How long you keep the files after delivery",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Do freelance video editors need to charge GST?",
+        answer:
+          "Only once you're registered. Registration is required when your turnover crosses ₹20 lakh (₹10 lakh in some special-category states); after that, editing services are generally taxed at 18%. Until then, invoice without GST, as in this example.",
+      },
+      {
+        question: "Should I charge for extra revisions?",
+        answer:
+          "Yes, if they go beyond what you agreed. Include two rounds in your price, and bill further rounds as a separate line so the client can see why the total changed.",
+      },
+    ],
+    document: document({
+      templateId: "modern-crimson",
+      number: "AN-2026-047",
+      currency: "INR",
+      taxMode: "none",
+      from: party("Arjun Nair", "TC 14/220, Kowdiar\nThiruvananthapuram, Kerala 695003", {
+        email: "arjun@arjunedits.in",
+        phone: "+91 94470 21987",
+      }),
+      to: party("Monsoon Trails Media", "2nd Floor, Panampilly Nagar\nKochi, Kerala 682036", {
+        email: "team@monsoontrails.in",
+      }),
+      payment: { upiId: "arjunedits@okaxis", accountName: "Arjun Nair", ...INDIAN_BANK },
+      items: [
+        item("YouTube video edit - 'Hidden Beaches of Gokarna' (14 min)", 1, 9000),
+        item("Instagram reels cut from the same footage (30-45 sec)", 6, 1200),
+        item("Colour grading and sound clean-up", 1, 3500),
+        item("Thumbnail design", 2, 800),
+        item("Extra revision round (third round)", 1, 1500),
+      ],
+      notes: "Final files are in the shared Google Drive folder. Thanks for another great trip to edit!",
+      terms:
+        "Payment due within 15 days by UPI or bank transfer. Two revision rounds included per video. Project files are kept for 60 days after delivery.",
+    }),
+  },
+  {
+    slug: "interior-designer",
+    name: "Interior Designer (IGST)",
+    summary: "Design fees for a project site in another state.",
+    metaTitle: "Interior Design Invoice Format With GST (IGST) - Free Example",
+    metaDescription:
+      "An interior design invoice format with GST: design fee per sq ft, site supervision, SAC 998391 and IGST for a project site in another state. Edit it free and download a PDF.",
+    heading: "Interior Design Invoice Format (With IGST)",
+    intro:
+      "An interior design firm billing a stage of work for an office in another state. Because interior design is tied to the property, the place of supply is where the site is - so this tax invoice charges IGST at 18% rather than CGST and SGST.",
+    highlights: {
+      title: "What this interior design invoice shows",
+      items: [
+        "The project and site address, and the stage being billed",
+        "Design fee per square foot, or as a lump sum",
+        "Site supervision visits as a separate line",
+        "SAC code 998391 for interior design services",
+        "Place of supply: the state where the property is",
+        "IGST at 18% when the site is in another state",
+      ],
+    },
+    guide: [
+      {
+        heading: "Place of supply follows the property",
+        paragraphs: [
+          "Under the IGST Act, services directly related to immovable property - including those of architects and interior decorators - are supplied where the property is located. That rule applies whether or not the client is GST-registered.",
+          "So a Bengaluru firm designing a home in Bengaluru charges CGST and SGST, but the same firm designing an office in Chennai charges IGST, with Tamil Nadu as the place of supply. Set the place of supply to the site's state and the generator picks the right tax.",
+        ],
+      },
+      {
+        heading: "Bill in stages",
+        paragraphs: [
+          "Design projects run for months, so invoice at agreed stages rather than at the end - for example concept, detailed drawings and execution supervision. Name the stage in the description and refer to your agreement in the notes.",
+          "Keep the design fee separate from materials, furniture or execution work. Those may be supplies of goods or works contracts, with their own codes and rates, so bill them on their own lines or on a separate invoice.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the GST rate on interior design services?",
+        answer:
+          "Interior design services are taxed at 18% GST under SAC 998391. Charge CGST and SGST at 9% each when the site is in your state, or IGST at 18% when it's in another state.",
+      },
+      {
+        question: "Can I add furniture to the same invoice?",
+        answer:
+          "You can, but furniture is a supply of goods with its own HSN code and GST rate, so list it on separate lines with the right code and rate. If you supply and install everything as one contract, ask your accountant whether it counts as a works contract.",
+      },
+    ],
+    document: document({
+      templateId: "sidebar-emerald",
+      number: "NID/2026-27/022",
+      currency: "INR",
+      taxMode: "gst",
+      placeOfSupply: "33",
+      from: party("Neev Interiors LLP", "88, 1st Main, Indiranagar\nBengaluru, Karnataka 560038", {
+        taxId: "29AAOFN3344D1Z2",
+        email: "studio@neevinteriors.in",
+        phone: "+91 80 4123 7788",
+        stateCode: "29",
+      }),
+      to: party(
+        "Bayline Workspaces Pvt Ltd",
+        "Site: 3rd Floor, Prestige Point, Guindy\nChennai, Tamil Nadu 600032",
+        { taxId: "33AAGCB4521H1Z9", stateCode: "33" },
+      ),
+      payment: { accountName: "Neev Interiors LLP", ...INDIAN_BANK },
+      items: [
+        item("Stage 2: detailed drawings and 3D views - office fit-out (sq ft)", 4200, 45, 18, "998391"),
+        item("Furniture, lighting and finishes schedule", 1, 25000, 18, "998391"),
+        item("Site supervision visits to Chennai", 4, 7500, 18, "998391"),
+      ],
+      notes: "Stage 2 of 3, as per the design agreement dated 12 August 2026.",
+      terms: "Payment due within 15 days. Travel and stay for site visits are included in the visit fee.",
+    }),
+  },
+  {
+    slug: "tutor",
+    name: "Tutor / Coaching Classes",
+    summary: "Monthly tuition fees for a student.",
+    metaTitle: "Tuition Fee Invoice Format for Tutors & Coaching Classes - Free",
+    metaDescription:
+      "A tuition fee invoice format for private tutors and coaching classes: monthly fees, extra sessions and study material, with UPI payment. Edit it free and download a PDF.",
+    heading: "Tuition Fee Invoice Format for Tutors and Coaching Classes",
+    intro:
+      "Parents appreciate a proper fee bill, and it makes your own records far easier. This invoice shows the student, the month, the subjects and any extras such as test series or doubt-clearing sessions, with a UPI QR code for quick payment.",
+    highlights: {
+      title: "What a tuition fee invoice includes",
+      items: [
+        "The student's name, class and batch",
+        "The month or term the fee covers",
+        "Subjects taught and the monthly fee",
+        "Extra sessions, study material and test series as separate lines",
+        "Your UPI ID with a scan-to-pay QR code",
+        "Fee due date and your absence or refund policy",
+      ],
+    },
+    guide: [
+      {
+        heading: "Do tutors need to charge GST?",
+        paragraphs: [
+          "The GST exemption for education covers schools and institutions that teach towards a qualification recognised by law. Private tuition and coaching classes aren't covered by it, so they're taxable like other services.",
+          "In practice, most individual tutors are below the registration threshold - ₹20 lakh of turnover a year, or ₹10 lakh in some special-category states - and invoice without GST, as in this example. Once registered, coaching services are generally taxed at 18%.",
+        ],
+      },
+      {
+        heading: "Fee bills parents understand",
+        paragraphs: [
+          "Issue one invoice per student per month, on the same date each month. Name the month in the description, list one-off charges such as material or test series separately, and put your rules on missed classes and refunds in the terms so there are no awkward conversations later.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can parents claim coaching fees under section 80C?",
+        answer:
+          "Generally no. The section 80C deduction covers tuition fees paid to a school, college or university in India for the full-time education of up to two children, and only under the old tax regime. Private coaching and tuition fees don't qualify.",
+      },
+      {
+        question: "Should I give a receipt after the fee is paid?",
+        answer:
+          "Yes, many parents ask for one. Issue a simple receipt that refers to the invoice number and the date and mode of payment.",
+      },
+    ],
+    document: document({
+      templateId: "minimal-sky",
+      number: "PM-OCT26-014",
+      currency: "INR",
+      taxMode: "none",
+      from: party("Pooja Mehta Tutorials", "12, Shanti Kunj Society, Satellite\nAhmedabad, Gujarat 380015", {
+        email: "pooja@poojamehtatutorials.in",
+        phone: "+91 98250 77341",
+      }),
+      to: party(
+        "Mr. Rohan Shah (for Aarav Shah, Class 10)",
+        "B-603, Shaligram Heights, Prahlad Nagar\nAhmedabad, Gujarat 380015",
+      ),
+      payment: { upiId: "poojamehta.tutor@okicici", accountName: "Pooja Mehta" },
+      items: [
+        item("Class 10 Maths and Science - October 2026 (monthly fee)", 1, 4500),
+        item("Extra doubt-clearing sessions before mid-term exams (hours)", 4, 400),
+        item("Study material and practice test series", 1, 1200),
+      ],
+      notes: "Batch: Monday, Wednesday and Friday, 5-7 pm. Thank you!",
+      terms:
+        "Fees are payable in advance by the 15th of each month. Fees are not refunded for missed classes; missed sessions can be made up in another batch.",
+    }),
+  },
 ];
 
 export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
@@ -764,7 +1073,7 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
       ],
       notes: "Includes 3 design revisions and weekly site visits.",
       terms:
-        "Valid for 15 days. 30% advance, 50% at material delivery, 20% at handover. Electrical and civil work excluded.",
+        "Valid for 30 days. 30% advance, 50% at material delivery, 20% at handover. Electrical and civil work excluded.",
     }),
   },
   {
@@ -838,6 +1147,334 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
       notes: "Menu tasting available for up to 4 people before confirmation.",
       terms:
         "Valid for 30 days. Minimum guarantee 225 plates. 40% advance on booking, balance on the event day.",
+    }),
+  },
+  {
+    slug: "digital-marketing",
+    name: "Digital Marketing Retainer",
+    summary: "Monthly social media, ads and SEO for a local business.",
+    metaTitle: "Digital Marketing Quotation Format - Free Monthly Retainer Quote",
+    metaDescription:
+      "A digital marketing quotation format for a monthly retainer: social media, ads management, SEO and a one-time setup, with GST. Edit it free and download a PDF quote.",
+    heading: "Digital Marketing Quotation Format (Monthly Retainer)",
+    intro:
+      "Digital marketing is usually sold as a monthly retainer. This quotation lists what the client gets each month - posts, reels, ad campaigns, blog articles and reporting - plus a one-time setup fee, so the first month and the running cost are both clear.",
+    highlights: {
+      title: "What a digital marketing quote should cover",
+      items: [
+        "Monthly deliverables: posts, reels, blogs and campaigns",
+        "Platforms covered (Instagram, Facebook, Google...)",
+        "One-time setup fees, separate from the monthly fee",
+        "Ad budget paid by the client, not included in your fee",
+        "Reporting and review meetings",
+        "Minimum term and notice period",
+      ],
+    },
+    guide: [
+      {
+        heading: "Quote deliverables, not hours",
+        paragraphs: [
+          "'16 posts and 8 reels a month' is easier to approve - and to check - than '40 hours of social media'. List the monthly output for each channel, and price one-time work such as an account audit or tracking setup on its own line so it doesn't look like part of the monthly fee.",
+        ],
+      },
+      {
+        heading: "Keep ad spend out of your fee",
+        paragraphs: [
+          "Recommend an ad budget in the notes, but have the client pay Google and Meta directly from their own ad accounts. You avoid fronting money, the client keeps ownership of the accounts and data, and your fee stays clearly about management.",
+          "Results take time, so many agencies ask for a minimum commitment of three months, followed by a 30-day notice period. Put both in the terms.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does digital marketing cost for a small business?",
+        answer:
+          "It depends on the channels and volume of content. Retainers for a local business covering one or two channels commonly start around ₹15,000-50,000 a month, before ad spend; full-service retainers with ads, SEO and content cost more.",
+      },
+      {
+        question: "What GST applies to digital marketing services?",
+        answer:
+          "Marketing and advertising services are generally taxed at 18% GST. Charge CGST and SGST for a client in your state, or IGST for a client in another state.",
+      },
+    ],
+    document: document({
+      kind: "quote",
+      templateId: "bold-orange",
+      number: "PD-Q-2026-058",
+      currency: "INR",
+      taxMode: "gst",
+      placeOfSupply: "08",
+      from: party("Pinwheel Digital", "3rd Floor, Ashok Marg, C-Scheme\nJaipur, Rajasthan 302001", {
+        taxId: "08AAPFP6112J1Z4",
+        email: "hello@pinwheeldigital.in",
+        phone: "+91 98290 61123",
+        stateCode: "08",
+      }),
+      to: party("Marigold Jewellers", "Johari Bazaar\nJaipur, Rajasthan 302003", {
+        taxId: "08ACKPG2398L1Z1",
+        stateCode: "08",
+      }),
+      items: [
+        item("Social media - Instagram and Facebook, 16 posts and 8 reels (monthly)", 1, 30000, 18, "998361"),
+        item("Google and Meta ads campaign management (monthly)", 1, 15000, 18, "998361"),
+        item("SEO - on-page optimisation and 4 blog articles (monthly)", 1, 18000, 18, "998361"),
+        item("One-time setup: account audit, tracking and catalogue", 1, 12000, 18, "998361"),
+      ],
+      notes:
+        "Recommended ad budget: ₹40,000 a month, paid by Marigold Jewellers directly to Google and Meta. From the second month, the monthly fee is ₹63,000 plus GST.",
+      terms:
+        "Valid for 30 days. Monthly fee payable in advance. Minimum term of 3 months, then 30 days' notice. Includes a monthly report and review call.",
+    }),
+  },
+  {
+    slug: "event-management",
+    name: "Event Management",
+    summary: "A corporate offsite with production, décor and entertainment.",
+    metaTitle: "Event Management Quotation Format - Free Example (PDF)",
+    metaDescription:
+      "An event management quotation format for a corporate event: planning, stage and sound, décor, entertainment, photography and transfers, with GST. Edit it free and download a PDF.",
+    heading: "Event Management Quotation Format",
+    intro:
+      "A corporate offsite involves a dozen suppliers, but the client wants one clear number. This quotation groups the event into planning, production, décor, entertainment, photography and transfers, so they can see the total and adjust any part of it.",
+    highlights: {
+      title: "What an event quotation should include",
+      items: [
+        "Event name, dates, venue and guest count",
+        "Your planning and coordination fee",
+        "Production: stage, sound, lighting and LED walls",
+        "Décor, entertainment and photography",
+        "Logistics such as guest transfers",
+        "Advance, payment schedule and cancellation terms",
+      ],
+    },
+    guide: [
+      {
+        heading: "Show what changes with the guest count",
+        paragraphs: [
+          "Some costs are fixed - the stage, the band, your coordination fee - and some depend on numbers, like transfers, welcome kits and meals. Price per-guest items with a quantity so the client can see the effect of 20 more or fewer guests, and state the guest count the quote assumes.",
+        ],
+      },
+      {
+        heading: "Agree payments and cancellation up front",
+        paragraphs: [
+          "Event managers commit money to vendors weeks in advance, so the payment schedule matters as much as the total. A common pattern:",
+        ],
+        bullets: [
+          "50% advance to confirm dates and book vendors",
+          "40% about a week before the event",
+          "The balance on completion, with any agreed extras",
+          "Cancellation charges that rise as the event date approaches",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What GST applies to event management?",
+        answer:
+          "Event management services are generally taxed at 18% GST (SAC 998596). For a GST-registered business client, the place of supply is usually the client's location, so this Mumbai company charges IGST to a client registered in Karnataka even though the event is in Goa.",
+      },
+      {
+        question: "Should hotel rooms go on the event quotation?",
+        answer:
+          "Often it's simpler for the client to pay the hotel directly. Accommodation has its own GST rules based on where the hotel is, so if you do include it, ask your accountant how to bill it.",
+      },
+    ],
+    document: document({
+      kind: "quote",
+      templateId: "sidebar-plum",
+      number: "SSE/Q/2026/112",
+      currency: "INR",
+      taxMode: "gst",
+      placeOfSupply: "29",
+      from: party(
+        "Saffron Sky Events LLP",
+        "Unit 12, Laxmi Industrial Estate, Andheri West\nMumbai, Maharashtra 400053",
+        {
+          taxId: "27ABQFS6655L1Z4",
+          email: "events@saffronsky.in",
+          phone: "+91 98670 22418",
+          stateCode: "27",
+        },
+      ),
+      to: party("Kestrel Analytics Pvt Ltd", "Outer Ring Road, Bellandur\nBengaluru, Karnataka 560103", {
+        taxId: "29AAHCK9012N1Z5",
+        stateCode: "29",
+      }),
+      items: [
+        item("Event planning, venue liaison and on-ground coordination", 1, 85000, 18, "998596"),
+        item("Stage, LED wall, sound and lighting (per evening)", 2, 65000, 18, "998596"),
+        item("Theme décor - welcome area and gala dinner", 1, 70000, 18, "998596"),
+        item("Emcee and live band for the gala night", 1, 90000, 18, "998596"),
+        item("Photography and highlights video", 1, 45000, 18, "998596"),
+        item("Airport transfers by coach (per trip)", 6, 9000, 18, "998596"),
+      ],
+      notes:
+        "Annual sales offsite, Goa, 12-14 December 2026, for 120 guests. Hotel rooms are booked by Kestrel directly.",
+      terms:
+        "Valid for 30 days. 50% advance to confirm, 40% seven days before the event, balance on completion. Cancellation within 30 days of the event: advance not refundable.",
+    }),
+  },
+  {
+    slug: "printing",
+    name: "Printing",
+    summary: "Visiting cards, brochures, flex banners and standees.",
+    metaTitle: "Printing Quotation Format - Free Print Shop Quote Example",
+    metaDescription:
+      "A printing quotation format for print shops: visiting cards, brochures, flex banners and standees with size, paper and finish. Edit it free and download a PDF quote.",
+    heading: "Printing Quotation Format",
+    intro:
+      "Print jobs are priced on the details: size, paper, colours, finish and quantity. This quotation from a local print shop spells them out for visiting cards, brochures, flex banners and a standee, so the customer knows exactly what they'll get.",
+    highlights: {
+      title: "What a printing quote should specify",
+      items: [
+        "Size and paper weight (GSM) for each item",
+        "Colours, single or double sided, and finish",
+        "Quantity and the price per piece, box or sq ft",
+        "Design or artwork charges, if you prepare the files",
+        "Proof approval and delivery time",
+        "Advance and quote validity",
+      ],
+    },
+    guide: [
+      {
+        heading: "Describe the job precisely",
+        paragraphs: [
+          "'1,000 brochures' can mean anything from thin flyers to glossy booklets. Write the size, paper GSM, print colours, sides and finish - for example 'A4 tri-fold, 170 GSM art paper, 4-colour both sides' - so your quote can be compared fairly and the customer can't later expect something better.",
+          "Price flex banners and vinyl by the square foot and state the material, and price cards by the box of 100.",
+        ],
+      },
+      {
+        heading: "Proofs, files and delivery",
+        paragraphs: [
+          "Ask the customer to approve a proof before printing, and say in the terms that errors in an approved proof are their responsibility. Mention whether design is included or whether they supply print-ready files, and give a delivery time that starts from proof approval, not from the order.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What GST applies to printing?",
+        answer:
+          "It depends on the job: some printing is treated as a supply of goods and some as a printing service, and rates differ between products such as brochures and flex banners. Check the HSN or SAC code and rate for each item with your accountant. This example is from a shop that isn't GST-registered.",
+      },
+      {
+        question: "Why does the price per piece fall with quantity?",
+        answer:
+          "Setting up a job - preparing files, plates or the press - costs the same for 100 pieces as for 5,000. Spread over more copies, that cost per piece drops, which is why offset printing suits large runs and digital printing suits small ones.",
+      },
+    ],
+    document: document({
+      kind: "quote",
+      templateId: "minimal-mono",
+      number: "IPH-Q-0386",
+      currency: "INR",
+      taxMode: "none",
+      from: party("Inkwell Print House", "14, Aminabad Market\nLucknow, Uttar Pradesh 226018", {
+        email: "orders@inkwellprint.in",
+        phone: "+91 94150 33872",
+      }),
+      to: party("Hearth & Home Bakery", "C-22, Gomti Nagar\nLucknow, Uttar Pradesh 226010", {
+        email: "hello@hearthandhome.in",
+      }),
+      items: [
+        item("Visiting cards - 350 GSM, both sides, matt lamination (box of 100)", 5, 450),
+        item("A4 tri-fold brochure - 170 GSM art paper, 4-colour both sides", 1000, 9),
+        item("Star flex banners with eyelets, 2 x (6 ft x 3 ft) (sq ft)", 36, 22),
+        item("Roll-up standee, 2.5 ft x 6 ft, with print", 1, 1800),
+        item("Brochure layout design (2 revisions)", 1, 2500),
+      ],
+      notes: "Prices include cutting and packing. Free delivery within Lucknow city.",
+      terms:
+        "Valid for 30 days. 50% advance with the order, balance on delivery. Printing starts after proof approval; delivery in 4 working days.",
+    }),
+  },
+  {
+    slug: "construction",
+    name: "Construction and Renovation",
+    summary: "Bathroom and kitchen renovation with materials and labour.",
+    metaTitle: "Construction Quotation Format - Free Renovation Quote Example",
+    metaDescription:
+      "A construction and renovation quotation format with materials and labour as separate lines, measured in sq ft, running ft and points, with GST. Edit it free and download a PDF.",
+    heading: "Construction and Renovation Quotation Format",
+    intro:
+      "A renovation quote for a homeowner: demolition, waterproofing, tiling, plumbing and a kitchen platform, with materials and labour priced by measurable units. The customer can see what each part costs and how the total changes if the measurements do.",
+    highlights: {
+      title: "What a renovation quote should include",
+      items: [
+        "Each work item with units: sq ft, running ft, points or lump sum",
+        "Materials and labour shown separately where it helps",
+        "Material grades and brands in the description",
+        "Demolition and debris removal",
+        "What's excluded, and how extra work is priced",
+        "Payment stages linked to progress",
+      ],
+    },
+    guide: [
+      {
+        heading: "Separate materials and labour",
+        paragraphs: [
+          "Homeowners often compare quotes line by line. Showing tile material and tiling labour separately - each by the square foot - lets them choose a different tile without asking you to re-quote everything, and makes it easy to adjust the bill if the final measurements differ.",
+          "Say in the terms that the final bill will follow measurements taken on site after the work, at the quoted rates.",
+        ],
+      },
+      {
+        heading: "Avoid surprises once walls are opened",
+        paragraphs: ["Renovation uncovers problems. Protect both sides with a few clear terms:"],
+        bullets: [
+          "Hidden damage such as leaking pipes or weak plaster is quoted separately before it's fixed",
+          "Electrical work, painting and fixtures are excluded unless listed",
+          "Material prices are held for the validity period only",
+          "Payments are linked to stages, such as start, tiling complete and handover",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What GST applies to renovation work?",
+        answer:
+          "When a contractor supplies both materials and labour, the job is usually a works contract and taxed as a service - generally at 18% on the full value, not at separate rates for materials and labour. Lower rates apply to some specific projects, so confirm with your accountant.",
+      },
+      {
+        question: "Should a renovation quote include a contingency?",
+        answer:
+          "Rather than padding every line, state that hidden problems found during the work will be quoted and approved before you fix them. The customer sees a fair price, and you're covered for the unexpected.",
+      },
+    ],
+    document: document({
+      kind: "quote",
+      templateId: "classic-navy",
+      number: "KCW/Q/26-27/041",
+      currency: "INR",
+      taxMode: "gst",
+      placeOfSupply: "33",
+      from: party(
+        "Kaveri Civil Works",
+        "45, Lattice Bridge Road, Thiruvanmiyur\nChennai, Tamil Nadu 600041",
+        {
+          taxId: "33ABDFK2211C1Z7",
+          email: "quotes@kavericivil.in",
+          phone: "+91 98410 55602",
+          stateCode: "33",
+        },
+      ),
+      to: party(
+        "Mrs. Lakshmi Narayanan",
+        "Flat 2B, Sea Breeze Apartments, Besant Nagar\nChennai, Tamil Nadu 600090",
+        {
+          stateCode: "33",
+        },
+      ),
+      items: [
+        item("Demolition of old bathroom tiles and debris removal (lump sum)", 1, 12000, 18, "9954"),
+        item("Waterproofing - bathroom floor and walls up to 1 ft (sq ft)", 120, 65, 18, "9954"),
+        item("Vitrified floor and wall tiles - material (sq ft)", 320, 85, 18, "9954"),
+        item("Tiling labour with cement, sand and adhesive (sq ft)", 320, 45, 18, "9954"),
+        item("Concealed CPVC plumbing - material and labour (points)", 6, 2500, 18, "9954"),
+        item("Kitchen platform with granite top - material and labour (running ft)", 10, 2200, 18, "9954"),
+        item("Wall plaster repairs and putty (sq ft)", 200, 40, 18, "9954"),
+      ],
+      notes: "Final bill as per site measurements at the quoted rates. Work takes about 3 weeks.",
+      terms:
+        "Valid for 30 days. 30% advance, 40% when tiling is complete, 30% at handover. Electrical work, painting and sanitaryware excluded.",
     }),
   },
 ];

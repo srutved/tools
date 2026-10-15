@@ -4,6 +4,8 @@
  */
 
 import { describe, expect, it } from "vitest";
+import { COVER_LETTER_EXAMPLES } from "./cover-letter-builder/examples";
+import { coverLetterExportSchema } from "./cover-letter-builder/schema";
 import { INVOICE_FORMATS, QUOTATION_FORMATS } from "./invoice-generator/examples";
 import { computeInvoice } from "./invoice-generator/lib/calculations";
 import { invoiceExportSchema } from "./invoice-generator/schema";
@@ -30,6 +32,21 @@ describe("resume examples", () => {
 
   it("have unique slugs", () => {
     expect(new Set(RESUME_EXAMPLES.map((example) => example.slug)).size).toBe(RESUME_EXAMPLES.length);
+  });
+});
+
+describe("cover letter examples", () => {
+  for (const example of COVER_LETTER_EXAMPLES) {
+    it(example.slug, () => {
+      expect(issuesOf(coverLetterExportSchema.safeParse(example.document))).toEqual([]);
+      expect(RESUME_TEMPLATES.some((template) => template.id === example.document.templateId)).toBe(true);
+    });
+  }
+
+  it("have unique slugs", () => {
+    expect(new Set(COVER_LETTER_EXAMPLES.map((example) => example.slug)).size).toBe(
+      COVER_LETTER_EXAMPLES.length,
+    );
   });
 });
 
