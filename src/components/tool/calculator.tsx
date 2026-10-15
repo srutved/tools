@@ -14,14 +14,28 @@ import { describedBy, Field } from "./form";
  * need no storage or PDF: plain state, inputs on the left and live results on the right.
  */
 
-/** Inputs on the left; results on the right, pinned while scrolling on large screens. Stacked on phones. */
-export function CalculatorLayout({ inputs, results }: { inputs: ReactNode; results: ReactNode }) {
+/**
+ * Inputs on the left; results on the right, pinned while scrolling on large screens. Stacked on phones.
+ * Optional `details` (e.g. a year-by-year table) span the full width underneath, after the results.
+ */
+export function CalculatorLayout({
+  inputs,
+  results,
+  details,
+}: {
+  inputs: ReactNode;
+  results: ReactNode;
+  details?: ReactNode;
+}) {
   return (
     <div className="bg-subtle/60">
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:items-start lg:px-8 lg:py-8">
         <div className="min-w-0 space-y-4">{inputs}</div>
         <div className="min-w-0 lg:sticky lg:top-20">{results}</div>
       </div>
+      {details && (
+        <div className="mx-auto max-w-7xl space-y-4 px-4 pb-6 sm:px-6 lg:px-8 lg:pb-8">{details}</div>
+      )}
     </div>
   );
 }

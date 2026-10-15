@@ -7,12 +7,14 @@ Free, open-source business tools for freelancers and small businesses, live at
 - **Private by design**: everything runs in your browser. Your data is stored on your device and never sent to a server.
 - **Real PDFs**: text-based and searchable, with embedded fonts, so what you see in the preview is what you download.
 
-| Category             | Tools                                                                                                                                                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Invoicing & billing  | [Invoice Generator](https://www.srutved.com/tools/invoice-generator) · [Quotation Generator](https://www.srutved.com/tools/quotation-generator) · [GST Calculator](https://www.srutved.com/tools/gst-calculator)               |
-| HR & payroll         | [Salary Slip Generator](https://www.srutved.com/tools/salary-slip-generator) · [HR Letter Generator](https://www.srutved.com/tools/hr-letter-generator) · [Salary Calculator](https://www.srutved.com/tools/salary-calculator) |
-| Resumes & job search | [Resume Builder](https://www.srutved.com/tools/resume-builder) · [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder)                                                                                    |
-| Agreements & rent    | [Contract Generator](https://www.srutved.com/tools/contract-generator) · [Rent Receipt Generator](https://www.srutved.com/tools/rent-receipt-generator) · [HRA Calculator](https://www.srutved.com/tools/hra-calculator)       |
+| Category                  | Tools                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Invoicing & GST           | [Invoice Generator](https://www.srutved.com/tools/invoice-generator) · [Proforma Invoice Generator](https://www.srutved.com/tools/proforma-invoice-generator) · [Receipt Generator](https://www.srutved.com/tools/receipt-generator) · [Credit Note Generator](https://www.srutved.com/tools/credit-note-generator) · [Debit Note Generator](https://www.srutved.com/tools/debit-note-generator) · [GST Calculator](https://www.srutved.com/tools/gst-calculator) |
+| Quotes, orders & delivery | [Quotation Generator](https://www.srutved.com/tools/quotation-generator) · [Purchase Order Generator](https://www.srutved.com/tools/purchase-order-generator) · [Delivery Challan Generator](https://www.srutved.com/tools/delivery-challan-generator)                                                                                                                                                                                                            |
+| HR & payroll              | [Salary Slip Generator](https://www.srutved.com/tools/salary-slip-generator) · [HR Letter Generator](https://www.srutved.com/tools/hr-letter-generator) · [Salary Calculator](https://www.srutved.com/tools/salary-calculator) · [Gratuity Calculator](https://www.srutved.com/tools/gratuity-calculator) · [PF Calculator](https://www.srutved.com/tools/pf-calculator)                                                                                          |
+| Loans & investments       | [EMI Calculator](https://www.srutved.com/tools/emi-calculator) · [SIP Calculator](https://www.srutved.com/tools/sip-calculator) · [FD Calculator](https://www.srutved.com/tools/fd-calculator) · [RD Calculator](https://www.srutved.com/tools/rd-calculator) · [PPF Calculator](https://www.srutved.com/tools/ppf-calculator) · [Compound Interest Calculator](https://www.srutved.com/tools/compound-interest-calculator)                                       |
+| Resumes & job search      | [Resume Builder](https://www.srutved.com/tools/resume-builder) · [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder)                                                                                                                                                                                                                                                                                                                       |
+| Agreements & rent         | [Contract Generator](https://www.srutved.com/tools/contract-generator) · [Rent Receipt Generator](https://www.srutved.com/tools/rent-receipt-generator) · [HRA Calculator](https://www.srutved.com/tools/hra-calculator)                                                                                                                                                                                                                                          |
 
 ## Invoice Generator
 
@@ -25,15 +27,20 @@ Free, open-source business tools for freelancers and small businesses, live at
 - Saved invoice history: reopen, duplicate or delete
 - Responsive: a split editor and live preview on desktop, Edit/Preview tabs on mobile
 
-## Quotation Generator
+## The invoice engine: quotations, receipts, notes, challans and orders
 
-Runs on the invoice engine (`src/tools/invoice-generator`): every document has a `kind` of
-`invoice` or `quote`, and all kind-specific wording lives in `lib/document-kind.ts`.
+Eight documents run on the invoice engine (`src/tools/invoice-generator`): invoices, quotations,
+proforma invoices, payment receipts, credit notes, debit notes, delivery challans and purchase
+orders. Every document has a `kind`; all kind-specific wording, dates and extra fields live in
+`lib/document-kind.ts`, so the 15 templates, GST/VAT, currencies and line items work for all of them.
 
-- The same 15 templates, currencies, GST/VAT and line items as invoices
-- Quotation wording throughout: "Quotation", "Valid until", "Quoted total"; no payment details
-- Convert an accepted quotation into an invoice in one click
-- Saved separately from invoices ("My quotations")
+- Kind-specific details: the original invoice and reason on credit and debit notes, payment mode
+  and reference on receipts, vehicle, transporter, purpose and delivery address on challans, and
+  the ship-to address and quote reference on purchase orders
+- One-click conversions: quotation or proforma to invoice, invoice to receipt ("Record payment")
+  or to a credit note
+- Payment details and the UPI QR code only on invoices and proforma invoices
+- Each kind is saved separately ("My receipts", "My purchase orders"...)
 
 ## Resume Builder
 
@@ -93,6 +100,8 @@ resume templates' designs, so a resume and letter with the same template look li
 - **GST Calculator:** add or remove GST at the GST 2.0 rates (or any rate), with the CGST/SGST or IGST split
 - **Salary Calculator:** CTC to monthly in-hand pay after PF, gratuity, professional tax and income tax under both regimes for FY 2026-27; hands the figures to the salary slip generator
 - **HRA Calculator:** tax-free HRA under the 8-metro rule from FY 2026-27; hands the rent to the rent receipt generator
+- **Gratuity and PF calculators:** gratuity under the labour codes (including fixed-term staff) and the EPF corpus at retirement
+- **Loans & investments:** EMI (with the repayment schedule), SIP (with step-up), FD, RD, PPF and compound interest calculators
 
 Calculators share `src/components/tool/calculator.tsx`; their maths lives in each tool's `lib/` with unit tests.
 
