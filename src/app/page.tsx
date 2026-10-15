@@ -4,14 +4,15 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/card";
 import { SITE, toolUrl } from "@/config/site";
 import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo";
-import { cn } from "@/lib/utils";
-import { LIVE_TOOLS, TOOLS } from "@/tools/registry";
+import { LIVE_TOOLS, toolsByCategory, type ToolDefinition } from "@/tools/registry";
 
-const title = "Free Business Tools - Invoices, Quotes, Resumes, Contracts, Payslips & Rent Receipts";
+const title = "Free Business Tools - Invoices, Payslips, HR Letters, Resumes, Contracts & Calculators";
 const description =
-  "Free, open-source tools for freelancers, job seekers and small businesses: invoice and quotation generators with GST, VAT and any currency, a resume and cover letter builder, a contract generator, and salary slip and rent receipt generators. No sign-up, no watermark.";
+  "Free, open-source tools for freelancers, small businesses and job seekers: invoice and quotation generators, salary slips, HR letters, resumes, cover letters, contracts, rent receipts, and GST, salary and HRA calculators. No sign-up, no watermark.";
 
 export const metadata = buildMetadata({ title, description, url: toolUrl() });
+
+const GROUPS = toolsByCategory();
 
 export default function ToolsHubPage() {
   return (
@@ -37,56 +38,67 @@ export default function ToolsHubPage() {
             Free tools for freelancers and small businesses
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-muted">
-            Create invoices, quotations, resumes, cover letters, contracts, payslips and rent receipts in
-            minutes. Everything runs in your browser, so your data never leaves your device, and every
-            download is free with no watermark.
+            Invoices, payslips, HR letters, resumes, contracts and everyday calculators. Everything runs in
+            your browser, so your data never leaves your device, and every download is free with no watermark.
           </p>
+          <nav aria-label="Tool categories" className="mt-6 flex flex-wrap gap-2">
+            {GROUPS.map(({ category, tools }) => (
+              <a
+                key={category.id}
+                href={`#${category.id}`}
+                className="rounded-full border border-border bg-white px-4 py-1.5 text-sm font-semibold shadow-xs transition-colors hover:border-brand hover:text-brand-strong"
+              >
+                {category.name} <span className="font-normal text-muted">{tools.length}</span>
+              </a>
+            ))}
+          </nav>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((tool) => {
-            const live = tool.status === "live";
-            const body = (
-              <>
-                <div className="flex items-start justify-between">
-                  <span className="flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-strong">
-                    <tool.icon className="size-6" aria-hidden />
-                  </span>
-                  {!live && <Badge className="bg-subtle text-muted">Coming soon</Badge>}
-                </div>
-                <h2 className="mt-4 text-xl font-bold">{tool.name}</h2>
-                <p className="mt-1 text-muted">{tool.tagline}</p>
-                {live && (
-                  <span className="mt-4 inline-flex items-center gap-1 font-semibold text-brand-strong">
-                    Open tool{" "}
-                    <ArrowRight
-                      className="size-4 transition-transform group-hover:translate-x-1"
-                      aria-hidden
-                    />
-                  </span>
-                )}
-              </>
-            );
-            const cardClass = cn(
-              "group block h-full rounded-2xl border border-border bg-white p-6 transition-all",
-              live ? "hover:border-brand hover:shadow-lg" : "opacity-70",
-            );
-            return (
-              <li key={tool.slug}>
-                {live ? (
-                  <Link href={`/${tool.slug}`} className={cardClass}>
-                    {body}
-                  </Link>
-                ) : (
-                  <div className={cardClass}>{body}</div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
+      <div className="mx-auto max-w-7xl space-y-14 px-4 py-12 sm:px-6 lg:px-8">
+        {GROUPS.map(({ category, tools }) => (
+          <section
+            key={category.id}
+            id={category.id}
+            aria-labelledby={`${category.id}-heading`}
+            className="scroll-mt-24"
+          >
+            <h2 id={`${category.id}-heading`} className="text-2xl font-bold">
+              {category.name}
+            </h2>
+            <p className="mt-1 text-muted">{category.description}</p>
+            <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {tools.map((tool) => (
+                <li key={tool.slug}>
+                  <ToolCard tool={tool} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
     </main>
+  );
+}
+
+function ToolCard({ tool }: { tool: ToolDefinition }) {
+  return (
+    <Link
+      href={`/${tool.slug}`}
+      className="group flex h-full flex-col rounded-2xl border border-border bg-white p-6 transition-all hover:border-brand hover:shadow-lg"
+    >
+      <div className="flex items-start justify-between">
+        <span className="flex size-12 items-center justify-center rounded-xl bg-brand-soft text-brand-strong">
+          <tool.icon className="size-6" aria-hidden />
+        </span>
+        {tool.kind === "calculator" && <Badge className="bg-subtle text-muted">Calculator</Badge>}
+      </div>
+      <h3 className="mt-4 text-xl font-bold">{tool.name}</h3>
+      <p className="mt-1 flex-1 text-muted">{tool.tagline}</p>
+      <span className="mt-4 inline-flex items-center gap-1 font-semibold text-brand-strong">
+        {tool.kind === "calculator" ? "Open calculator" : "Open tool"}
+        <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+      </span>
+    </Link>
   );
 }

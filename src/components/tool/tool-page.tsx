@@ -4,14 +4,17 @@ import type { ReactNode } from "react";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SITE, toolUrl } from "@/config/site";
 import { breadcrumbJsonLd, faqJsonLd, softwareApplicationJsonLd } from "@/lib/seo";
-import type { ToolDefinition } from "@/tools/registry";
+import { TOOL_CATEGORIES, type ToolDefinition } from "@/tools/registry";
 import { FaqList } from "./faq-list";
 import { RelatedTools } from "./related-tools";
 import { SrutvedCta } from "./srutved-cta";
 import { ToolPromo } from "./tool-promo";
 import type { ToolContent } from "./tool-content";
 
-const PROMISES = ["100% free", "No sign-up", "No watermark", "Data stays on your device"];
+const PROMISES: Record<ToolDefinition["kind"], string[]> = {
+  generator: ["100% free", "No sign-up", "No watermark", "Data stays on your device"],
+  calculator: ["100% free", "No sign-up", "Instant results", "Nothing leaves your device"],
+};
 
 interface ToolPageProps {
   tool: ToolDefinition;
@@ -23,6 +26,7 @@ interface ToolPageProps {
 /** Shared page shell for every tool: hero, the tool, how-to, features, FAQ and structured data. */
 export function ToolPage({ tool, content, children }: ToolPageProps) {
   const url = toolUrl(tool.slug);
+  const category = TOOL_CATEGORIES.find((candidate) => candidate.id === tool.category);
 
   return (
     <main className="flex-1">
@@ -45,6 +49,14 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
               Tools
             </Link>
             <ChevronRight className="size-4" aria-hidden />
+            {category && (
+              <>
+                <Link href={`/#${category.id}`} className="hover:text-brand-strong">
+                  {category.name}
+                </Link>
+                <ChevronRight className="size-4" aria-hidden />
+              </>
+            )}
             <span aria-current="page" className="font-medium text-foreground">
               {tool.name}
             </span>
@@ -52,7 +64,7 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
           <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{content.heading}</h1>
           <p className="mt-3 max-w-3xl text-lg text-muted">{content.intro}</p>
           <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold">
-            {PROMISES.map((promise) => (
+            {PROMISES[tool.kind].map((promise) => (
               <li key={promise} className="flex items-center gap-1.5">
                 <Check className="size-4 text-brand" aria-hidden />
                 {promise}
