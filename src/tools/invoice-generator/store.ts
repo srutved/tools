@@ -1,18 +1,21 @@
 import { createDocumentStore } from "@/lib/saved-documents";
-import type { DocumentKind } from "./lib/document-kind";
-import { invoiceSchema } from "./schema";
+import { kindLabels, type DocumentKind } from "./lib/document-kind";
+import { EMPTY_EXTRA, invoiceSchema } from "./schema";
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
 
-/** Documents saved before quotations existed have no `kind`; they are all invoices. */
+/**
+ * Fills in fields added since a document was saved: documents saved before quotations existed have
+ * no `kind` (they are all invoices), and those saved before receipts and notes have no `extra`.
+ */
 function withKind(raw: unknown, kind: DocumentKind): unknown {
   if (!isObject(raw) || !Array.isArray(raw.documents)) return raw;
   return {
     ...raw,
     documents: raw.documents.map((entry: unknown) =>
-      isObject(entry) && isObject(entry.data) && !("kind" in entry.data)
-        ? { ...entry, data: { kind, ...entry.data } }
+      isObject(entry) && isObject(entry.data)
+        ? { ...entry, data: { kind, extra: EMPTY_EXTRA, ...entry.data } }
         : entry,
     ),
   };
@@ -45,6 +48,26 @@ export const invoiceStore = createDocumentStore({
 export const quoteStore = createDocumentStore({
   key: "quotation-generator/quotations",
   schema: invoiceSchema,
+  migrate: (raw) => withKind(raw, "quote"),
 });
 
-export const storeFor = (kind: DocumentKind) => (kind === "quote" ? quoteStore : invoiceStore);
+/** Every other kind keeps its own list, under its tool's name ("My receipts", "My credit notes"...). */
+const otherStore = (kind: DocumentKind) =>
+  createDocumentStore({
+    key: `${kindLabels(kind).toolSlug}/documents`,
+    schema: invoiceSchema,
+    migrate: (raw) => withKind(raw, kind),
+  });
+
+const STORES: Record<DocumentKind, typeof invoiceStore> = {
+  invoice: invoiceStore,
+  quote: quoteStore,
+  proforma: otherStore("proforma"),
+  receipt: otherStore("receipt"),
+  "credit-note": otherStore("credit-note"),
+  "debit-note": otherStore("debit-note"),
+  challan: otherStore("challan"),
+  "purchase-order": otherStore("purchase-order"),
+};
+
+export const storeFor = (kind: DocumentKind) => STORES[kind];

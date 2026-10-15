@@ -8,7 +8,7 @@ import { BASE_PATH } from "@/config/site";
  * we can see which tools people actually use. Only names and tool/template ids are sent - never
  * anything a user typed. Custom events need a paid Vercel plan; elsewhere they're simply dropped.
  */
-export type ToolEvent = "PDF Downloaded" | "PDF Printed" | "Example Opened" | "Quote Converted";
+export type ToolEvent = "PDF Downloaded" | "PDF Printed" | "Example Opened" | "Document Converted";
 
 /** The tool on the current page, e.g. "invoice-generator", from /tools/invoice-generator. */
 export function currentToolSlug(): string {

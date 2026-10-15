@@ -11,7 +11,7 @@ import { Input, Select } from "@/components/ui/input";
 import { formatMoney, getCurrencyOptions, POPULAR_CURRENCIES } from "@/lib/currency";
 import { toFiniteNumber } from "@/lib/utils";
 import { createLineItem } from "../defaults";
-import { kindLabels } from "../lib/document-kind";
+import { kindLabels, PAYMENT_METHODS } from "../lib/document-kind";
 import { GST_RATES, INDIAN_STATES, stateCodeFromGstin } from "../lib/gst";
 import type { Invoice } from "../schema";
 
@@ -45,12 +45,13 @@ function PartyFields({ party }: { party: "from" | "to" }) {
   const isGst = taxMode === "gst" || taxMode === "gst-export";
   const showState = taxMode === "gst" || (taxMode === "gst-export" && party === "from");
   const isClient = party === "to";
+  const partyNoun = useLabels().partyNoun;
 
   return (
     <>
       <TextField<Invoice>
         name={`${party}.name`}
-        label={isClient ? "Client name" : "Business name"}
+        label={isClient ? `${partyNoun[0].toUpperCase()}${partyNoun.slice(1)} name` : "Business name"}
         placeholder={isClient ? "e.g. Northwind Traders Pvt Ltd" : "e.g. Aarav Design Studio"}
         autoComplete={isClient ? "off" : "organization"}
       />
@@ -135,10 +136,10 @@ export function DetailsSection() {
 
   return (
     <FormSection title={labels.detailsSection}>
-      <FieldRow className="sm:grid-cols-3">
+      <FieldRow className={labels.dueField ? "sm:grid-cols-3" : undefined}>
         <TextField<Invoice> name="number" label={labels.numberField} placeholder={labels.numberPlaceholder} />
         <TextField<Invoice> name="issueDate" label={labels.dateField} type="date" />
-        <TextField<Invoice> name="dueDate" label={labels.dueField} type="date" />
+        {labels.dueField && <TextField<Invoice> name="dueDate" label={labels.dueField} type="date" />}
       </FieldRow>
       <FieldRow>
         <SelectField<Invoice>
@@ -191,6 +192,90 @@ export function DetailsSection() {
           label="LUT ARN (optional)"
           placeholder="e.g. AD290324000123X"
           hint="Your Letter of Undertaking reference number."
+        />
+      )}
+    </FormSection>
+  );
+}
+
+/* ---------------------------------------------------------------- Kind-specific details */
+
+/**
+ * The details only some documents have: the invoice a credit note adjusts, how a receipt was paid,
+ * how goods on a delivery challan travel, where a purchase order is delivered.
+ */
+export function ExtrasSection() {
+  const extras = useLabels().extras;
+  if (!extras) return null;
+  return (
+    <FormSection title={extras.title}>
+      {extras.payment && (
+        <FieldRow>
+          <SelectField<Invoice> name="extra.paymentMethod" label="Paid by">
+            <option value="">Choose...</option>
+            {PAYMENT_METHODS.map((method) => (
+              <option key={method} value={method}>
+                {method}
+              </option>
+            ))}
+          </SelectField>
+          <TextField<Invoice>
+            name="extra.paymentReference"
+            label="Transaction or cheque no. (optional)"
+            placeholder="e.g. UTR 428913076512"
+          />
+        </FieldRow>
+      )}
+      {(extras.refNumber || extras.refDate) && (
+        <FieldRow>
+          {extras.refNumber && (
+            <TextField<Invoice>
+              name="extra.refNumber"
+              label={extras.refNumber.field}
+              placeholder={extras.refNumber.placeholder}
+            />
+          )}
+          {extras.refDate && (
+            <TextField<Invoice> name="extra.refDate" label={extras.refDate.field} type="date" />
+          )}
+        </FieldRow>
+      )}
+      {extras.transport && (
+        <FieldRow>
+          <TextField<Invoice>
+            name="extra.vehicleNumber"
+            label="Vehicle number (optional)"
+            placeholder="e.g. MH 12 AB 1234"
+          />
+          <TextField<Invoice>
+            name="extra.transporter"
+            label="Transporter (optional)"
+            placeholder="e.g. Swift Surface Logistics"
+          />
+        </FieldRow>
+      )}
+      {extras.reason && (
+        <>
+          <TextField<Invoice>
+            name="extra.reason"
+            label={extras.reason.required ? extras.reason.label : `${extras.reason.label} (optional)`}
+            placeholder={extras.reason.placeholder}
+            list="document-reasons"
+          />
+          <datalist id="document-reasons">
+            {extras.reason.suggestions.map((reason) => (
+              <option key={reason} value={reason} />
+            ))}
+          </datalist>
+        </>
+      )}
+      {extras.shipTo && (
+        <TextAreaField<Invoice>
+          name="extra.shipTo"
+          label={`${extras.shipTo.label} (optional)`}
+          rows={2}
+          placeholder={extras.shipTo.placeholder}
+          hint="Only if it's different from the address above."
         />
       )}
     </FormSection>

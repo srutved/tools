@@ -129,11 +129,27 @@ export function PartyBlock({
 /* ---------------------------------------------------------------- Invoice meta */
 
 export function metaRows(invoice: Invoice): { label: string; value: string }[] {
+  const labels = labelsFor(invoice);
+  const extras = labels.extras;
+  const extra = invoice.extra;
   const rows = [
-    { label: labelsFor(invoice).numberLabel, value: invoice.number },
-    { label: labelsFor(invoice).dateLabel, value: invoice.issueDate ? formatDate(invoice.issueDate) : "" },
-    { label: labelsFor(invoice).dueLabel, value: invoice.dueDate ? formatDate(invoice.dueDate) : "" },
+    { label: labels.numberLabel, value: invoice.number },
+    { label: labels.dateLabel, value: invoice.issueDate ? formatDate(invoice.issueDate) : "" },
+    { label: labels.dueLabel, value: labels.dueLabel && invoice.dueDate ? formatDate(invoice.dueDate) : "" },
   ];
+  // Kind-specific details: the invoice a note adjusts, how a receipt was paid, how goods travel.
+  if (extras?.refNumber) rows.push({ label: extras.refNumber.label, value: extra?.refNumber ?? "" });
+  if (extras?.refDate) {
+    rows.push({ label: extras.refDate.label, value: extra?.refDate ? formatDate(extra.refDate) : "" });
+  }
+  if (extras?.payment) {
+    rows.push({ label: "Payment Mode", value: extra?.paymentMethod ?? "" });
+    rows.push({ label: "Reference", value: extra?.paymentReference ?? "" });
+  }
+  if (extras?.transport) {
+    rows.push({ label: "Vehicle No.", value: extra?.vehicleNumber ?? "" });
+    rows.push({ label: "Transporter", value: extra?.transporter ?? "" });
+  }
   if (invoice.taxMode === "gst") {
     const code = invoice.placeOfSupply || invoice.to.stateCode;
     const name = code ? stateName(code) : null;
@@ -511,11 +527,40 @@ export function PaymentBlock({
 
 /* ---------------------------------------------------------------- Notes */
 
+/** The reason for a credit or debit note, the purpose of a delivery, and where goods are going. */
+function ExtraDetails({ invoice }: Pick<LayoutProps, "invoice">) {
+  const extras = labelsFor(invoice).extras;
+  const reason = extras?.reason && invoice.extra?.reason.trim();
+  const shipTo = extras?.shipTo && invoice.extra?.shipTo.trim();
+  if (!reason && !shipTo) return null;
+  return (
+    <View style={{ flexDirection: "row", marginBottom: 10 }}>
+      {reason && (
+        <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, paddingRight: 16 }}>
+          <Label>{extras!.reason!.label}</Label>
+          <Text style={{ fontWeight: 700 }}>{reason}</Text>
+        </View>
+      )}
+      {shipTo && (
+        <View style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0 }}>
+          <Label>{extras!.shipTo!.label}</Label>
+          <Text>{shipTo}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
 export function NotesBlock({ invoice, computed }: Pick<LayoutProps, "invoice" | "computed">) {
-  const hasContent = invoice.notes || invoice.terms || computed.notices.length > 0;
+  const extras = labelsFor(invoice).extras;
+  const hasExtra = Boolean(
+    (extras?.reason && invoice.extra?.reason.trim()) || (extras?.shipTo && invoice.extra?.shipTo.trim()),
+  );
+  const hasContent = hasExtra || invoice.notes || invoice.terms || computed.notices.length > 0;
   if (!hasContent) return null;
   return (
     <View keepTogether style={{ marginTop: 18 }}>
+      <ExtraDetails invoice={invoice} />
       {computed.notices.map((notice) => (
         <Text key={notice} style={{ fontWeight: 700, marginBottom: 2 }}>
           {notice}

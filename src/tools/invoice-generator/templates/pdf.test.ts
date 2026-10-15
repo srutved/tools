@@ -13,6 +13,7 @@ import { describe, expect, it, vi } from "vitest";
 import { generateQrDataUrl } from "@/lib/qr";
 import { INVOICE_FORMATS, QUOTATION_FORMATS } from "../examples";
 import { computeInvoice } from "../lib/calculations";
+import { DOCUMENT_KINDS } from "../lib/document-kind";
 import { sampleFor } from "../sample";
 import type { Invoice } from "../schema";
 import { InvoiceDocument } from "./invoice-document";
@@ -47,6 +48,23 @@ describe("invoice templates render to PDF", () => {
         const { pdf } = await render({ ...sampleFor(kind), templateId: template.id });
         if (outDir) writeFileSync(join(outDir, `${kind}-${template.id}.pdf`), pdf);
         expect(pdf.length).toBeGreaterThan(1000);
+      }
+    });
+  }
+
+  // Every other kind of document, in one design of each layout.
+  for (const kind of DOCUMENT_KINDS.filter((kind) => kind !== "invoice" && kind !== "quote")) {
+    it(`kind: ${kind}`, { timeout: 60_000 }, async () => {
+      for (const templateId of [
+        "classic-slate",
+        "modern-indigo",
+        "minimal-mono",
+        "sidebar-emerald",
+        "bold-orange",
+      ]) {
+        const { pdf, text } = await render({ ...sampleFor(kind), templateId });
+        if (outDir) writeFileSync(join(outDir, `${kind}-${templateId}.pdf`), pdf);
+        expect(text.match(/\/Type\s*\/Page\b/g)?.length ?? 0).toBe(1);
       }
     });
   }

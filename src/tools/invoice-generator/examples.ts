@@ -1,7 +1,7 @@
 import type { UseCase, UseCaseCollection } from "@/components/tool/use-case";
 import { EMPTY_PAYMENT_DETAILS, type Party, type PaymentDetails } from "@/shared/business-profile";
 import type { DocumentKind } from "./lib/document-kind";
-import type { Invoice, LineItem, TaxMode } from "./schema";
+import { EMPTY_EXTRA, type Invoice, type LineItem, type TaxMode } from "./schema";
 
 /*
  * Invoice and quotation formats: one landing page per profession or business
@@ -87,6 +87,7 @@ function document({ kind = "invoice", payment, ...rest }: ExampleDocument): Invo
     logo: "",
     ...rest,
     payment: { ...EMPTY_PAYMENT_DETAILS, ...payment },
+    extra: EMPTY_EXTRA,
   };
 }
 
@@ -1479,7 +1480,16 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
   },
 ];
 
-const ALL_FORMATS = { invoice: INVOICE_FORMATS, quote: QUOTATION_FORMATS } as const;
+const ALL_FORMATS: Record<DocumentKind, UseCase<Invoice>[]> = {
+  invoice: INVOICE_FORMATS,
+  quote: QUOTATION_FORMATS,
+  proforma: [],
+  receipt: [],
+  "credit-note": [],
+  "debit-note": [],
+  challan: [],
+  "purchase-order": [],
+};
 
 /** Examples for a document kind, used to open one from a landing page. */
 export const formatsFor = (kind: DocumentKind) => ALL_FORMATS[kind];

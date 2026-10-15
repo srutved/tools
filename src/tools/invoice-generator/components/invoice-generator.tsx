@@ -29,19 +29,20 @@ import { WebPage } from "@/lib/document/web";
 import { upsertDocument } from "@/lib/saved-documents";
 import { createId } from "@/lib/utils";
 import { loadBusinessProfile, saveBusinessProfile } from "@/shared/business-profile";
-import { createInvoice, fromExample, nextNumberAfter, quoteToInvoice } from "../defaults";
+import { CONVERSIONS, convertDocument, createInvoice, fromExample, nextNumberAfter } from "../defaults";
 import { formatsFor } from "../examples";
 import { renderInvoicePdf } from "../export";
 import { computeInvoice } from "../lib/calculations";
 import { kindLabels, type DocumentKind } from "../lib/document-kind";
 import { nextInvoiceNumber } from "../lib/invoice-number";
 import { invoiceExportSchema, type Invoice } from "../schema";
-import { invoiceStore, storeFor } from "../store";
+import { storeFor } from "../store";
 import { getTemplate, INVOICE_TEMPLATES, InvoiceDocument } from "../templates";
 import {
   BusinessSection,
   ClientSection,
   DetailsSection,
+  ExtrasSection,
   ItemsSection,
   NotesSection,
   PaymentSection,
@@ -57,6 +58,58 @@ export function InvoiceGenerator() {
 export function QuoteGenerator() {
   return <BillingDocumentGenerator kind="quote" />;
 }
+
+export function ProformaInvoiceGenerator() {
+  return <BillingDocumentGenerator kind="proforma" />;
+}
+
+export function ReceiptGenerator() {
+  return <BillingDocumentGenerator kind="receipt" />;
+}
+
+export function CreditNoteGenerator() {
+  return <BillingDocumentGenerator kind="credit-note" />;
+}
+
+export function DebitNoteGenerator() {
+  return <BillingDocumentGenerator kind="debit-note" />;
+}
+
+export function DeliveryChallanGenerator() {
+  return <BillingDocumentGenerator kind="challan" />;
+}
+
+export function PurchaseOrderGenerator() {
+  return <BillingDocumentGenerator kind="purchase-order" />;
+}
+
+/** The offer shown under the editor to turn this document into another kind. */
+const CONVERSION_COPY: Partial<
+  Record<DocumentKind, Partial<Record<DocumentKind, [string, string, string]>>>
+> = {
+  quote: {
+    invoice: [
+      "Quotation accepted?",
+      "Turn it into an invoice with the same client and items.",
+      "Convert to invoice",
+    ],
+  },
+  proforma: {
+    invoice: [
+      "Order confirmed?",
+      "Raise the tax invoice with the same client and items.",
+      "Convert to invoice",
+    ],
+  },
+  invoice: {
+    receipt: ["Got paid?", "Create a receipt for this invoice's payment in one click.", "Record payment"],
+    "credit-note": [
+      "Need to reduce this invoice?",
+      "Issue a credit note against it, for a return, discount or overcharge.",
+      "Create credit note",
+    ],
+  },
+};
 
 function BillingDocumentGenerator({ kind }: { kind: DocumentKind }) {
   return (
@@ -90,19 +143,22 @@ function loadInitialState(kind: DocumentKind, query: URLSearchParams) {
   });
 }
 
-/** Creates an invoice from a quotation in the user's saved invoices and opens it. */
-function useConvertToInvoice() {
+/** Saves a converted document (an invoice from a quotation, a receipt from an invoice...) in its tool and opens it. */
+function useConvertDocument() {
   const router = useRouter();
-  return (quote: Invoice) => {
-    const invoices = invoiceStore.load();
-    const latest = invoices.documents[0]?.data.number;
-    const invoice = quoteToInvoice(quote, {
-      number: latest ? nextInvoiceNumber(latest) : "INV-0001",
+  return (source: Invoice, target: DocumentKind) => {
+    const store = storeFor(target);
+    const saved = store.load();
+    const latest = saved.documents[0]?.data.number;
+    const converted = convertDocument(source, target, {
+      number: latest
+        ? nextInvoiceNumber(latest)
+        : createInvoice({ kind: target, currency: source.currency }).number,
       profile: loadBusinessProfile(),
     });
-    invoiceStore.save(upsertDocument(invoices, createId(), invoice));
-    trackToolEvent("Quote Converted");
-    router.push("/invoice-generator");
+    store.save(upsertDocument(saved, createId(), converted));
+    trackToolEvent("Document Converted", { from: source.kind, to: target });
+    router.push(`/${kindLabels(target).toolSlug}`);
   };
 }
 
@@ -115,7 +171,7 @@ function BillingDocumentApp({ kind, query }: { kind: DocumentKind; query: URLSea
   const [dialog, setDialog] = useState<"templates" | "library" | null>(null);
   const [alert, setAlert] = useState<string | null>(null);
   const [exported, setExported] = useState(false);
-  const convertToInvoice = useConvertToInvoice();
+  const convert = useConvertDocument();
 
   const form = useForm<Invoice>({
     resolver: zodResolver(invoiceExportSchema),
@@ -180,9 +236,9 @@ function BillingDocumentApp({ kind, query }: { kind: DocumentKind; query: URLSea
     });
   };
 
-  const handleConvert = () => {
+  const handleConvert = (target: DocumentKind) => {
     library.flushSave();
-    convertToInvoice(form.getValues());
+    convert(form.getValues(), target);
   };
 
   const templateId = useWatch({ control: form.control, name: "templateId" });
@@ -194,12 +250,7 @@ function BillingDocumentApp({ kind, query }: { kind: DocumentKind; query: URLSea
         tab={tab}
         onTabChange={setTab}
         notice={
-          exported && (
-            <ExportedBanner
-              toolSlug={kind === "quote" ? "quotation-generator" : "invoice-generator"}
-              onDismiss={() => setExported(false)}
-            />
-          )
+          exported && <ExportedBanner toolSlug={labels.toolSlug} onDismiss={() => setExported(false)} />
         }
         toolbar={
           <DocumentToolbar
@@ -220,20 +271,27 @@ function BillingDocumentApp({ kind, query }: { kind: DocumentKind; query: URLSea
             <BusinessSection />
             <ClientSection />
             <DetailsSection />
+            <ExtrasSection />
             <ItemsSection />
             {labels.showsPayment && <PaymentSection />}
             <NotesSection />
-            {kind === "quote" && (
-              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/30 bg-brand-soft p-4">
-                <p className="text-sm">
-                  <span className="font-bold">Quotation accepted?</span> Turn it into an invoice with the same
-                  client and items.
-                </p>
-                <Button variant="outline" size="sm" onClick={handleConvert}>
-                  Convert to invoice <ArrowRight />
-                </Button>
-              </div>
-            )}
+            {(CONVERSIONS[kind] ?? []).map((target) => {
+              const copy = CONVERSION_COPY[kind]?.[target];
+              if (!copy) return null;
+              return (
+                <div
+                  key={target}
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/30 bg-brand-soft p-4"
+                >
+                  <p className="text-sm">
+                    <span className="font-bold">{copy[0]}</span> {copy[1]}
+                  </p>
+                  <Button variant="outline" size="sm" onClick={() => handleConvert(target)}>
+                    {copy[2]} <ArrowRight />
+                  </Button>
+                </div>
+              );
+            })}
           </form>
         }
         preview={<InvoicePreview control={form.control} />}

@@ -1,16 +1,25 @@
 import { addDaysIso, todayIso } from "@/lib/date";
 import { createId } from "@/lib/utils";
 import { EMPTY_PARTY, EMPTY_PAYMENT_DETAILS, type BusinessProfile } from "@/shared/business-profile";
-import type { DocumentKind } from "./lib/document-kind";
+import { computeInvoice } from "./lib/calculations";
+import { kindLabels, type DocumentKind } from "./lib/document-kind";
 import { nextInvoiceNumber } from "./lib/invoice-number";
-import type { Invoice, LineItem, TaxMode } from "./schema";
+import { EMPTY_EXTRA, type Invoice, type LineItem, type TaxMode } from "./schema";
 import { DEFAULT_TEMPLATE_ID } from "./templates/registry";
 
 export const DEFAULT_PAYMENT_TERMS_DAYS = 14;
 export const DEFAULT_QUOTE_VALIDITY_DAYS = 30;
 
+interface Starter {
+  number: string;
+  /** Days from the issue date to the second date (due, valid until, deliver by); 0 when there's none. */
+  days: number;
+  notes: string;
+  terms: string;
+}
+
 /** Per-kind starting values for a new document. */
-const STARTERS: Record<DocumentKind, { number: string; days: number; notes: string; terms: string }> = {
+const STARTERS: Record<DocumentKind, Starter> = {
   invoice: {
     number: "INV-0001",
     days: DEFAULT_PAYMENT_TERMS_DAYS,
@@ -23,7 +32,48 @@ const STARTERS: Record<DocumentKind, { number: string; days: number; notes: stri
     notes: "Thank you for the opportunity. We look forward to working with you.",
     terms: `This quotation is valid for ${DEFAULT_QUOTE_VALIDITY_DAYS} days. Work starts on written acceptance.`,
   },
+  proforma: {
+    number: "PI-0001",
+    days: 15,
+    notes: "This is a proforma invoice, not a tax invoice. A tax invoice will be issued on dispatch.",
+    terms: "Valid for 15 days. Goods are dispatched once the advance payment is received.",
+  },
+  receipt: {
+    number: "RCT-0001",
+    days: 0,
+    notes: "Thank you for your payment.",
+    terms: "",
+  },
+  "credit-note": {
+    number: "CN-0001",
+    days: 0,
+    notes: "This credit note reduces the amount payable against the invoice above.",
+    terms: "",
+  },
+  "debit-note": {
+    number: "DN-0001",
+    days: 0,
+    notes: "This debit note increases the amount payable against the invoice above.",
+    terms: "",
+  },
+  challan: {
+    number: "DC-0001",
+    days: 0,
+    notes: "Please sign and return a copy of this challan on receiving the goods.",
+    terms: "Goods are sent for the purpose stated above and are not a sale unless invoiced.",
+  },
+  "purchase-order": {
+    number: "PO-0001",
+    days: 15,
+    notes: "Please quote this PO number on your invoice and delivery challan.",
+    terms:
+      "Deliver to the address above by the date shown. Goods must match the agreed specifications. Payment within 30 days of receiving the goods and a valid invoice.",
+  },
 };
+
+/** The second date (due, valid until, deliver by), or "" for kinds without one. */
+const secondDate = (kind: DocumentKind, issueDate: string) =>
+  STARTERS[kind].days > 0 && kindLabels(kind).dueLabel ? addDaysIso(issueDate, STARTERS[kind].days) : "";
 
 export function createLineItem(taxRate = 0): LineItem {
   return { id: createId(), description: "", code: "", quantity: 1, unitPrice: 0, taxRate };
@@ -38,8 +88,8 @@ interface NewInvoiceOptions {
 }
 
 /**
- * A blank invoice or quotation, pre-filled with the user's saved business details when they have
- * them.
+ * A blank document of the given kind, pre-filled with the user's saved business details when they
+ * have them.
  */
 export function createInvoice({
   kind = "invoice",
@@ -50,13 +100,14 @@ export function createInvoice({
 }: NewInvoiceOptions): Invoice {
   const starter = STARTERS[kind];
   const issueDate = todayIso();
-  const taxMode: TaxMode = currency === "INR" ? "gst" : "none";
+  // Receipts record a payment; the tax was on the invoice it settles.
+  const taxMode: TaxMode = currency === "INR" && kind !== "receipt" ? "gst" : "none";
   return {
     kind,
     templateId: templateId ?? DEFAULT_TEMPLATE_ID,
     number: number ?? starter.number,
     issueDate,
-    dueDate: addDaysIso(issueDate, starter.days),
+    dueDate: secondDate(kind, issueDate),
     currency,
     taxMode,
     taxLabel: "Tax",
@@ -70,6 +121,7 @@ export function createInvoice({
     items: [createLineItem(taxMode === "gst" ? 18 : 0)],
     notes: starter.notes,
     terms: starter.terms,
+    extra: { ...EMPTY_EXTRA, paymentMethod: kind === "receipt" ? "Bank transfer" : "" },
   };
 }
 
@@ -91,7 +143,7 @@ export function fromExample(
     ...example,
     number: number ?? example.number,
     issueDate,
-    dueDate: addDaysIso(issueDate, STARTERS[example.kind].days),
+    dueDate: secondDate(example.kind, issueDate),
     from: hasProfile ? profile!.business : example.from,
     logo: hasProfile ? profile!.logo : example.logo,
     payment: hasProfile ? profile!.payment : example.payment,
@@ -99,25 +151,63 @@ export function fromExample(
   };
 }
 
+/** Documents one kind can be turned into, e.g. an accepted quotation into an invoice. */
+export const CONVERSIONS: Partial<Record<DocumentKind, DocumentKind[]>> = {
+  quote: ["invoice"],
+  proforma: ["invoice"],
+  invoice: ["receipt", "credit-note"],
+};
+
 /**
- * Turns an accepted quotation into an invoice: same client, items, tax and design, with a new
- * invoice number, today's date, payment terms and the user's latest payment details.
+ * Turns a document into another kind: an accepted quotation or proforma into an invoice, or an
+ * invoice into the receipt for its payment or a credit note against it. The client, design and
+ * currency carry over; the new document gets its own number, today's date and its kind's wording.
  */
-export function quoteToInvoice(
-  quote: Invoice,
+export function convertDocument(
+  source: Invoice,
+  target: DocumentKind,
   { number, profile }: { number: string; profile?: BusinessProfile | null },
 ): Invoice {
-  const starter = STARTERS.invoice;
+  const starter = STARTERS[target];
   const issueDate = todayIso();
-  return {
-    ...quote,
-    kind: "invoice",
+  const base: Invoice = {
+    ...source,
+    kind: target,
     number,
     issueDate,
-    dueDate: addDaysIso(issueDate, starter.days),
-    payment: profile?.payment ?? quote.payment,
-    items: quote.items.map((item) => ({ ...item, id: createId() })),
+    dueDate: secondDate(target, issueDate),
+    payment: profile?.payment ?? source.payment,
+    items: source.items.map((item) => ({ ...item, id: createId() })),
     notes: starter.notes,
     terms: starter.terms,
+    extra: { ...EMPTY_EXTRA },
   };
+  const reference = { ...EMPTY_EXTRA, refNumber: source.number, refDate: source.issueDate };
+
+  if (target === "receipt") {
+    // One line for the payment, so the receipt shows exactly what was received.
+    const total = computeInvoice(source).totals.total;
+    return {
+      ...base,
+      taxMode: "none",
+      discount: 0,
+      items: [
+        {
+          ...createLineItem(),
+          description:
+            `Payment against ${kindLabels(source.kind).title.toLowerCase()} ${source.number}`.trim(),
+          unitPrice: total,
+        },
+      ],
+      extra: { ...reference, paymentMethod: "Bank transfer" },
+    };
+  }
+  if (target === "credit-note" || target === "debit-note") return { ...base, extra: reference };
+  return base;
 }
+
+/** An accepted quotation as an invoice. Kept for callers that only convert quotations. */
+export const quoteToInvoice = (
+  quote: Invoice,
+  options: { number: string; profile?: BusinessProfile | null },
+) => convertDocument(quote, "invoice", options);
