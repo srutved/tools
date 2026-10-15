@@ -6,6 +6,9 @@
 import { describe, expect, it } from "vitest";
 import { COVER_LETTER_EXAMPLES } from "./cover-letter-builder/examples";
 import { coverLetterExportSchema } from "./cover-letter-builder/schema";
+import { HR_LETTER_EXAMPLES } from "./hr-letter-generator/examples";
+import { hrLetterExportSchema } from "./hr-letter-generator/schema";
+import { LETTER_TEMPLATES } from "./hr-letter-generator/templates/registry";
 import { INVOICE_FORMATS, QUOTATION_FORMATS } from "./invoice-generator/examples";
 import { computeInvoice } from "./invoice-generator/lib/calculations";
 import { invoiceExportSchema } from "./invoice-generator/schema";
@@ -64,4 +67,22 @@ describe("invoice and quotation formats", () => {
       });
     }
   }
+});
+
+describe("HR letter examples", () => {
+  for (const example of HR_LETTER_EXAMPLES) {
+    it(example.slug, () => {
+      const letter = example.document;
+      expect(issuesOf(hrLetterExportSchema.safeParse(letter))).toEqual([]);
+      expect(LETTER_TEMPLATES.some((template) => template.id === letter.templateId)).toBe(true);
+      if (letter.employmentType === "full-time" && letter.salaryBreakdown.length > 0) {
+        const monthly = letter.salaryBreakdown.reduce((sum, row) => sum + row.monthly, 0);
+        expect(Math.abs(monthly - letter.pay / 12)).toBeLessThanOrEqual(1);
+      }
+    });
+  }
+
+  it("have unique slugs", () => {
+    expect(new Set(HR_LETTER_EXAMPLES.map((example) => example.slug)).size).toBe(HR_LETTER_EXAMPLES.length);
+  });
 });
