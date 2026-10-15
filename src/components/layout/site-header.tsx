@@ -3,10 +3,13 @@ import { GithubIcon } from "@/components/icons/github-icon";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { toolsByCategory } from "@/tools/registry";
+import { getTool } from "@/tools/registry";
 import { ToolsMenu } from "./tools-menu";
 
-const QUICK_LINKS = toolsByCategory().map(({ tools }) => tools[0]);
+/** The most-used tools, linked directly where there is room; the menu has the rest. */
+const QUICK_LINKS = ["invoice-generator", "salary-slip-generator", "resume-builder", "emi-calculator"].map(
+  getTool,
+);
 
 export function SiteHeader() {
   return (
@@ -19,7 +22,6 @@ export function SiteHeader() {
           </a>
           <div className="flex items-center gap-1">
             <ToolsMenu />
-            {/* The most-used tool in each category, where there's room; the menu has the rest. */}
             {QUICK_LINKS.map((tool) => (
               <Link
                 key={tool.slug}

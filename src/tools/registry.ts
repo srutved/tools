@@ -1,18 +1,32 @@
 import {
   BadgeIndianRupee,
   Calculator,
+  ChartLine,
+  Coins,
+  FileClock,
+  FileMinus2,
+  FilePlus2,
   FileSignature,
   FileText,
   FileUser,
+  HandCoins,
   House,
+  Landmark,
   Mail,
   Percent,
+  PiggyBank,
+  Receipt,
   ReceiptText,
+  Repeat,
+  ShieldCheck,
+  ShoppingCart,
+  Sprout,
+  Truck,
   Wallet,
   type LucideIcon,
 } from "lucide-react";
 
-export type ToolCategoryId = "billing" | "careers" | "hr" | "agreements";
+export type ToolCategoryId = "billing" | "sales" | "hr" | "finance" | "careers" | "agreements";
 
 export interface ToolCategory {
   id: ToolCategoryId;
@@ -25,13 +39,23 @@ export interface ToolCategory {
 export const TOOL_CATEGORIES: ToolCategory[] = [
   {
     id: "billing",
-    name: "Invoicing & billing",
-    description: "Quote, bill and get paid, with GST, VAT or any currency.",
+    name: "Invoicing & GST",
+    description: "Bill, adjust and record payments, with GST, VAT or any currency.",
+  },
+  {
+    id: "sales",
+    name: "Quotes, orders & delivery",
+    description: "From the first quote to the purchase order and the goods on the truck.",
   },
   {
     id: "hr",
     name: "HR & payroll",
     description: "Payslips, offer and experience letters, and salary maths for small teams.",
+  },
+  {
+    id: "finance",
+    name: "Loans & investments",
+    description: "Work out EMIs, interest and how your savings grow.",
   },
   {
     id: "careers",
@@ -70,7 +94,7 @@ export interface ToolDefinition {
  * from this list, so adding a tool here is all it takes to make it discoverable.
  */
 export const TOOLS: ToolDefinition[] = [
-  /* ------------------------------------------------------------------ Invoicing & billing */
+  /* ------------------------------------------------------------------ Invoicing & GST */
   {
     slug: "invoice-generator",
     name: "Invoice Generator",
@@ -96,7 +120,7 @@ export const TOOLS: ToolDefinition[] = [
     navLabel: "Quotations",
     tagline: "Quotes and estimates in any currency, with GST or VAT. Convert to an invoice in one click.",
     icon: Calculator,
-    category: "billing",
+    category: "sales",
     kind: "generator",
     status: "live",
     subPages: [
@@ -113,6 +137,66 @@ export const TOOLS: ToolDefinition[] = [
     },
   },
   {
+    slug: "proforma-invoice-generator",
+    name: "Proforma Invoice Generator",
+    navLabel: "Proforma invoices",
+    tagline: "Proforma invoices for advance payments and export orders, with GST and any currency.",
+    icon: FileClock,
+    category: "billing",
+    kind: "generator",
+    status: "live",
+    nextStep: { slug: "invoice-generator", text: "When the order is confirmed, raise the final invoice." },
+    promo: {
+      heading: "Billing that runs itself?",
+      text: "We build custom billing and accounting software with GST, e-invoicing, payment tracking and reports built in.",
+    },
+  },
+  {
+    slug: "receipt-generator",
+    name: "Receipt Generator",
+    navLabel: "Payment receipts",
+    tagline: "Payment receipts for cash, UPI, bank or cheque payments, against any invoice.",
+    icon: Receipt,
+    category: "billing",
+    kind: "generator",
+    status: "live",
+    nextStep: { slug: "invoice-generator", text: "Need the invoice for this payment too?" },
+    promo: {
+      heading: "Collecting payments online?",
+      text: "We build payment collection, reminders and automatic receipts into custom billing apps.",
+    },
+  },
+  {
+    slug: "credit-note-generator",
+    name: "Credit Note Generator",
+    navLabel: "Credit notes",
+    tagline: "GST credit notes for returns, discounts and overcharged invoices.",
+    icon: FileMinus2,
+    category: "billing",
+    kind: "generator",
+    status: "live",
+    nextStep: { slug: "invoice-generator", text: "Raise a corrected invoice in the same design." },
+    promo: {
+      heading: "Billing that runs itself?",
+      text: "We build custom billing and accounting software with GST, e-invoicing, payment tracking and reports built in.",
+    },
+  },
+  {
+    slug: "debit-note-generator",
+    name: "Debit Note Generator",
+    navLabel: "Debit notes",
+    tagline: "GST debit notes when an invoice undercharged, or for extra charges.",
+    icon: FilePlus2,
+    category: "billing",
+    kind: "generator",
+    status: "live",
+    nextStep: { slug: "credit-note-generator", text: "Reducing an invoice instead? Use a credit note." },
+    promo: {
+      heading: "Billing that runs itself?",
+      text: "We build custom billing and accounting software with GST, e-invoicing, payment tracking and reports built in.",
+    },
+  },
+  {
     slug: "gst-calculator",
     name: "GST Calculator",
     navLabel: "GST calculator",
@@ -125,6 +209,40 @@ export const TOOLS: ToolDefinition[] = [
     promo: {
       heading: "GST on every sale, worked out for you?",
       text: "We build billing and point-of-sale systems with GST, e-invoicing and reports built in.",
+    },
+  },
+
+  {
+    slug: "purchase-order-generator",
+    name: "Purchase Order Generator",
+    navLabel: "Purchase orders",
+    tagline: "Purchase orders to your suppliers, with delivery dates, GST and terms.",
+    icon: ShoppingCart,
+    category: "sales",
+    kind: "generator",
+    status: "live",
+    nextStep: {
+      slug: "delivery-challan-generator",
+      text: "Shipping goods? Send them with a delivery challan.",
+    },
+    promo: {
+      heading: "Managing purchases and stock?",
+      text: "We build inventory and procurement software with purchase orders, approvals and supplier tracking.",
+    },
+  },
+  {
+    slug: "delivery-challan-generator",
+    name: "Delivery Challan Generator",
+    navLabel: "Delivery challans",
+    tagline: "Delivery challans for goods sent on approval, for job work or between branches.",
+    icon: Truck,
+    category: "sales",
+    kind: "generator",
+    status: "live",
+    nextStep: { slug: "invoice-generator", text: "When the goods are sold, raise the tax invoice." },
+    promo: {
+      heading: "Shipping goods every day?",
+      text: "We build logistics and order-management apps with challans, e-way bills and delivery tracking.",
     },
   },
 
@@ -173,6 +291,129 @@ export const TOOLS: ToolDefinition[] = [
     promo: {
       heading: "Payroll for your whole team?",
       text: "We build payroll software that works out salaries, PF, TDS and payslips for everyone, every month.",
+    },
+  },
+
+  {
+    slug: "gratuity-calculator",
+    name: "Gratuity Calculator",
+    navLabel: "Gratuity calculator",
+    tagline: "Gratuity under the new labour codes, including the one-year rule for fixed-term staff.",
+    icon: HandCoins,
+    category: "hr",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "hr-letter-generator", text: "Write the relieving and experience letters." },
+    promo: {
+      heading: "Payroll for your whole team?",
+      text: "We build payroll software that works out salaries, PF, gratuity, TDS and payslips for everyone, every month.",
+    },
+  },
+  {
+    slug: "pf-calculator",
+    name: "PF Calculator",
+    navLabel: "PF calculator",
+    tagline: "Your EPF balance at retirement, with employer and employee contributions and interest.",
+    icon: PiggyBank,
+    category: "hr",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "salary-calculator", text: "See your take-home pay after PF." },
+    promo: {
+      heading: "Payroll for your whole team?",
+      text: "We build payroll software that works out salaries, PF, gratuity, TDS and payslips for everyone, every month.",
+    },
+  },
+
+  /* ------------------------------------------------------------------ Loans & investments */
+  {
+    slug: "emi-calculator",
+    name: "EMI Calculator",
+    navLabel: "EMI calculator",
+    tagline: "Monthly EMI, total interest and the full repayment schedule for any loan.",
+    icon: Landmark,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "fd-calculator", text: "Saving up instead? See what a fixed deposit earns." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
+    },
+  },
+  {
+    slug: "sip-calculator",
+    name: "SIP Calculator",
+    navLabel: "SIP calculator",
+    tagline: "What a monthly SIP could grow to, with an optional yearly step-up.",
+    icon: ChartLine,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "ppf-calculator", text: "Compare it with a PPF account." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
+    },
+  },
+  {
+    slug: "fd-calculator",
+    name: "FD Calculator",
+    navLabel: "FD calculator",
+    tagline: "Fixed deposit maturity and interest, compounded the way banks do.",
+    icon: ShieldCheck,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "rd-calculator", text: "Saving monthly? Try the RD calculator." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
+    },
+  },
+  {
+    slug: "rd-calculator",
+    name: "RD Calculator",
+    navLabel: "RD calculator",
+    tagline: "Recurring deposit maturity for monthly savings, with quarterly compounding.",
+    icon: Repeat,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "sip-calculator", text: "See what the same amount could do in a SIP." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
+    },
+  },
+  {
+    slug: "ppf-calculator",
+    name: "PPF Calculator",
+    navLabel: "PPF calculator",
+    tagline: "Public Provident Fund maturity at the current rate, year by year.",
+    icon: Sprout,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "sip-calculator", text: "Compare it with a SIP." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
+    },
+  },
+  {
+    slug: "compound-interest-calculator",
+    name: "Compound Interest Calculator",
+    navLabel: "Compound interest",
+    tagline: "How money grows with compound interest, with optional regular deposits.",
+    icon: Coins,
+    category: "finance",
+    kind: "calculator",
+    status: "live",
+    nextStep: { slug: "fd-calculator", text: "Put it to work in a fixed deposit." },
+    promo: {
+      heading: "Building a fintech product?",
+      text: "We build lending, investment and personal-finance apps for startups, often as an MVP in 15 days.",
     },
   },
 

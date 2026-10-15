@@ -8,7 +8,7 @@ import { LIVE_TOOLS, toolsByCategory, type ToolDefinition } from "@/tools/regist
 
 const title = "Free Business Tools - Invoices, Payslips, HR Letters, Resumes, Contracts & Calculators";
 const description =
-  "Free, open-source tools for freelancers, small businesses and job seekers: invoice and quotation generators, salary slips, HR letters, resumes, cover letters, contracts, rent receipts, and GST, salary and HRA calculators. No sign-up, no watermark.";
+  "25 free tools for freelancers, small businesses and job seekers: GST invoices, quotations, receipts, credit notes, delivery challans, purchase orders, payslips, HR letters, resumes and contracts, plus EMI, SIP, FD, GST, salary and gratuity calculators. No sign-up, no watermark.";
 
 export const metadata = buildMetadata({ title, description, url: toolUrl() });
 
@@ -38,8 +38,9 @@ export default function ToolsHubPage() {
             Free tools for freelancers and small businesses
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-muted">
-            Invoices, payslips, HR letters, resumes, contracts and everyday calculators. Everything runs in
-            your browser, so your data never leaves your device, and every download is free with no watermark.
+            Invoices, receipts, purchase orders, payslips, HR letters, resumes, contracts and calculators for
+            loans, savings and tax. Everything runs in your browser, so your data never leaves your device,
+            and every download is free with no watermark.
           </p>
           <nav aria-label="Tool categories" className="mt-6 flex flex-wrap gap-2">
             {GROUPS.map(({ category, tools }) => (

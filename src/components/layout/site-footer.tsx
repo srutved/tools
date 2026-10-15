@@ -19,7 +19,7 @@ export function SiteFooter() {
         </div>
         <nav
           aria-label="All tools"
-          className="grid gap-6 sm:grid-cols-2 md:col-span-2 lg:col-span-1 lg:grid-cols-2"
+          className="grid gap-6 sm:grid-cols-2 md:col-span-2 lg:col-span-1 lg:grid-cols-3"
         >
           {GROUPS.map(({ category, tools }) => (
             <div key={category.id}>

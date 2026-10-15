@@ -64,7 +64,7 @@ export function ToolsMenu() {
         className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-white shadow-lg"
       >
         <nav aria-label="Tools" className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {GROUPS.map(({ category, tools }) => (
               <section key={category.id} aria-labelledby={`menu-${category.id}`}>
                 <h2
@@ -73,26 +73,24 @@ export function ToolsMenu() {
                 >
                   {category.name}
                 </h2>
-                <ul className="mt-2 space-y-1">
+                <ul className="mt-2 space-y-0.5">
                   {tools.map((tool) => {
                     const current = pathname === `/${tool.slug}` || pathname.startsWith(`/${tool.slug}/`);
                     return (
                       <li key={tool.slug}>
                         <Link
                           href={`/${tool.slug}`}
+                          title={tool.tagline}
                           aria-current={current ? "page" : undefined}
                           className={cn(
-                            "-mx-2 flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-subtle",
+                            "-mx-2 flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm font-semibold transition-colors hover:bg-subtle",
                             current && "bg-brand-soft",
                           )}
                         >
-                          <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-brand-soft text-brand-strong">
+                          <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-brand-soft text-brand-strong">
                             <tool.icon className="size-4" aria-hidden />
                           </span>
-                          <span className="min-w-0">
-                            <span className="block text-sm font-semibold">{tool.name}</span>
-                            <span className="block text-xs leading-snug text-muted">{tool.tagline}</span>
-                          </span>
+                          <span className="min-w-0">{tool.name}</span>
                         </Link>
                       </li>
                     );
