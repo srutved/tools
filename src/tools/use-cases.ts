@@ -1,4 +1,5 @@
 import type { UseCase, UseCaseCollection } from "@/components/tool/use-case";
+import { CONTRACT_EXAMPLES, CONTRACT_TEMPLATES_COLLECTION } from "./contract-generator/examples";
 import {
   INVOICE_FORMATS,
   INVOICE_FORMATS_COLLECTION,
@@ -15,6 +16,7 @@ export const USE_CASE_COLLECTIONS: { collection: UseCaseCollection; items: UseCa
   { collection: INVOICE_FORMATS_COLLECTION, items: INVOICE_FORMATS },
   { collection: QUOTATION_FORMATS_COLLECTION, items: QUOTATION_FORMATS },
   { collection: RESUME_EXAMPLES_COLLECTION, items: RESUME_EXAMPLES },
+  { collection: CONTRACT_TEMPLATES_COLLECTION, items: CONTRACT_EXAMPLES },
 ];
 
 /** Paths of every use-case page, e.g. "resume-builder/examples/fresher". */

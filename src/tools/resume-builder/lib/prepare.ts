@@ -4,6 +4,7 @@
  * Templates only lay this out; they never parse or format anything themselves.
  */
 
+import { toBullets } from "@/lib/text";
 import {
   customSectionKey,
   isBlankEntry,
@@ -99,15 +100,7 @@ export interface PreparedResume {
   sections: PreparedSection[];
 }
 
-const BULLET_MARKER = /^\s*(?:[-*•▪◦·‣–]|\d+[.)])\s+/;
-
-/** Splits text into non-empty lines, removing bullet markers people type or paste ("- ", "• ", "1. "). */
-export function toBullets(text: string): string[] {
-  return text
-    .split(/\r?\n/)
-    .map((line) => line.replace(BULLET_MARKER, "").trim())
-    .filter(Boolean);
-}
+export { toBullets };
 
 /** Comma, semicolon or newline separated skills. */
 export function toSkillList(text: string): string[] {

@@ -77,6 +77,12 @@ const pdfPrimitives: DocumentPrimitives = {
       {children}
     </Link>
   ),
+  PageNumber: ({ style }) => (
+    <Text
+      style={{ fontSize: DEFAULT_FONT_SIZE, lineHeight: DEFAULT_LINE_HEIGHT, ...toPdfStyle(style) }}
+      render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`}
+    />
+  ),
 };
 
 interface PdfPageProps {

@@ -7,13 +7,13 @@ Free, open-source business tools for freelancers and small businesses, live at
 - **Private by design**: everything runs in your browser. Your data is stored on your device and never sent to a server.
 - **Real PDFs**: text-based and searchable, with embedded fonts, so what you see in the preview is what you download.
 
-| Tool                                                                       | Status        |
-| -------------------------------------------------------------------------- | ------------- |
-| [Invoice Generator](https://www.srutved.com/tools/invoice-generator)       | ✅ Live       |
-| [Quotation Generator](https://www.srutved.com/tools/quotation-generator)   | ✅ Live       |
-| [Resume Builder](https://www.srutved.com/tools/resume-builder)             | ✅ Live       |
-| [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder) | ✅ Live       |
-| Contract Generator                                                         | 🛠 Coming soon |
+| Tool                                                                       | Status  |
+| -------------------------------------------------------------------------- | ------- |
+| [Invoice Generator](https://www.srutved.com/tools/invoice-generator)       | ✅ Live |
+| [Quotation Generator](https://www.srutved.com/tools/quotation-generator)   | ✅ Live |
+| [Resume Builder](https://www.srutved.com/tools/resume-builder)             | ✅ Live |
+| [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder) | ✅ Live |
+| [Contract Generator](https://www.srutved.com/tools/contract-generator)     | ✅ Live |
 
 ## Invoice Generator
 
@@ -58,6 +58,15 @@ resume templates' designs, so a resume and letter with the same template look li
 - Proper letter layout: date, recipient, subject, greeting, paragraphs and sign-off
 - Saved letters with duplicate, for tailoring one per job
 
+## Contract Generator
+
+- Service (freelance) agreements, NDAs (one-way or mutual) and statements of work
+- Plain-English, balanced clauses assembled from the user's answers in `lib/clauses.ts` (pure and unit-tested)
+- Fixed, hourly or milestone fees in any currency; IP assigned on payment or licensed; optional clauses and custom clauses
+- Six restrained designs, numbered clauses, signature blocks and "Page x of y" footers in the PDF
+- Contract templates (freelance, website development, social media, NDA, mutual NDA, SOW) as landing pages
+- Clearly presented as a starting point, not legal advice
+
 ## Tech stack
 
 [Next.js 16](https://nextjs.org) (App Router, every page pre-rendered) · React 19 · TypeScript (strict) ·
@@ -90,6 +99,7 @@ src/
 │  ├─ quotation-generator/  Tool page + /templates gallery page (invoice engine)
 │  ├─ resume-builder/       Tool page + /templates gallery page
 │  ├─ cover-letter-builder/ Tool page + /templates gallery page
+│  ├─ contract-generator/   Tool page + /templates contract template pages
 │  └─ sitemap.ts            /tools/sitemap.xml
 ├─ components/
 │  ├─ ui/                   Design-system primitives (Button, Input, Dialog…)
@@ -108,6 +118,7 @@ src/
    ├─ registry.ts           Every tool; drives the hub, navigation and sitemap
    ├─ resume-builder/       Same structure as the invoice generator
    ├─ cover-letter-builder/ Reuses the resume's details, editor section and template designs
+   ├─ contract-generator/   Clause builder (lib/clauses.ts), designs and contract templates
    └─ invoice-generator/    One self-contained folder per tool
       ├─ schema.ts          Zod schemas (stored drafts vs. export validation)
       ├─ lib/               Pure business logic + unit tests (tax, totals, UPI, GST)

@@ -108,6 +108,11 @@ export interface ViewProps {
   keepTogether?: boolean;
   /** PDF: repeat on every page (use for page backgrounds). Web: rendered once. */
   fixed?: boolean;
+  /**
+   * Render in PDFs only, e.g. a running footer: the on-screen preview is one continuous page, so
+   * page furniture would land in the middle of the content there.
+   */
+  pdfOnly?: boolean;
 }
 
 export interface TextProps {
@@ -128,11 +133,16 @@ export interface LinkProps {
   children?: ReactNode;
 }
 
+export interface PageNumberProps {
+  style?: DocStyleProp;
+}
+
 export interface DocumentPrimitives {
   View: (props: ViewProps) => ReactNode;
   Text: (props: TextProps) => ReactNode;
   Image: (props: ImageProps) => ReactNode;
   Link: (props: LinkProps) => ReactNode;
+  PageNumber: (props: PageNumberProps) => ReactNode;
 }
 
 /** The page component of a render target: WebPage for screen, PdfPage for PDF. */
@@ -180,5 +190,14 @@ export function Image(props: ImageProps) {
 
 export function Link(props: LinkProps) {
   const { Link: Impl } = usePrimitives();
+  return <Impl {...props} />;
+}
+
+/**
+ * "Page 2 of 5". PDF only - the on-screen preview is one continuous page, so it renders nothing
+ * there. Place it inside a `fixed` View so it repeats on every page.
+ */
+export function PageNumber(props: PageNumberProps) {
+  const { PageNumber: Impl } = usePrimitives();
   return <Impl {...props} />;
 }

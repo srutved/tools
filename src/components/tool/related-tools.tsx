@@ -11,7 +11,7 @@ export function RelatedTools({ slug }: { slug: string }) {
       <h2 id="related-tools" className="text-2xl font-bold">
         More free tools
       </h2>
-      <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2">
         {tools.map((tool) => (
           <li key={tool.slug}>
             <Link

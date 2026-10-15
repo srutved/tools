@@ -47,3 +47,11 @@ export function formatLongDate(iso: string): string {
     timeZone: "UTC",
   }).format(date);
 }
+
+/** Whole days from one "YYYY-MM-DD" date to another (negative if `to` is earlier). */
+export function daysBetween(from: string, to: string): number {
+  const start = parseIsoDate(from);
+  const end = parseIsoDate(to);
+  if (!start || !end) return 0;
+  return Math.round((end.getTime() - start.getTime()) / 86_400_000);
+}

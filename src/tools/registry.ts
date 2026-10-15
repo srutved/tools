@@ -71,10 +71,15 @@ export const TOOLS: ToolDefinition[] = [
   },
   {
     slug: "contract-generator",
+    nextStep: {
+      slug: "invoice-generator",
+      text: "Once the work is delivered, bill your client with a matching invoice.",
+    },
     name: "Contract Generator",
     tagline: "Freelance agreements, NDAs and statements of work from plain-English templates.",
     icon: FileSignature,
-    status: "coming-soon",
+    status: "live",
+    subPages: [{ slug: "templates", label: "Contract templates" }],
   },
 ];
 

@@ -28,7 +28,7 @@ export interface UseCase<T> {
 export interface UseCaseCollection {
   toolSlug: string;
   /** URL segment: /<tool>/<segment>/<slug>. */
-  segment: "examples" | "formats";
+  segment: "examples" | "formats" | "templates";
   /** e.g. "Resume Examples". */
   title: string;
   /** e.g. "resume". */

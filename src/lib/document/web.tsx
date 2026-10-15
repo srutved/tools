@@ -52,7 +52,8 @@ const VIEW_DEFAULTS: CSSProperties = {
 };
 
 const webPrimitives: DocumentPrimitives = {
-  View: ({ style, children }) => <div style={{ ...VIEW_DEFAULTS, ...toCss(style) }}>{children}</div>,
+  View: ({ style, children, pdfOnly }) =>
+    pdfOnly ? null : <div style={{ ...VIEW_DEFAULTS, ...toCss(style) }}>{children}</div>,
   Text: ({ style, children }) => (
     <div
       style={{
@@ -78,6 +79,8 @@ const webPrimitives: DocumentPrimitives = {
       {children}
     </a>
   ),
+  // The preview is one continuous page, so page numbers only appear in the PDF.
+  PageNumber: () => null,
 };
 
 /** Renders document primitives as DOM elements. */
