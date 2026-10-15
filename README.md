@@ -140,6 +140,18 @@ Add an entry to the tool's `templates/registry.ts`, e.g.
 `src/tools/invoice-generator/templates/registry.ts`. A template is a layout plus a
 theme (accent colour and font, plus table style for invoices), so most new looks need no layout code.
 
+### Examples and formats (landing pages)
+
+Each `UseCase` (`src/components/tool/use-case.ts`) is a landing page for one search - "software
+engineer resume", "invoice format for photographers" - with a complete example document, a short
+guide and FAQs. They live with their tool (`resume-builder/examples.ts`, `invoice-generator/examples.ts`)
+and are rendered by the shared `UseCasePage` at `/<tool>/examples/<slug>` or `/<tool>/formats/<slug>`.
+
+"Use this example" opens the tool with `?example=<slug>`; the example is added as a new document, so
+nothing the visitor saved is overwritten. `src/tools/examples.test.ts` checks that every example passes
+the tool's export validation, so it downloads without errors. To add one, append an entry to the list -
+the page, social image and sitemap entry follow automatically.
+
 ### Adding a tool
 
 1. Create `src/tools/<tool-name>/` with its schema, logic, components and `content.ts`.

@@ -11,6 +11,8 @@ interface ToolWorkspaceProps {
   toolbar: ReactNode;
   editor: ReactNode;
   preview: ReactNode;
+  /** Shown above the editor and preview, whichever mobile tab is open (e.g. "PDF ready"). */
+  notice?: ReactNode;
   /** Optionally control the mobile tab, e.g. to jump back to the editor when validation fails. */
   tab?: WorkspaceTab;
   onTabChange?: (tab: WorkspaceTab) => void;
@@ -20,7 +22,7 @@ interface ToolWorkspaceProps {
  * The shared editor + live preview layout used by every document tool.
  * Desktop: editor on the left, preview pinned on the right. Mobile: Edit / Preview tabs.
  */
-export function ToolWorkspace({ toolbar, editor, preview, tab, onTabChange }: ToolWorkspaceProps) {
+export function ToolWorkspace({ toolbar, editor, preview, notice, tab, onTabChange }: ToolWorkspaceProps) {
   const [internalTab, setInternalTab] = useState<WorkspaceTab>("edit");
   const mobileTab = tab ?? internalTab;
   const setMobileTab = onTabChange ?? setInternalTab;
@@ -57,6 +59,8 @@ export function ToolWorkspace({ toolbar, editor, preview, tab, onTabChange }: To
             </button>
           ))}
         </div>
+
+        {notice && <div className="mb-4">{notice}</div>}
 
         <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div className={cn("space-y-4", mobileTab !== "edit" && "hidden lg:block")}>{editor}</div>

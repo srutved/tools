@@ -1,11 +1,13 @@
-import { Check, ChevronDown, ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/seo/json-ld";
-import { buttonVariants } from "@/components/ui/button";
 import { SITE, toolUrl } from "@/config/site";
 import { breadcrumbJsonLd, faqJsonLd, softwareApplicationJsonLd } from "@/lib/seo";
 import type { ToolDefinition } from "@/tools/registry";
+import { FaqList } from "./faq-list";
+import { RelatedTools } from "./related-tools";
+import { SrutvedCta } from "./srutved-cta";
 import type { ToolContent } from "./tool-content";
 
 const PROMISES = ["100% free", "No sign-up", "No watermark", "Data stays on your device"];
@@ -56,6 +58,20 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
               </li>
             ))}
           </ul>
+          {tool.subPages && (
+            <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+              <span className="text-muted">Browse:</span>
+              {tool.subPages.map((page) => (
+                <Link
+                  key={page.slug}
+                  href={`/${tool.slug}/${page.slug}`}
+                  className="font-semibold text-brand-strong hover:underline"
+                >
+                  {page.label}
+                </Link>
+              ))}
+            </p>
+          )}
         </div>
       </section>
 
@@ -107,34 +123,11 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
         ))}
 
         <h2 className="mt-16 text-2xl font-bold">Frequently asked questions</h2>
-        <div className="mt-6 space-y-3">
-          {content.faqs.map((faq) => (
-            <details
-              key={faq.question}
-              className="group rounded-xl border border-border bg-white p-5 open:border-brand"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold [&::-webkit-details-marker]:hidden">
-                {faq.question}
-                <ChevronDown
-                  className="size-5 shrink-0 text-brand transition-transform group-open:rotate-180"
-                  aria-hidden
-                />
-              </summary>
-              <p className="mt-3 text-muted">{faq.answer}</p>
-            </details>
-          ))}
-        </div>
+        <FaqList faqs={content.faqs} />
 
-        <div className="mt-16 rounded-2xl bg-gray-900 p-8 text-center text-white">
-          <h2 className="text-2xl font-bold">Need software built for your business?</h2>
-          <p className="mx-auto mt-2 max-w-xl text-gray-300">
-            These tools are made by Srutved, an app development company. We build MVPs, mobile apps and SaaS
-            products, often in as little as 15 days.
-          </p>
-          <a href={SITE.contactUrl} className={buttonVariants({ size: "lg", className: "mt-6" })}>
-            Talk to us
-          </a>
-        </div>
+        <RelatedTools slug={tool.slug} />
+
+        <SrutvedCta />
       </section>
     </main>
   );

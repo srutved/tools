@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { toolUrl } from "@/config/site";
 import { LIVE_TOOLS } from "@/tools/registry";
+import { allUseCasePaths } from "@/tools/use-cases";
 
 /**
  * Served at /tools/sitemap.xml. URLs point at the public srutved.com domain. Reference this file
@@ -12,10 +13,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...LIVE_TOOLS.flatMap((tool) => [
       { url: toolUrl(tool.slug), changeFrequency: "weekly" as const, priority: 0.9 },
       ...(tool.subPages ?? []).map((page) => ({
-        url: toolUrl(`${tool.slug}/${page}`),
+        url: toolUrl(`${tool.slug}/${page.slug}`),
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
     ]),
+    // One page per resume example, invoice format and quotation format.
+    ...allUseCasePaths().map((path) => ({
+      url: toolUrl(path),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

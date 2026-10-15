@@ -1,19 +1,25 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, FilePlus2, LoaderCircle } from "lucide-react";
+import { ArrowRight, FilePlus2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm, useWatch, type Control } from "react-hook-form";
 import { PreviewCard } from "@/components/document/preview-card";
 import { DocumentList } from "@/components/tool/document-list";
 import { DocumentToolbar } from "@/components/tool/document-toolbar";
+import { ExportedBanner } from "@/components/tool/exported-banner";
 import { FormAlert } from "@/components/tool/form";
+import { ToolGate } from "@/components/tool/tool-gate";
 import { ToolWorkspace, type WorkspaceTab } from "@/components/tool/tool-workspace";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { loadDocumentLibrary, templateFromQuery, useDocumentLibrary } from "@/hooks/use-document-library";
-import { useHydrated } from "@/hooks/use-hydrated";
+import {
+  exampleFromQuery,
+  loadDocumentLibrary,
+  templateFromQuery,
+  useDocumentLibrary,
+} from "@/hooks/use-document-library";
 import { usePdfExport } from "@/hooks/use-pdf-export";
 import { useQrCode } from "@/hooks/use-qr-code";
 import { formatMoney, guessCurrencyFromLocale } from "@/lib/currency";
@@ -22,7 +28,8 @@ import { WebPage } from "@/lib/document/web";
 import { upsertDocument } from "@/lib/saved-documents";
 import { createId } from "@/lib/utils";
 import { loadBusinessProfile, saveBusinessProfile } from "@/shared/business-profile";
-import { createInvoice, quoteToInvoice } from "../defaults";
+import { createInvoice, fromExample, nextNumberAfter, quoteToInvoice } from "../defaults";
+import { formatsFor } from "../examples";
 import { renderInvoicePdf } from "../export";
 import { computeInvoice } from "../lib/calculations";
 import { kindLabels, type DocumentKind } from "../lib/document-kind";
@@ -51,21 +58,26 @@ export function QuoteGenerator() {
 }
 
 function BillingDocumentGenerator({ kind }: { kind: DocumentKind }) {
-  const hydrated = useHydrated();
-  if (!hydrated) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-subtle/60 text-muted">
-        <LoaderCircle className="mr-2 size-5 animate-spin" aria-hidden /> Loading the {kindLabels(kind).noun}{" "}
-        generator…
-      </div>
-    );
-  }
-  return <BillingDocumentApp kind={kind} />;
+  return (
+    <ToolGate
+      label={`${kindLabels(kind).noun} generator`}
+      render={(query) => <BillingDocumentApp kind={kind} query={query} />}
+    />
+  );
 }
 
-function loadInitialState(kind: DocumentKind) {
-  const templateId = templateFromQuery(INVOICE_TEMPLATES);
-  return loadDocumentLibrary(storeFor(kind), {
+function loadInitialState(kind: DocumentKind, query: URLSearchParams) {
+  const templateId = templateFromQuery(query, INVOICE_TEMPLATES);
+  const example = exampleFromQuery(query, formatsFor(kind));
+  const store = storeFor(kind);
+  return loadDocumentLibrary(store, {
+    // An example chosen on a landing page opens as a new document next to the saved ones.
+    startWith:
+      example &&
+      fromExample(example.document, {
+        profile: loadBusinessProfile(),
+        number: nextNumberAfter(store.load().documents[0]?.data.number),
+      }),
     create: () =>
       createInvoice({
         kind,
@@ -92,14 +104,15 @@ function useConvertToInvoice() {
   };
 }
 
-function BillingDocumentApp({ kind }: { kind: DocumentKind }) {
+function BillingDocumentApp({ kind, query }: { kind: DocumentKind; query: URLSearchParams }) {
   const labels = kindLabels(kind);
   const plural = `${labels.noun}s`;
   const store = storeFor(kind);
-  const [initial] = useState(() => loadInitialState(kind));
+  const [initial] = useState(() => loadInitialState(kind, query));
   const [tab, setTab] = useState<WorkspaceTab>("edit");
   const [dialog, setDialog] = useState<"templates" | "library" | null>(null);
   const [alert, setAlert] = useState<string | null>(null);
+  const [exported, setExported] = useState(false);
   const convertToInvoice = useConvertToInvoice();
 
   const form = useForm<Invoice>({
@@ -130,6 +143,7 @@ function BillingDocumentApp({ kind }: { kind: DocumentKind }) {
     setAlert,
     onBeforeExport: library.flushSave,
     onInvalid: () => setTab("edit"),
+    onExported: (mode) => setExported(mode === "download"),
   });
 
   const latestNumber = () => library.latest()?.number ?? form.getValues("number");
@@ -177,6 +191,14 @@ function BillingDocumentApp({ kind }: { kind: DocumentKind }) {
       <ToolWorkspace
         tab={tab}
         onTabChange={setTab}
+        notice={
+          exported && (
+            <ExportedBanner
+              toolSlug={kind === "quote" ? "quotation-generator" : "invoice-generator"}
+              onDismiss={() => setExported(false)}
+            />
+          )
+        }
         toolbar={
           <DocumentToolbar
             templateName={getTemplate(templateId).name}

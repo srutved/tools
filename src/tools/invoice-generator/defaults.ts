@@ -2,6 +2,7 @@ import { addDaysIso, todayIso } from "@/lib/date";
 import { createId } from "@/lib/utils";
 import { EMPTY_PARTY, EMPTY_PAYMENT_DETAILS, type BusinessProfile } from "@/shared/business-profile";
 import type { DocumentKind } from "./lib/document-kind";
+import { nextInvoiceNumber } from "./lib/invoice-number";
 import type { Invoice, LineItem, TaxMode } from "./schema";
 import { DEFAULT_TEMPLATE_ID } from "./templates/registry";
 
@@ -69,6 +70,32 @@ export function createInvoice({
     items: [createLineItem(taxMode === "gst" ? 18 : 0)],
     notes: starter.notes,
     terms: starter.terms,
+  };
+}
+
+/** The number after the user's latest one, or undefined to keep the example's own. */
+export const nextNumberAfter = (latest: string | undefined) =>
+  latest ? nextInvoiceNumber(latest) : undefined;
+
+/**
+ * Makes a landing-page example the user's own: their saved business details and payment info
+ * (when they have them), today's date, a fresh due date and their next document number.
+ */
+export function fromExample(
+  example: Invoice,
+  { profile, number }: { profile?: BusinessProfile | null; number?: string },
+): Invoice {
+  const issueDate = todayIso();
+  const hasProfile = Boolean(profile?.business.name.trim());
+  return {
+    ...example,
+    number: number ?? example.number,
+    issueDate,
+    dueDate: addDaysIso(issueDate, STARTERS[example.kind].days),
+    from: hasProfile ? profile!.business : example.from,
+    logo: hasProfile ? profile!.logo : example.logo,
+    payment: hasProfile ? profile!.payment : example.payment,
+    items: example.items.map((item) => ({ ...item, id: createId() })),
   };
 }
 

@@ -183,7 +183,7 @@ function tableColumns(
   { invoice, computed }: Pick<LayoutProps, "invoice" | "computed">,
   compact: boolean,
 ): Column[] {
-  const columns: Column[] = [{ key: "index", label: "#", width: compact ? 16 : 20, align: "left" }];
+  const columns: Column[] = [{ key: "index", label: "#", width: compact ? 20 : 22, align: "left" }];
   columns.push({ key: "description", label: "Item", width: "auto", align: "left" });
   if (computed.showCodeColumn && !compact) {
     columns.push({
@@ -285,8 +285,10 @@ export function ItemsTable({
 
   return (
     <View style={[{ marginTop: 18 }, boxed && { borderWidth: 0.75, borderColor: INK.border }]}>
+      {/* Fixed: when the table runs onto another page, the PDF repeats the header there. */}
       <View
         keepTogether
+        fixed
         style={[
           { flexDirection: "row", paddingVertical: 7, paddingHorizontal: 8 },
           filled

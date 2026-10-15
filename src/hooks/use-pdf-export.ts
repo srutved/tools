@@ -15,6 +15,8 @@ interface UsePdfExportOptions<T extends FieldValues> {
   onBeforeExport?: () => void;
   /** Runs when validation fails, before focusing the first invalid field (e.g. show the editor tab). */
   onInvalid?: () => void;
+  /** Runs after a successful download or print, e.g. to suggest a next step. */
+  onExported?: (mode: ExportMode) => void;
 }
 
 /** Moves focus to the first invalid field, opening any collapsed section it is in. */
@@ -34,6 +36,7 @@ export function usePdfExport<T extends FieldValues>({
   setAlert,
   onBeforeExport,
   onInvalid,
+  onExported,
 }: UsePdfExportOptions<T>) {
   const [busy, setBusy] = useState<ExportMode | null>(null);
 
@@ -55,6 +58,7 @@ export function usePdfExport<T extends FieldValues>({
         const { blob, fileName } = await render(data);
         if (printWindow) printWindow.location.href = URL.createObjectURL(blob);
         else downloadBlob(blob, fileName);
+        onExported?.(mode);
       } catch (error) {
         console.error("PDF export failed", error);
         printWindow?.close();

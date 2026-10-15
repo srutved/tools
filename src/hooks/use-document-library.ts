@@ -18,21 +18,37 @@ type ActiveCollection<T> = DocumentCollection<T> & { activeId: string };
 /**
  * Reads a tool's saved documents on first load, creating a first document for new visitors.
  * `patch` adjusts the opened document, e.g. to apply a template chosen through the URL.
+ * `startWith` opens a new document instead (e.g. an example chosen on a landing page), added
+ * alongside the saved ones so nothing the user made is overwritten.
  */
 export function loadDocumentLibrary<T>(
   store: DocumentStore<T>,
-  { create, patch = (data) => data }: { create: () => T; patch?: (data: T) => T },
+  { create, patch = (data) => data, startWith }: { create: () => T; patch?: (data: T) => T; startWith?: T },
 ): ActiveCollection<T> & { active: T } {
   const collection = store.load();
+  if (startWith) {
+    const id = createId();
+    const active = patch(startWith);
+    return { ...upsertDocument(collection, id, active), activeId: id, active };
+  }
   const existing = findDocument(collection, collection.activeId) ?? collection.documents[0];
   const id = existing?.id ?? createId();
   const active = patch(existing ? existing.data : create());
   return { ...upsertDocument(collection, id, active), activeId: id, active };
 }
 
-/** Reads the `?template=` query parameter if it names one of the given templates. */
-export function templateFromQuery(templates: { id: string }[]): string | undefined {
-  const requested = new URLSearchParams(window.location.search).get("template");
+/** The example named by `?example=`, if any. ToolGate removes the parameter once it's been read. */
+export function exampleFromQuery<E extends { slug: string }>(
+  query: URLSearchParams,
+  examples: readonly E[],
+): E | undefined {
+  const slug = query.get("example");
+  return slug ? examples.find((example) => example.slug === slug) : undefined;
+}
+
+/** The template named by `?template=`, if it's one of the given templates. */
+export function templateFromQuery(query: URLSearchParams, templates: { id: string }[]): string | undefined {
+  const requested = query.get("template");
   return templates.some((template) => template.id === requested) ? requested! : undefined;
 }
 

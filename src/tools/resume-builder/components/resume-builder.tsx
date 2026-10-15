@@ -1,22 +1,29 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FilePlus2, LoaderCircle } from "lucide-react";
+import { FilePlus2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm, useWatch, type Control } from "react-hook-form";
 import { PreviewCard } from "@/components/document/preview-card";
 import { DocumentList } from "@/components/tool/document-list";
 import { DocumentToolbar } from "@/components/tool/document-toolbar";
+import { ExportedBanner } from "@/components/tool/exported-banner";
 import { ExampleBanner } from "@/components/tool/example-banner";
 import { FormAlert } from "@/components/tool/form";
+import { ToolGate } from "@/components/tool/tool-gate";
 import { ToolWorkspace, type WorkspaceTab } from "@/components/tool/tool-workspace";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { loadDocumentLibrary, templateFromQuery, useDocumentLibrary } from "@/hooks/use-document-library";
-import { useHydrated } from "@/hooks/use-hydrated";
+import {
+  exampleFromQuery,
+  loadDocumentLibrary,
+  templateFromQuery,
+  useDocumentLibrary,
+} from "@/hooks/use-document-library";
 import { usePdfExport } from "@/hooks/use-pdf-export";
 import { WebPage } from "@/lib/document/web";
 import { createResume, withFreshIds } from "../defaults";
+import { RESUME_EXAMPLES } from "../examples";
 import { renderResumePdf } from "../export";
 import { prepareResume } from "../lib/prepare";
 import { SAMPLE_RESUME } from "../sample";
@@ -38,32 +45,28 @@ import {
 } from "./editor-sections";
 import { ResumeTemplateGallery } from "./template-gallery";
 
-/** Entry point. Renders a placeholder on the server; the editor itself needs the browser's storage. */
+/** Entry point: waits for the browser, then opens the editor. */
 export function ResumeBuilder() {
-  const hydrated = useHydrated();
-  if (!hydrated) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center bg-subtle/60 text-muted">
-        <LoaderCircle className="mr-2 size-5 animate-spin" aria-hidden /> Loading the resume builder…
-      </div>
-    );
-  }
-  return <ResumeBuilderApp />;
+  return <ToolGate label="resume builder" render={(query) => <ResumeBuilderApp query={query} />} />;
 }
 
-function loadInitialState() {
-  const templateId = templateFromQuery(RESUME_TEMPLATES);
+function loadInitialState(query: URLSearchParams) {
+  const templateId = templateFromQuery(query, RESUME_TEMPLATES);
+  const example = exampleFromQuery(query, RESUME_EXAMPLES);
   return loadDocumentLibrary(resumeStore, {
     create: () => createResume(templateId),
+    // An example chosen on a landing page opens as a new resume next to the saved ones.
+    startWith: example && withFreshIds(example.document),
     patch: (resume) => (templateId ? { ...resume, templateId } : resume),
   });
 }
 
-function ResumeBuilderApp() {
-  const [initial] = useState(loadInitialState);
+function ResumeBuilderApp({ query }: { query: URLSearchParams }) {
+  const [initial] = useState(() => loadInitialState(query));
   const [tab, setTab] = useState<WorkspaceTab>("edit");
   const [dialog, setDialog] = useState<"templates" | "resumes" | null>(null);
   const [alert, setAlert] = useState<string | null>(null);
+  const [exported, setExported] = useState(false);
 
   const form = useForm<Resume>({
     resolver: zodResolver(resumeExportSchema),
@@ -90,6 +93,7 @@ function ResumeBuilderApp() {
     setAlert,
     onBeforeExport: library.flushSave,
     onInvalid: () => setTab("edit"),
+    onExported: (mode) => setExported(mode === "download"),
   });
 
   const templateId = useWatch({ control: form.control, name: "templateId" });
@@ -105,6 +109,9 @@ function ResumeBuilderApp() {
       <ToolWorkspace
         tab={tab}
         onTabChange={setTab}
+        notice={
+          exported && <ExportedBanner toolSlug={"resume-builder"} onDismiss={() => setExported(false)} />
+        }
         toolbar={
           <DocumentToolbar
             templateName={getTemplate(templateId).name}

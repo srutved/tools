@@ -49,6 +49,20 @@ describe("invoice templates render to PDF", () => {
     });
   }
 
+  it("continues long item tables onto more pages", { timeout: 60_000 }, async () => {
+    const sample = sampleFor("invoice");
+    const items = Array.from({ length: 45 }, (_, index) => ({
+      ...sample.items[index % sample.items.length],
+      id: `long-${index}`,
+      description: `${sample.items[index % sample.items.length].description} - phase ${index + 1}`,
+    }));
+    for (const templateId of ["classic-slate", "sidebar-emerald", "bold-orange"]) {
+      const { pdf, text } = await render({ ...sample, templateId, items });
+      if (outDir) writeFileSync(join(outDir, `invoice-long-${templateId}.pdf`), pdf);
+      expect(text.match(/\/Type\s*\/Page\b/g)?.length ?? 0).toBeGreaterThan(1);
+    }
+  });
+
   it("leaves the payment QR code off quotations", () => {
     expect(computeInvoice(sampleFor("invoice")).upiUri).not.toBeNull();
     expect(

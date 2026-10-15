@@ -36,7 +36,7 @@ export function MinimalLayout({ invoice, computed, qrCode, theme }: LayoutProps)
 
       <View style={{ flexDirection: "row", marginTop: 34, alignItems: "flex-start" }}>
         <View style={column}>
-          <PartyBlock invoice={invoice} party={invoice.to} title="Billed to" />
+          <PartyBlock invoice={invoice} party={invoice.to} title={labelsFor(invoice).clientHeading} />
         </View>
         <View style={column}>
           <Label>Details</Label>
