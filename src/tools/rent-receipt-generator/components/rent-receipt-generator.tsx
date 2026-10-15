@@ -21,6 +21,7 @@ import { addMonths, formatMonth, isMonth, monthRange } from "@/lib/date";
 import { WebPage } from "@/lib/document/web";
 import { createRentReceipt } from "../defaults";
 import { renderRentReceiptPdf } from "../export";
+import { rentFromQuery } from "../lib/handoff";
 import { prepareRentReceipts } from "../lib/receipts";
 import { SAMPLE_RENT_RECEIPT } from "../sample";
 import { rentReceiptExportSchema, type RentReceipt } from "../schema";
@@ -39,8 +40,11 @@ export function RentReceiptGenerator() {
 
 function loadInitialState(query: URLSearchParams) {
   const templateId = templateFromQuery(query, RECEIPT_TEMPLATES);
+  const rent = rentFromQuery(query);
   return loadDocumentLibrary(rentReceiptStore, {
     create: () => createRentReceipt(templateId),
+    // A rent from the HRA calculator opens as a new set of receipts next to the saved ones.
+    startWith: rent ? { ...createRentReceipt(templateId), monthlyRent: rent } : undefined,
     patch: (receipt) => (templateId ? { ...receipt, templateId } : receipt),
   });
 }

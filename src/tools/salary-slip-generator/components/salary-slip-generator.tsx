@@ -22,6 +22,7 @@ import { WebPage } from "@/lib/document/web";
 import { loadBusinessProfile } from "@/shared/business-profile";
 import { createSalarySlip, withFreshIds } from "../defaults";
 import { renderSalarySlipPdf } from "../export";
+import { salaryFromQuery, slipWithSalary } from "../lib/handoff";
 import { nextMonthSlip, preparePayslip } from "../lib/payslip";
 import { SAMPLE_SALARY_SLIP } from "../sample";
 import { salarySlipExportSchema, type SalarySlip } from "../schema";
@@ -54,8 +55,11 @@ function newSlip(templateId?: string, currency?: string) {
 
 function loadInitialState(query: URLSearchParams) {
   const templateId = templateFromQuery(query, PAYSLIP_TEMPLATES);
+  const salary = salaryFromQuery(query);
   return loadDocumentLibrary(salarySlipStore, {
     create: () => newSlip(templateId),
+    // A salary from the salary calculator opens as a new slip next to the saved ones.
+    startWith: salary && slipWithSalary(newSlip(templateId, "INR"), salary),
     patch: (slip) => (templateId ? { ...slip, templateId } : slip),
   });
 }
@@ -207,10 +211,12 @@ function SalarySlipGeneratorApp({ query }: { query: URLSearchParams }) {
   );
 }
 
-/** Shown while no employee has been entered yet. */
+/** Shown while the slip is still blank. */
 function EmptySlipBanner({ control, onLoad }: { control: Control<SalarySlip>; onLoad: () => void }) {
   const employee = useWatch({ control, name: "employee.name" });
-  if (employee?.trim()) return null;
+  const earnings = useWatch({ control, name: "earnings" });
+  // Hidden once there's anything to lose, e.g. figures handed over from the salary calculator.
+  if (employee?.trim() || earnings?.some((item) => Number(item.amount) > 0)) return null;
   return <ExampleBanner noun="salary slip" onLoad={onLoad} />;
 }
 

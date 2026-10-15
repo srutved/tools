@@ -6,8 +6,21 @@ import { Suspense, useEffect, type ReactNode } from "react";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { trackToolEvent } from "@/lib/analytics";
 
-/** Query parameters that only apply to the first load and are removed afterwards. */
-const ONE_TIME_PARAMS = ["example"];
+/** `?example=` opens a landing-page example as a new document (see exampleFromQuery). */
+const EXAMPLE_PARAM = "example";
+
+/**
+ * Figures handed over by the calculators, each opening a new document: the salary calculator
+ * sends ?basic=&hra=&special=&pf=&pt=&tds= to the salary slip generator, and the HRA calculator
+ * sends ?rent= to the rent receipt generator.
+ */
+const HANDOFF_PARAMS = ["basic", "hra", "special", "pf", "pt", "tds", "rent"];
+
+/**
+ * Query parameters that only apply to the first load and are removed afterwards, so a reload
+ * doesn't open the same example or handed-over document again.
+ */
+const ONE_TIME_PARAMS = [EXAMPLE_PARAM, ...HANDOFF_PARAMS];
 
 function ToolLoading({ label }: { label: string }) {
   return (
@@ -45,7 +58,7 @@ function ToolGateInner({ label, render }: ToolGateProps) {
   useEffect(() => {
     const url = new URL(window.location.href);
     if (!ONE_TIME_PARAMS.some((name) => url.searchParams.has(name))) return;
-    const example = url.searchParams.get("example");
+    const example = url.searchParams.get(EXAMPLE_PARAM);
     if (example) trackToolEvent("Example Opened", { example });
     ONE_TIME_PARAMS.forEach((name) => url.searchParams.delete(name));
     window.history.replaceState(window.history.state, "", url);

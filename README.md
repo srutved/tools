@@ -7,15 +7,12 @@ Free, open-source business tools for freelancers and small businesses, live at
 - **Private by design**: everything runs in your browser. Your data is stored on your device and never sent to a server.
 - **Real PDFs**: text-based and searchable, with embedded fonts, so what you see in the preview is what you download.
 
-| Tool                                                                           | Status  |
-| ------------------------------------------------------------------------------ | ------- |
-| [Invoice Generator](https://www.srutved.com/tools/invoice-generator)           | ✅ Live |
-| [Quotation Generator](https://www.srutved.com/tools/quotation-generator)       | ✅ Live |
-| [Resume Builder](https://www.srutved.com/tools/resume-builder)                 | ✅ Live |
-| [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder)     | ✅ Live |
-| [Contract Generator](https://www.srutved.com/tools/contract-generator)         | ✅ Live |
-| [Rent Receipt Generator](https://www.srutved.com/tools/rent-receipt-generator) | ✅ Live |
-| [Salary Slip Generator](https://www.srutved.com/tools/salary-slip-generator)   | ✅ Live |
+| Category             | Tools                                                                                                                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Invoicing & billing  | [Invoice Generator](https://www.srutved.com/tools/invoice-generator) · [Quotation Generator](https://www.srutved.com/tools/quotation-generator) · [GST Calculator](https://www.srutved.com/tools/gst-calculator)               |
+| HR & payroll         | [Salary Slip Generator](https://www.srutved.com/tools/salary-slip-generator) · [HR Letter Generator](https://www.srutved.com/tools/hr-letter-generator) · [Salary Calculator](https://www.srutved.com/tools/salary-calculator) |
+| Resumes & job search | [Resume Builder](https://www.srutved.com/tools/resume-builder) · [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder)                                                                                    |
+| Agreements & rent    | [Contract Generator](https://www.srutved.com/tools/contract-generator) · [Rent Receipt Generator](https://www.srutved.com/tools/rent-receipt-generator) · [HRA Calculator](https://www.srutved.com/tools/hra-calculator)       |
 
 ## Invoice Generator
 
@@ -83,6 +80,21 @@ resume templates' designs, so a resume and letter with the same template look li
 - Earnings beside deductions, with suggested components (HRA, PF, ESI, professional tax, TDS) and any currency
 - Gross pay, total deductions and net pay in words worked out in `lib/payslip.ts` (pure and unit-tested)
 - Six one-page designs; duplicate a slip to make the next month's
+
+## HR Letter Generator
+
+- Offer, appointment, experience, relieving and increment (or promotion) letters, for employees and interns
+- Formal wording assembled from the answers in `lib/letters.ts` (pure and unit-tested), referring to the employee as they, she or he
+- Letterhead with logo and contact details, signature, an acceptance block for offers and appointments, and a salary annexure built from the CTC
+- Six designs; letter templates (offer, appointment, experience, relieving, internship, increment, promotion) as landing pages
+
+## Calculators
+
+- **GST Calculator:** add or remove GST at the GST 2.0 rates (or any rate), with the CGST/SGST or IGST split
+- **Salary Calculator:** CTC to monthly in-hand pay after PF, gratuity, professional tax and income tax under both regimes for FY 2026-27; hands the figures to the salary slip generator
+- **HRA Calculator:** tax-free HRA under the 8-metro rule from FY 2026-27; hands the rent to the rent receipt generator
+
+Calculators share `src/components/tool/calculator.tsx`; their maths lives in each tool's `lib/` with unit tests.
 
 ## Tech stack
 
@@ -187,7 +199,7 @@ the page, social image and sitemap entry follow automatically.
 ### Adding a tool
 
 1. Create `src/tools/<tool-name>/` with its schema, logic, components and `content.ts`.
-2. Register it in `src/tools/registry.ts`. The hub, header, footer and sitemap pick it up automatically.
+2. Register it in `src/tools/registry.ts` with its category. The hub, the header menu, the footer and the sitemap pick it up automatically.
 3. Add `src/app/<tool-name>/page.tsx`, which wraps your tool in the shared `<ToolPage>`.
 4. Reuse the shared building blocks for a consistent UI: `ToolWorkspace`, `DocumentToolbar`, the form fields and
    `EntryList`, `useDocumentLibrary`, `usePdfExport`, `TemplateGallery`, `TemplatesPage` and the document primitives.
