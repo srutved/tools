@@ -25,10 +25,10 @@ export function SiteHeader() {
               <Link
                 key={tool.slug}
                 href={`/${tool.slug}`}
-                // Every tool by name only where there's room; "All tools" covers narrower screens.
-                className="hidden rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap text-muted hover:text-foreground xl:block"
+                // Every tool only where there's room; "All tools" covers narrower screens.
+                className="hidden rounded-md px-2.5 py-2 text-sm font-semibold whitespace-nowrap text-muted hover:text-foreground xl:block"
               >
-                {tool.name}
+                {tool.navLabel}
               </Link>
             ))}
           </nav>

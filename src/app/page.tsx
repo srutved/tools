@@ -7,9 +7,9 @@ import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo
 import { cn } from "@/lib/utils";
 import { LIVE_TOOLS, TOOLS } from "@/tools/registry";
 
-const title = "Free Business Tools - Invoices, Quotes, Resumes, Cover Letters & Contracts";
+const title = "Free Business Tools - Invoices, Quotes, Resumes, Contracts, Payslips & Rent Receipts";
 const description =
-  "Free, open-source tools for freelancers, job seekers and small businesses: invoice and quotation generators with GST, VAT and any currency, a resume builder, a matching cover letter builder and a contract generator. No sign-up, no watermark.";
+  "Free, open-source tools for freelancers, job seekers and small businesses: invoice and quotation generators with GST, VAT and any currency, a resume and cover letter builder, a contract generator, and salary slip and rent receipt generators. No sign-up, no watermark.";
 
 export const metadata = buildMetadata({ title, description, url: toolUrl() });
 
@@ -37,8 +37,9 @@ export default function ToolsHubPage() {
             Free tools for freelancers and small businesses
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-muted">
-            Create invoices, quotations, resumes, cover letters and contracts in minutes. Everything runs in
-            your browser, so your data never leaves your device, and every download is free with no watermark.
+            Create invoices, quotations, resumes, cover letters, contracts, payslips and rent receipts in
+            minutes. Everything runs in your browser, so your data never leaves your device, and every
+            download is free with no watermark.
           </p>
         </div>
       </section>

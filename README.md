@@ -7,13 +7,15 @@ Free, open-source business tools for freelancers and small businesses, live at
 - **Private by design**: everything runs in your browser. Your data is stored on your device and never sent to a server.
 - **Real PDFs**: text-based and searchable, with embedded fonts, so what you see in the preview is what you download.
 
-| Tool                                                                       | Status  |
-| -------------------------------------------------------------------------- | ------- |
-| [Invoice Generator](https://www.srutved.com/tools/invoice-generator)       | ✅ Live |
-| [Quotation Generator](https://www.srutved.com/tools/quotation-generator)   | ✅ Live |
-| [Resume Builder](https://www.srutved.com/tools/resume-builder)             | ✅ Live |
-| [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder) | ✅ Live |
-| [Contract Generator](https://www.srutved.com/tools/contract-generator)     | ✅ Live |
+| Tool                                                                           | Status  |
+| ------------------------------------------------------------------------------ | ------- |
+| [Invoice Generator](https://www.srutved.com/tools/invoice-generator)           | ✅ Live |
+| [Quotation Generator](https://www.srutved.com/tools/quotation-generator)       | ✅ Live |
+| [Resume Builder](https://www.srutved.com/tools/resume-builder)                 | ✅ Live |
+| [Cover Letter Builder](https://www.srutved.com/tools/cover-letter-builder)     | ✅ Live |
+| [Contract Generator](https://www.srutved.com/tools/contract-generator)         | ✅ Live |
+| [Rent Receipt Generator](https://www.srutved.com/tools/rent-receipt-generator) | ✅ Live |
+| [Salary Slip Generator](https://www.srutved.com/tools/salary-slip-generator)   | ✅ Live |
 
 ## Invoice Generator
 
@@ -57,6 +59,7 @@ resume templates' designs, so a resume and letter with the same template look li
 - Copy your details (and design) from a saved resume in one click; new letters start from your latest resume
 - Proper letter layout: date, recipient, subject, greeting, paragraphs and sign-off
 - Saved letters with duplicate, for tailoring one per job
+- Cover letter examples (fresher, internship, career change and more) as landing pages
 
 ## Contract Generator
 
@@ -66,6 +69,20 @@ resume templates' designs, so a resume and letter with the same template look li
 - Six restrained designs, numbered clauses, signature blocks and "Page x of y" footers in the PDF
 - Contract templates (freelance, website development, social media, NDA, mutual NDA, SOW) as landing pages
 - Clearly presented as a starting point, not legal advice
+
+## Rent Receipt Generator
+
+- One numbered, dated receipt per month from a single form: a whole financial year (or up to 24 months) in one PDF
+- Built for HRA claims in India: landlord PAN (flagged when yearly rent is over ₹1,00,000), amount in words, payment mode
+- A revenue stamp box on cash receipts over ₹5,000, and an optional landlord signature on every receipt
+- Six designs, about three receipts to an A4 page with cut lines; duplicate a set for the next year
+
+## Salary Slip Generator
+
+- Company logo, employee details (ID, PAN, UAN, bank), working and paid days with loss of pay
+- Earnings beside deductions, with suggested components (HRA, PF, ESI, professional tax, TDS) and any currency
+- Gross pay, total deductions and net pay in words worked out in `lib/payslip.ts` (pure and unit-tested)
+- Six one-page designs; duplicate a slip to make the next month's
 
 ## Tech stack
 
@@ -100,6 +117,8 @@ src/
 │  ├─ resume-builder/       Tool page + /templates gallery page
 │  ├─ cover-letter-builder/ Tool page + /templates gallery page
 │  ├─ contract-generator/   Tool page + /templates contract template pages
+│  ├─ rent-receipt-generator/
+│  ├─ salary-slip-generator/
 │  └─ sitemap.ts            /tools/sitemap.xml
 ├─ components/
 │  ├─ ui/                   Design-system primitives (Button, Input, Dialog…)
@@ -119,6 +138,8 @@ src/
    ├─ resume-builder/       Same structure as the invoice generator
    ├─ cover-letter-builder/ Reuses the resume's details, editor section and template designs
    ├─ contract-generator/   Clause builder (lib/clauses.ts), designs and contract templates
+   ├─ rent-receipt-generator/ One receipt per month (lib/receipts.ts) and receipt designs
+   ├─ salary-slip-generator/ Payslip totals (lib/payslip.ts) and payslip designs
    └─ invoice-generator/    One self-contained folder per tool
       ├─ schema.ts          Zod schemas (stored drafts vs. export validation)
       ├─ lib/               Pure business logic + unit tests (tax, totals, UPI, GST)
