@@ -4,6 +4,7 @@ import { LoaderCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, type ReactNode } from "react";
 import { useHydrated } from "@/hooks/use-hydrated";
+import { trackToolEvent } from "@/lib/analytics";
 
 /** Query parameters that only apply to the first load and are removed afterwards. */
 const ONE_TIME_PARAMS = ["example"];
@@ -44,6 +45,8 @@ function ToolGateInner({ label, render }: ToolGateProps) {
   useEffect(() => {
     const url = new URL(window.location.href);
     if (!ONE_TIME_PARAMS.some((name) => url.searchParams.has(name))) return;
+    const example = url.searchParams.get("example");
+    if (example) trackToolEvent("Example Opened", { example });
     ONE_TIME_PARAMS.forEach((name) => url.searchParams.delete(name));
     window.history.replaceState(window.history.state, "", url);
   }, [searchParams]);

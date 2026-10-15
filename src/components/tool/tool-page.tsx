@@ -8,6 +8,7 @@ import type { ToolDefinition } from "@/tools/registry";
 import { FaqList } from "./faq-list";
 import { RelatedTools } from "./related-tools";
 import { SrutvedCta } from "./srutved-cta";
+import { ToolPromo } from "./tool-promo";
 import type { ToolContent } from "./tool-content";
 
 const PROMISES = ["100% free", "No sign-up", "No watermark", "Data stays on your device"];
@@ -76,6 +77,7 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
       </section>
 
       {children}
+      <ToolPromo tool={tool} />
 
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <h2 className="text-2xl font-bold">How it works</h2>
@@ -127,7 +129,7 @@ export function ToolPage({ tool, content, children }: ToolPageProps) {
 
         <RelatedTools slug={tool.slug} />
 
-        <SrutvedCta />
+        <SrutvedCta toolSlug={tool.slug} />
       </section>
     </main>
   );

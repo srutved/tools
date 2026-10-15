@@ -27,5 +27,12 @@ export const SITE = {
   },
 } as const;
 
+/**
+ * Srutved's contact page, tagged with the tool the visitor came from so enquiries can be traced
+ * back to it in the main site's analytics.
+ */
+export const contactUrlFrom = (toolSlug: string) =>
+  `${SITE.contactUrl}?utm_source=srutved-tools&utm_medium=tool&utm_campaign=${toolSlug}`;
+
 /** Absolute URL of a tool page on the public domain, e.g. toolUrl("invoice-generator"). */
 export const toolUrl = (slug?: string) => (slug ? `${SITE.toolsUrl}/${slug}` : SITE.toolsUrl);

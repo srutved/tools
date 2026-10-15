@@ -22,6 +22,7 @@ import {
 } from "@/hooks/use-document-library";
 import { usePdfExport } from "@/hooks/use-pdf-export";
 import { useQrCode } from "@/hooks/use-qr-code";
+import { trackToolEvent } from "@/lib/analytics";
 import { formatMoney, guessCurrencyFromLocale } from "@/lib/currency";
 import { formatDate, todayIso } from "@/lib/date";
 import { WebPage } from "@/lib/document/web";
@@ -100,6 +101,7 @@ function useConvertToInvoice() {
       profile: loadBusinessProfile(),
     });
     invoiceStore.save(upsertDocument(invoices, createId(), invoice));
+    trackToolEvent("Quote Converted");
     router.push("/invoice-generator");
   };
 }

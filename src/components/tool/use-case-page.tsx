@@ -159,7 +159,7 @@ export function UseCasePage({ tool, collection, useCase, preview, siblings }: Us
         )}
 
         <RelatedTools slug={tool.slug} />
-        <SrutvedCta />
+        <SrutvedCta toolSlug={tool.slug} />
       </section>
     </main>
   );
@@ -221,7 +221,7 @@ export function UseCaseIndexPage({ tool, collection, items }: UseCaseIndexPagePr
         </ul>
         <div className="mx-auto max-w-5xl">
           <RelatedTools slug={tool.slug} />
-          <SrutvedCta />
+          <SrutvedCta toolSlug={tool.slug} />
         </div>
       </section>
     </main>

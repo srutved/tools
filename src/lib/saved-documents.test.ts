@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { SAMPLE_INVOICE } from "@/tools/invoice-generator/sample";
 import { invoiceStore } from "@/tools/invoice-generator/store";
+import { SAMPLE_RENT_RECEIPT } from "@/tools/rent-receipt-generator/sample";
+import { rentReceiptStore } from "@/tools/rent-receipt-generator/store";
 import { removeDocument, upsertDocument, type DocumentCollection } from "./saved-documents";
 
 const collection: DocumentCollection<string> = {
@@ -51,6 +53,43 @@ describe("invoice store", () => {
         JSON.stringify({ activeId: "y", documents: [{ id: "y", updatedAt: 6, data: withoutKind }] }),
       );
       expect(invoiceStore.load().documents[0]?.data).toEqual(SAMPLE_INVOICE);
+    } finally {
+      Reflect.deleteProperty(globalThis, "window");
+    }
+  });
+});
+
+describe("loading drafts", () => {
+  it("repairs emptied and out-of-range numbers instead of dropping the draft", () => {
+    const storage = new Map<string, string>();
+    const localStorage = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+      removeItem: (key: string) => storage.delete(key),
+    };
+    Object.assign(globalThis, { window: { localStorage } });
+    try {
+      // An emptied number field is NaN in the form, which JSON saves as null.
+      const draft = { ...SAMPLE_RENT_RECEIPT, monthlyRent: NaN, paymentDay: 40 };
+      storage.set(
+        "srutved-tools/v1/rent-receipt-generator/receipts",
+        JSON.stringify({ activeId: "r", documents: [{ id: "r", updatedAt: 1, data: draft }] }),
+      );
+      expect(rentReceiptStore.load().documents[0]?.data).toEqual({
+        ...SAMPLE_RENT_RECEIPT,
+        monthlyRent: 0,
+        paymentDay: 31,
+      });
+
+      // Anything else wrong still drops just that entry.
+      storage.set(
+        "srutved-tools/v1/rent-receipt-generator/receipts",
+        JSON.stringify({
+          activeId: "r",
+          documents: [{ id: "r", updatedAt: 1, data: { ...draft, tenantName: 5 } }],
+        }),
+      );
+      expect(rentReceiptStore.load().documents).toEqual([]);
     } finally {
       Reflect.deleteProperty(globalThis, "window");
     }

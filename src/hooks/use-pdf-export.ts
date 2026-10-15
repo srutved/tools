@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
+import { trackToolEvent } from "@/lib/analytics";
 import { downloadBlob } from "@/lib/browser";
 
 export type ExportMode = "download" | "print";
@@ -58,6 +59,10 @@ export function usePdfExport<T extends FieldValues>({
         const { blob, fileName } = await render(data);
         if (printWindow) printWindow.location.href = URL.createObjectURL(blob);
         else downloadBlob(blob, fileName);
+        const templateId = (data as { templateId?: unknown }).templateId;
+        trackToolEvent(mode === "print" ? "PDF Printed" : "PDF Downloaded", {
+          template: typeof templateId === "string" ? templateId : "",
+        });
         onExported?.(mode);
       } catch (error) {
         console.error("PDF export failed", error);
