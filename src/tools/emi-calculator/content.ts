@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const EMI_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "EMI Calculator - Loan EMI, Total Interest and Repayment Schedule (Home, Car, Personal Loan)",
+  metaTitle: "EMI Calculator - Home, Car & Personal Loan EMI",
   metaDescription:
-    "Free EMI and loan interest calculator for India. Work out the monthly EMI, total interest and total payment for a home, car, personal or education loan, with a year-by-year and month-by-month amortisation schedule.",
+    "Free EMI calculator for India. Work out the monthly EMI, total interest and total payment for a home, car or personal loan, with an amortisation schedule.",
   heading: "Free EMI Calculator",
   intro:
     "Enter the loan amount, interest rate and tenure to see your monthly EMI, the total interest you'll pay and how each EMI splits between principal and interest. Works for home, car, personal and education loans, with the full repayment schedule year by year or month by month.",

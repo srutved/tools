@@ -2,9 +2,9 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the payment receipt generator, which runs on the invoice engine. */
 export const RECEIPT_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Receipt Generator - Payment Receipts for Cash, UPI & Bank (PDF)",
+  metaTitle: "Free Receipt Generator - Cash, UPI & Bank (PDF)",
   metaDescription:
-    "Create payment receipts free for cash, UPI, bank transfer, cheque or card. 15 templates, any currency, GST or VAT and instant PDF. No sign-up, no watermark.",
+    "Create payment receipts free for cash, UPI, bank transfer, cheque or card. 15 templates, any currency, GST or VAT and PDF. No sign-up, no watermark.",
   heading: "Free Receipt Generator",
   intro:
     "Give customers a clear receipt the moment they pay. Record who paid, how much, by which mode and against which invoice, pick from 15 templates and download a PDF - or create the receipt from a saved invoice in one click.",

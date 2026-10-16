@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const COMPOUND_INTEREST_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "Compound Interest Calculator - Yearly, Quarterly, Monthly or Daily, with Regular Deposits",
+  metaTitle: "Compound Interest Calculator - With Deposits",
   metaDescription:
-    "Free compound interest calculator. See how money grows with yearly, half-yearly, quarterly, monthly or daily compounding, with optional monthly or yearly deposits, a simple interest comparison and a year-by-year table.",
+    "Free compound interest calculator. See how money grows with yearly, quarterly, monthly or daily compounding, regular deposits and a year-by-year table.",
   heading: "Free Compound Interest Calculator",
   intro:
     "Enter an amount, an interest rate and a time period to see how your money grows when interest earns interest. Choose how often it's compounded, add a regular monthly or yearly deposit if you like, and compare the result with simple interest.",

@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const HRA_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "HRA Calculator - Tax-Free HRA under the New 8 Metro City Rules (FY 2026-27)",
+  metaTitle: "HRA Calculator - New 8 Metro Rules (FY 2026-27)",
   metaDescription:
-    "Free HRA exemption calculator. Enter your basic salary, HRA and rent to see how much HRA is tax-free, with Bengaluru, Hyderabad, Pune and Ahmedabad now counted as metros from FY 2026-27.",
+    "Free HRA exemption calculator. Enter basic pay, HRA and rent to see tax-free HRA, with Bengaluru, Hyderabad, Pune and Ahmedabad as metros from FY 2026-27.",
   heading: "Free HRA Calculator",
   intro:
     "Find out how much of your house rent allowance is tax-free. Enter your basic salary, the HRA you receive and the rent you pay, and see all three limits side by side, under the latest rules that make eight cities metros from FY 2026-27.",

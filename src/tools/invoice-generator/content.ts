@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const INVOICE_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Invoice Generator - GST, VAT & Any Currency, PDF Download",
+  metaTitle: "Free Invoice Generator - GST, VAT & PDF Download",
   metaDescription:
-    "Create professional invoices free in seconds. 15 templates, any currency, India GST (CGST/SGST/IGST), VAT, UPI QR codes and instant PDF download. No sign-up, no watermark.",
+    "Create invoices free in seconds. 15 templates, any currency, GST (CGST/SGST/IGST), VAT, UPI QR codes and PDF download. No sign-up, no watermark.",
   heading: "Free Invoice Generator",
   intro:
     "Create a professional invoice in under a minute. Pick from 15 templates, bill in any currency with GST, VAT or sales tax, and download a clean PDF - free, with no sign-up and no watermark.",

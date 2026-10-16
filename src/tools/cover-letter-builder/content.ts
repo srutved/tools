@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const COVER_LETTER_BUILDER_CONTENT: ToolContent = {
-  metaTitle: "Free Cover Letter Builder - Matching Resume Templates, PDF Download",
+  metaTitle: "Free Cover Letter Builder - Instant PDF Download",
   metaDescription:
-    "Write a professional cover letter free in minutes. 15 designs that match our resume templates, your details filled in from your resume, live preview and instant PDF. No sign-up.",
+    "Write a professional cover letter free in minutes. 15 designs that match our resume templates, live preview and instant PDF. No sign-up.",
   heading: "Free Cover Letter Builder",
   intro:
     "Write a cover letter that gets read. Your details fill in from your resume, the design matches it, and you download a clean PDF - free, with no sign-up and no watermark.",

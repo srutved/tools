@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const SALARY_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "Salary Calculator India - CTC to In-Hand Salary for FY 2026-27 (New and Old Regime)",
+  metaTitle: "Salary Calculator: CTC to In-Hand - FY 2026-27",
   metaDescription:
-    "Free CTC to in-hand salary calculator. See your monthly take-home pay after PF, professional tax and income tax for FY 2026-27, and whether the new or old tax regime saves you more.",
+    "Free CTC to in-hand salary calculator. See your take-home pay after PF, professional tax and income tax for FY 2026-27, and which tax regime saves more.",
   heading: "Free Salary Calculator: CTC to In-Hand",
   intro:
     "Enter your CTC and see what actually lands in your bank account each month, after provident fund, professional tax and income tax. Compare the new and old tax regimes, then turn the figures into a salary slip in one click.",

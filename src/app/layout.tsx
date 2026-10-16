@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   // Includes the /tools base path: Next.js resolves generated image URLs (opengraph-image) against
   // metadataBase without adding basePath, so without it previews would point at srutved.com/<page>.
   metadataBase: new URL(`${SITE.toolsUrl}/`),
-  title: { default: `Free Business Tools | ${SITE.name}`, template: `%s | ${SITE.name}` },
+  title: { default: `Free Business Tools | ${SITE.titleSuffix}`, template: `%s | ${SITE.titleSuffix}` },
   description: SITE.description,
   applicationName: SITE.name,
   authors: [{ name: SITE.company, url: SITE.url }],

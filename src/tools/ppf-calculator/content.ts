@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const PPF_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "PPF Calculator - Public Provident Fund Maturity at 7.1%, Year by Year",
+  metaTitle: "PPF Calculator - Maturity at 7.1%, Year by Year",
   metaDescription:
-    "Free PPF calculator for India. See your Public Provident Fund maturity value at the current 7.1% rate over 15 years or with 5-year extensions, with a year-by-year table of deposits, interest and balance.",
+    "Free PPF calculator for India. See your Public Provident Fund maturity at the current 7.1% rate over 15 years or with 5-year extensions, year by year.",
   heading: "Free PPF Calculator",
   intro:
     "Enter how much you'll put into your Public Provident Fund each year to see what it could grow to over 15 years, or longer with 5-year extensions. The rate starts at the current 7.1%, and you can change it to see other rates.",

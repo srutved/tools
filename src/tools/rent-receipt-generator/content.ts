@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const RENT_RECEIPT_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Rent Receipt Generator - HRA Rent Receipts for the Whole Year in PDF",
+  metaTitle: "Free Rent Receipt Generator - HRA Receipts in PDF",
   metaDescription:
-    "Make rent receipts for HRA in seconds: one numbered receipt per month, landlord PAN, revenue stamp box and signature. Download the whole financial year as one PDF. Free, no sign-up.",
+    "Make free rent receipts for HRA: one numbered receipt per month, landlord PAN, revenue stamp and signature. Download the whole year as one PDF. No sign-up.",
   heading: "Free Rent Receipt Generator",
   intro:
     "Fill in the tenant, landlord, rent and months once, and get a numbered rent receipt for every month - the whole financial year in a single PDF, ready to sign and hand to your employer for your HRA claim.",

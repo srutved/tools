@@ -7,7 +7,7 @@ import { getTool } from "@/tools/registry";
 
 const tool = getTool("invoice-generator");
 const description =
-  "Browse free, professional invoice templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF in any currency, with GST or VAT.";
+  "Free professional invoice templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF with GST or VAT.";
 
 export const metadata = buildMetadata({
   title: `${INVOICE_TEMPLATES.length} Free Invoice Templates - Download as PDF`,

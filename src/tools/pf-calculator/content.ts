@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const PF_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "PF Calculator - EPF Balance at Retirement at 8.25% Interest (Employee and Employer Share)",
+  metaTitle: "PF Calculator - EPF Balance at Retirement (8.25%)",
   metaDescription:
-    "Free EPF calculator. See your provident fund balance at retirement, with your and your employer's contributions, the EPS pension split, voluntary PF and interest at 8.25%, year by year.",
+    "Free EPF calculator. See your provident fund balance at retirement with employee and employer contributions, the EPS pension split and 8.25% interest.",
   heading: "Free PF Calculator",
   intro:
     "See how much your Employees' Provident Fund (EPF) could grow to by the time you retire. Enter your age, basic salary and current balance to see your contributions, your employer's, the interest and the balance year by year, at the EPFO rate of 8.25% for FY 2025-26.",

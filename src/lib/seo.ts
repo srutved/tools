@@ -26,7 +26,7 @@ export function toTitleCase(text: string): string {
  */
 export function buildMetadata({ title: rawTitle, description, url }: PageMetadataInput): Metadata {
   const title = toTitleCase(rawTitle);
-  const fullTitle = `${title} | ${SITE.name}`;
+  const fullTitle = `${title} | ${SITE.titleSuffix}`;
   return {
     title,
     description,

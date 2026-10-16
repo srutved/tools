@@ -7,7 +7,7 @@ import { getTool } from "@/tools/registry";
 
 const tool = getTool("quotation-generator");
 const description =
-  "Browse free quotation templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF quote in any currency, with GST or VAT.";
+  "Free quotation templates: classic, modern, minimal, sidebar and bold designs. Fill one in online and download a PDF quote in any currency, with GST or VAT.";
 
 export const metadata = buildMetadata({
   title: `${INVOICE_TEMPLATES.length} Free Quotation Templates - Download as PDF`,

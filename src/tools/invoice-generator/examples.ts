@@ -14,9 +14,9 @@ export const INVOICE_FORMATS_COLLECTION: UseCaseCollection = {
   segment: "formats",
   title: "Invoice Formats",
   noun: "invoice",
-  metaTitle: "Invoice Formats by Profession - Free Examples to Edit & Download",
+  metaTitle: "Invoice Formats by Profession - Free Examples",
   metaDescription:
-    "Free invoice formats for freelancers, consultants, photographers, video editors, interior designers, tutors, exporters and UK VAT. Edit an example and download a PDF.",
+    "Free invoice formats for freelancers, consultants, photographers, video editors, tutors, exporters and UK VAT. Edit an example and download a PDF.",
   intro:
     "Ready-made invoice examples for different kinds of work, with the right tax and payment details for each. Open one in the free invoice generator, add your details and download a PDF.",
 };
@@ -26,9 +26,9 @@ export const QUOTATION_FORMATS_COLLECTION: UseCaseCollection = {
   segment: "formats",
   title: "Quotation Formats",
   noun: "quotation",
-  metaTitle: "Quotation Formats by Business - Free Examples to Edit & Download",
+  metaTitle: "Quotation Formats by Business - Free Examples",
   metaDescription:
-    "Free quotation formats for website design, app development, interior design, catering, digital marketing, events, printing and construction. Edit an example and download a PDF.",
+    "Free quotation formats for website design, app development, interior design, catering, marketing and construction. Edit an example and download a PDF.",
   intro:
     "Ready-made quotation examples for common projects, broken into clear line items. Open one in the free quotation generator, adjust the prices and download a PDF.",
 };
@@ -102,7 +102,7 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "freelancer",
     name: "Freelancer (no GST)",
     summary: "For freelancers who aren't registered for GST.",
-    metaTitle: "Invoice Format for Freelancers in India (Without GST) - Free Example",
+    metaTitle: "Invoice Format for Freelancers (India, No GST)",
     metaDescription:
       "A freelancer invoice format for India without GST: your details, the client's, services, totals and UPI payment. Edit it free and download a PDF.",
     heading: "Invoice Format for Freelancers (Without GST)",
@@ -173,7 +173,7 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "gst-consultant",
     name: "Consultant with GST",
     summary: "GST tax invoice with CGST and SGST.",
-    metaTitle: "GST Invoice Format for Consultants - Free Tax Invoice Example",
+    metaTitle: "GST Invoice Format for Consultants - Free Example",
     metaDescription:
       "A GST tax invoice format for consultants and professional services: GSTIN, SAC codes, CGST and SGST, place of supply. Edit it free and download a PDF.",
     heading: "GST Invoice Format for Consultants",
@@ -250,7 +250,7 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "photographer",
     name: "Photographer",
     summary: "Wedding, event and product photography.",
-    metaTitle: "Photography Invoice Format - Free Template for Photographers",
+    metaTitle: "Photography Invoice Format - Free Template (PDF)",
     metaDescription:
       "A photography invoice format with shoot fees, editing, travel and advance received. Edit it free in the invoice generator and download a PDF.",
     heading: "Photography Invoice Format",
@@ -320,9 +320,9 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "web-designer-usd",
     name: "Web Designer (USD client)",
     summary: "Billing an international client in US dollars.",
-    metaTitle: "Invoice Format for International Clients (USD) - Free Example",
+    metaTitle: "Invoice Format for International Clients (USD)",
     metaDescription:
-      "An invoice format for billing international clients in US dollars: hourly work, fixed-price items and a PayPal or Wise payment link. Edit it free and download a PDF.",
+      "An invoice format for international clients in US dollars: hourly work, fixed-price items and a PayPal or Wise payment link. Edit free and download a PDF.",
     heading: "Invoice Format for International Clients (USD)",
     intro:
       "Billing a client in the US, UK or Europe? Invoice in their currency, list the work clearly and add a payment link - so paying you is as easy as paying a local supplier.",
@@ -393,7 +393,7 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "export-of-services-lut",
     name: "Export under LUT",
     summary: "Zero-rated GST invoice for foreign clients.",
-    metaTitle: "Export Invoice Format Under LUT (Without IGST) - Free Example",
+    metaTitle: "Export Invoice Format Under LUT (Without IGST)",
     metaDescription:
       "An export of services invoice format under LUT: zero-rated, no IGST, with the LUT declaration and ARN. Edit it free and download a PDF in any currency.",
     heading: "Export Invoice Format Under LUT",
@@ -549,9 +549,9 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "consulting-hourly",
     name: "Hourly Consulting (GST)",
     summary: "Billing a client by the hour, with CGST and SGST.",
-    metaTitle: "Hourly Consulting Invoice Format With GST - Free Example",
+    metaTitle: "Hourly Consulting Invoice Format With GST - Free",
     metaDescription:
-      "An hourly consulting invoice format with GST: hours by activity, hourly rate, SAC code, CGST and SGST and the billing period. Edit it free and download a PDF.",
+      "An hourly consulting invoice format with GST: hours by activity, hourly rate, SAC code, CGST and SGST and the billing period. Edit free and download a PDF.",
     heading: "Hourly Consulting Invoice Format (With GST)",
     intro:
       "Consultants who bill by the hour need an invoice that shows where the time went. This GST tax invoice lists hours by activity for the month, at one hourly rate, and charges CGST and SGST because the client is in the same state.",
@@ -633,9 +633,9 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "video-editor",
     name: "Video Editor",
     summary: "Freelance video editing, reels and thumbnails.",
-    metaTitle: "Video Editing Invoice Format - Free Template for Video Editors",
+    metaTitle: "Video Editing Invoice Format - Free Template (PDF)",
     metaDescription:
-      "A video editing invoice format for freelancers: long-form edits, reels, colour grading, thumbnails and extra revisions, with UPI payment. Edit it free and download a PDF.",
+      "A video editing invoice for freelancers: long-form edits, reels, colour grading, thumbnails, extra revisions and UPI payment. Edit free and download a PDF.",
     heading: "Video Editing Invoice Format",
     intro:
       "Freelance video editors juggle long-form edits, reels, thumbnails and extra revision rounds. This invoice puts each on its own line, names the video it relates to and adds a UPI QR code so creators and brands can pay in seconds.",
@@ -710,9 +710,9 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "interior-designer",
     name: "Interior Designer (IGST)",
     summary: "Design fees for a project site in another state.",
-    metaTitle: "Interior Design Invoice Format With GST (IGST) - Free Example",
+    metaTitle: "Interior Design Invoice Format With GST (IGST)",
     metaDescription:
-      "An interior design invoice format with GST: design fee per sq ft, site supervision, SAC 998391 and IGST for a project site in another state. Edit it free and download a PDF.",
+      "An interior design invoice with GST: design fee per sq ft, site supervision, SAC 998391 and IGST for a site in another state. Edit free, download a PDF.",
     heading: "Interior Design Invoice Format (With IGST)",
     intro:
       "An interior design firm billing a stage of work for an office in another state. Because interior design is tied to the property, the place of supply is where the site is - so this tax invoice charges IGST at 18% rather than CGST and SGST.",
@@ -786,9 +786,9 @@ export const INVOICE_FORMATS: UseCase<Invoice>[] = [
     slug: "tutor",
     name: "Tutor / Coaching Classes",
     summary: "Monthly tuition fees for a student.",
-    metaTitle: "Tuition Fee Invoice Format for Tutors & Coaching Classes - Free",
+    metaTitle: "Tuition Fee Invoice Format for Tutors - Free PDF",
     metaDescription:
-      "A tuition fee invoice format for private tutors and coaching classes: monthly fees, extra sessions and study material, with UPI payment. Edit it free and download a PDF.",
+      "A tuition fee invoice format for tutors and coaching classes: monthly fees, extra sessions, study material and UPI payment. Edit free and download a PDF.",
     heading: "Tuition Fee Invoice Format for Tutors and Coaching Classes",
     intro:
       "Parents appreciate a proper fee bill, and it makes your own records far easier. This invoice shows the student, the month, the subjects and any extras such as test series or doubt-clearing sessions, with a UPI QR code for quick payment.",
@@ -861,7 +861,7 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "website-design",
     name: "Website Design",
     summary: "Design, development and hosting for a business website.",
-    metaTitle: "Website Design Quotation Format - Free Example (PDF)",
+    metaTitle: "Website Design Quotation Format - Free Example",
     metaDescription:
       "A website design quotation format with pages, design, development, hosting and maintenance as clear line items. Edit it free and download a PDF quote.",
     heading: "Website Design Quotation Format",
@@ -932,7 +932,7 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "mobile-app-development",
     name: "Mobile App Development",
     summary: "An MVP app for Android and iOS.",
-    metaTitle: "App Development Quotation Format - Free MVP Quote Example",
+    metaTitle: "App Development Quotation Format - Free MVP Quote",
     metaDescription:
       "A mobile app development quotation format for an MVP: design, Android and iOS development, backend, testing and launch. Edit it free and download a PDF.",
     heading: "App Development Quotation Format",
@@ -1008,7 +1008,7 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "interior-design",
     name: "Interior Design",
     summary: "Design fee, materials and execution for a home.",
-    metaTitle: "Interior Design Quotation Format - Free Example (PDF)",
+    metaTitle: "Interior Design Quotation Format - Free Example",
     metaDescription:
       "An interior design quotation format with design fees, modular kitchen, wardrobes, false ceiling and painting. Edit it free and download a PDF quote.",
     heading: "Interior Design Quotation Format",
@@ -1081,7 +1081,7 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "catering",
     name: "Catering",
     summary: "Per-plate pricing for events and weddings.",
-    metaTitle: "Catering Quotation Format - Free Per-Plate Quote Example",
+    metaTitle: "Catering Quotation Format - Free Per-Plate Quote",
     metaDescription:
       "A catering quotation format with per-plate menu pricing, live counters, staff and equipment. Edit it free in the quotation generator and download a PDF.",
     heading: "Catering Quotation Format",
@@ -1154,9 +1154,9 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "digital-marketing",
     name: "Digital Marketing Retainer",
     summary: "Monthly social media, ads and SEO for a local business.",
-    metaTitle: "Digital Marketing Quotation Format - Free Monthly Retainer Quote",
+    metaTitle: "Digital Marketing Quotation Format - Free Example",
     metaDescription:
-      "A digital marketing quotation format for a monthly retainer: social media, ads management, SEO and a one-time setup, with GST. Edit it free and download a PDF quote.",
+      "A digital marketing quotation format for a monthly retainer: social media, ads management, SEO and a one-time setup, with GST. Edit free, download a PDF.",
     heading: "Digital Marketing Quotation Format (Monthly Retainer)",
     intro:
       "Digital marketing is usually sold as a monthly retainer. This quotation lists what the client gets each month - posts, reels, ad campaigns, blog articles and reporting - plus a one-time setup fee, so the first month and the running cost are both clear.",
@@ -1231,9 +1231,9 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "event-management",
     name: "Event Management",
     summary: "A corporate offsite with production, décor and entertainment.",
-    metaTitle: "Event Management Quotation Format - Free Example (PDF)",
+    metaTitle: "Event Management Quotation Format - Free Example",
     metaDescription:
-      "An event management quotation format for a corporate event: planning, stage and sound, décor, entertainment, photography and transfers, with GST. Edit it free and download a PDF.",
+      "An event management quotation for a corporate event: planning, stage, sound, décor, entertainment, photography, transfers and GST. Edit free, get a PDF.",
     heading: "Event Management Quotation Format",
     intro:
       "A corporate offsite involves a dozen suppliers, but the client wants one clear number. This quotation groups the event into planning, production, décor, entertainment, photography and transfers, so they can see the total and adjust any part of it.",
@@ -1319,9 +1319,9 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "printing",
     name: "Printing",
     summary: "Visiting cards, brochures, flex banners and standees.",
-    metaTitle: "Printing Quotation Format - Free Print Shop Quote Example",
+    metaTitle: "Printing Quotation Format - Free Print Shop Quote",
     metaDescription:
-      "A printing quotation format for print shops: visiting cards, brochures, flex banners and standees with size, paper and finish. Edit it free and download a PDF quote.",
+      "A printing quotation format for print shops: visiting cards, brochures, flex banners and standees with size, paper and finish. Edit free, download a PDF.",
     heading: "Printing Quotation Format",
     intro:
       "Print jobs are priced on the details: size, paper, colours, finish and quantity. This quotation from a local print shop spells them out for visiting cards, brochures, flex banners and a standee, so the customer knows exactly what they'll get.",
@@ -1392,9 +1392,9 @@ export const QUOTATION_FORMATS: UseCase<Invoice>[] = [
     slug: "construction",
     name: "Construction and Renovation",
     summary: "Bathroom and kitchen renovation with materials and labour.",
-    metaTitle: "Construction Quotation Format - Free Renovation Quote Example",
+    metaTitle: "Construction Quotation Format - Free Example",
     metaDescription:
-      "A construction and renovation quotation format with materials and labour as separate lines, measured in sq ft, running ft and points, with GST. Edit it free and download a PDF.",
+      "A construction and renovation quotation with materials and labour on separate lines, in sq ft, running ft and points, with GST. Edit free, download a PDF.",
     heading: "Construction and Renovation Quotation Format",
     intro:
       "A renovation quote for a homeowner: demolition, waterproofing, tiling, plumbing and a kitchen platform, with materials and labour priced by measurable units. The customer can see what each part costs and how the total changes if the measurements do.",

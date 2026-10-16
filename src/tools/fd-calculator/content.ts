@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const FD_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "FD Calculator - Fixed Deposit Maturity and Interest with Quarterly Compounding",
+  metaTitle: "FD Calculator - Fixed Deposit Maturity & Interest",
   metaDescription:
-    "Free FD calculator for India. Work out fixed deposit maturity and interest with quarterly, monthly, half-yearly or yearly compounding, or the monthly or quarterly interest payout, with a year-by-year table.",
+    "Free FD calculator for India. Work out fixed deposit maturity and interest with quarterly, monthly or yearly compounding or interest payouts, year by year.",
   heading: "Free FD Calculator",
   intro:
     "Enter your deposit, the bank's interest rate and the tenure to see the maturity amount and the interest you'll earn. Choose a cumulative FD, where interest is reinvested, or a monthly or quarterly payout, and see how the deposit grows year by year.",

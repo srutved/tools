@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const CONTRACT_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Contract Generator - Freelance Agreement, NDA & SOW in Plain English",
+  metaTitle: "Free Contract Generator - Freelance, NDA & SOW",
   metaDescription:
-    "Create a freelance contract, service agreement, NDA or statement of work free in minutes. Plain-English clauses, your terms, signature blocks and instant PDF. No sign-up.",
+    "Create a freelance contract, service agreement, NDA or statement of work free. Plain-English clauses, signature blocks and instant PDF. No sign-up.",
   heading: "Free Contract Generator",
   intro:
     "Answer a few plain questions and get a clear, balanced contract: a freelance or service agreement, an NDA or a statement of work, with numbered clauses and signature blocks, ready to download as a PDF.",

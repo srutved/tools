@@ -15,6 +15,8 @@ export const SITE = {
   repoUrl: "https://github.com/srutved/srutved-tools",
   /** The organisation declared in the main site's structured data; tools refer to the same entity. */
   organizationId: "https://www.srutved.com/#organization",
+  /** Appended to page titles. The main brand alone, to leave room in search results for the page's own title. */
+  titleSuffix: "Srutved",
   description:
     "Free, open-source business tools by Srutved. No sign-up, no watermark - everything runs in your browser and your data never leaves your device.",
   locale: "en_IN",

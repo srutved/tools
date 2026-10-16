@@ -12,9 +12,9 @@ export const COVER_LETTER_EXAMPLES_COLLECTION: UseCaseCollection = {
   segment: "examples",
   title: "Cover Letter Examples",
   noun: "cover letter",
-  metaTitle: "Cover Letter Examples for Every Job - Free Templates to Edit & Download",
+  metaTitle: "Cover Letter Examples for Every Job - Free to Edit",
   metaDescription:
-    "Free cover letter examples for freshers, internships, career changers, software engineers, sales and teachers. Open any example, edit it and download a PDF.",
+    "Free cover letter examples for freshers, internships, career changers, software engineers, sales and teachers. Edit any example and download a PDF.",
   intro:
     "Complete cover letter examples written for real situations. Open one in the free cover letter builder, make it yours and download a matching PDF - no sign-up, no watermark.",
 };
@@ -53,7 +53,7 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "fresher",
     name: "Fresher",
     summary: "For graduates applying for their first job.",
-    metaTitle: "Cover Letter for Freshers - Free Example & Template (PDF)",
+    metaTitle: "Cover Letter for Freshers - Free Example (PDF)",
     metaDescription:
       "A complete cover letter example for freshers and recent graduates, built around one strong project and an internship. Edit it free and download a PDF.",
     heading: "Cover Letter for Freshers",
@@ -132,9 +132,9 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "internship",
     name: "Internship",
     summary: "For students applying for internships.",
-    metaTitle: "Cover Letter for Internship - Free Example for Students (PDF)",
+    metaTitle: "Cover Letter for Internship - Free Example (PDF)",
     metaDescription:
-      "An internship cover letter example for students: course, availability, projects and why the company. Edit it free in the cover letter builder and download a PDF.",
+      "An internship cover letter example for students: course, availability, projects and why the company. Edit it free and download a PDF.",
     heading: "Cover Letter for Internship",
     intro:
       "A short, specific internship cover letter that tells the recruiter who you are, when you're available and why you'd be useful from your first week.",
@@ -207,7 +207,7 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "career-change",
     name: "Career Change",
     summary: "For moving into a new field or role.",
-    metaTitle: "Career Change Cover Letter Example - Free Template (PDF)",
+    metaTitle: "Career Change Cover Letter Example - Free Template",
     metaDescription:
       "A career change cover letter example that explains the switch, shows new skills and turns past experience into a strength. Edit it free and download a PDF.",
     heading: "Career Change Cover Letter Example",
@@ -290,9 +290,9 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "software-engineer",
     name: "Software Engineer",
     summary: "Backend, frontend and full-stack developers.",
-    metaTitle: "Software Engineer Cover Letter Example - Free Template (PDF)",
+    metaTitle: "Software Engineer Cover Letter Example - Free PDF",
     metaDescription:
-      "A software engineer cover letter example with one in-depth project story, real numbers and a clear link to the company's product. Edit it free and download a PDF.",
+      "A software engineer cover letter example with one in-depth project story, real numbers and a link to the company's product. Edit free and download a PDF.",
     heading: "Software Engineer Cover Letter Example",
     intro:
       "A focused software engineer cover letter that skips the buzzwords and tells one technical story with real numbers - the kind engineering managers actually read.",
@@ -368,7 +368,7 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "sales",
     name: "Sales",
     summary: "Account executives and business development.",
-    metaTitle: "Sales Cover Letter Example - Free Template for Sales Jobs (PDF)",
+    metaTitle: "Sales Cover Letter Example - Free Template (PDF)",
     metaDescription:
       "A sales cover letter example with target attainment, a deal story and territory knowledge. Edit it free in the cover letter builder and download a PDF.",
     heading: "Sales Cover Letter Example",
@@ -444,7 +444,7 @@ export const COVER_LETTER_EXAMPLES: UseCase<CoverLetter>[] = [
     slug: "teacher",
     name: "Teacher",
     summary: "School teachers applying to new schools.",
-    metaTitle: "Teacher Cover Letter Example - Free Template for Teaching Jobs (PDF)",
+    metaTitle: "Teacher Cover Letter Example - Free Template (PDF)",
     metaDescription:
       "A teacher cover letter example with qualifications, classes taught, student results and co-curricular roles. Edit it free and download a PDF.",
     heading: "Teacher Cover Letter Example",

@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const SALARY_SLIP_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Salary Slip Generator - Payslip Format in PDF for Small Businesses",
+  metaTitle: "Free Salary Slip Generator - Payslip Format in PDF",
   metaDescription:
-    "Create professional salary slips free: earnings, deductions (PF, ESI, professional tax, TDS), net pay in words and your logo. Six payslip designs, instant PDF, no sign-up.",
+    "Create salary slips free: earnings, deductions (PF, ESI, professional tax, TDS), net pay in words and logo. Six payslip designs, instant PDF, no sign-up.",
   heading: "Free Salary Slip Generator",
   intro:
     "Make a clear, professional payslip in minutes: your company and logo, the employee's details, earnings beside deductions and net pay in words, ready to download as a PDF. Save it and next month's slip is one click away.",

@@ -7,10 +7,10 @@ import { RESUME_TEMPLATES } from "@/tools/resume-builder/templates";
 
 const tool = getTool("resume-builder");
 const description =
-  "Browse free resume templates: ATS-friendly classic and executive designs, modern templates with a photo, sidebar and two-column layouts. Fill one in online and download a PDF.";
+  "Free resume templates: ATS-friendly classic and executive designs, modern photo templates, sidebar and two-column layouts. Fill one in and download a PDF.";
 
 export const metadata = buildMetadata({
-  title: `${RESUME_TEMPLATES.length} Free Resume Templates - ATS-Friendly, PDF Download`,
+  title: `${RESUME_TEMPLATES.length} Free Resume Templates - ATS-Friendly PDF`,
   description,
   url: toolUrl(`${tool.slug}/templates`),
 });

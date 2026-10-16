@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const GST_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "GST Calculator - Add or Remove GST with CGST, SGST and IGST (GST 2.0 Rates)",
+  metaTitle: "GST Calculator - Add or Remove GST (GST 2.0 Rates)",
   metaDescription:
-    "Free GST calculator for India. Add GST to a price or take it out of a GST-inclusive amount at 5%, 18%, 40% or any rate, with the CGST and SGST or IGST split and the formula shown.",
+    "Free GST calculator for India. Add or remove GST at 5%, 18%, 40% or any rate, with the CGST and SGST or IGST split and the formula shown.",
   heading: "Free GST Calculator",
   intro:
     "Add GST to a price, or work out how much GST is inside an amount that already includes it. Pick a rate, choose whether the sale is within your state or to another state, and see the CGST, SGST or IGST split as you type.",

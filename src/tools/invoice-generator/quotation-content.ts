@@ -2,9 +2,9 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the quotation generator, which runs on the invoice engine. */
 export const QUOTATION_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Quotation Generator - Make Quotes & Estimates Online, PDF Download",
+  metaTitle: "Free Quotation Generator - Quotes & Estimates PDF",
   metaDescription:
-    "Create professional quotations and estimates free. 15 templates, any currency, GST or VAT, validity date and instant PDF. Convert an accepted quote into an invoice in one click.",
+    "Create quotations and estimates free. 15 templates, any currency, GST or VAT and instant PDF. Turn an accepted quote into an invoice in one click.",
   heading: "Free Quotation Generator",
   intro:
     "Send clients a clear, professional quotation in minutes. Pick from 15 templates, price your work in any currency with GST or VAT, download a PDF - and turn it into an invoice in one click when it's accepted.",

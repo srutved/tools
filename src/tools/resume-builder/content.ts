@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const RESUME_BUILDER_CONTENT: ToolContent = {
-  metaTitle: "Free Resume Builder - ATS-Friendly Templates, PDF Download, No Sign-Up",
+  metaTitle: "Free Resume Builder - ATS-Friendly PDF, No Sign-Up",
   metaDescription:
-    "Build a professional resume free in minutes. 15 ATS-friendly and modern templates, live preview and instant PDF download. No sign-up, no watermark, no paywall.",
+    "Build a professional resume free in minutes. 15 ATS-friendly and modern templates, live preview and instant PDF download. No sign-up, no watermark.",
   heading: "Free Resume Builder",
   intro:
     "Write a resume that gets interviews. Choose from 15 professional templates, see every change live, and download a clean, ATS-friendly PDF - free, with no sign-up, no watermark and no paywall at the end.",

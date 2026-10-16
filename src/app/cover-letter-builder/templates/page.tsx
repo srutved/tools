@@ -7,10 +7,10 @@ import { RESUME_TEMPLATES } from "@/tools/resume-builder/templates";
 
 const tool = getTool("cover-letter-builder");
 const description =
-  "Browse free cover letter templates that match our resume templates: classic, modern, executive, sidebar and two-column designs. Fill one in online and download a PDF.";
+  "Free cover letter templates that match our resume templates: classic, modern, executive, sidebar and two-column designs. Fill one in and download a PDF.";
 
 export const metadata = buildMetadata({
-  title: `${RESUME_TEMPLATES.length} Free Cover Letter Templates - Match Your Resume, PDF Download`,
+  title: `${RESUME_TEMPLATES.length} Free Cover Letter Templates - Match Your Resume`,
   description,
   url: toolUrl(`${tool.slug}/templates`),
 });

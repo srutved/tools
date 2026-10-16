@@ -11,9 +11,9 @@ export const HR_LETTER_TEMPLATES_COLLECTION: UseCaseCollection = {
   segment: "templates",
   title: "HR Letter Templates",
   noun: "letter",
-  metaTitle: "Free HR Letter Templates - Offer, Experience & Relieving Letters (PDF)",
+  metaTitle: "Free HR Letter Templates - Offer to Relieving",
   metaDescription:
-    "Free HR letter templates for India: offer, appointment, experience, relieving, internship, increment and promotion letters. Fill in your details online and download a PDF on your letterhead.",
+    "Free HR letter templates for India: offer, appointment, experience, relieving, internship and increment letters. Fill in online and download a PDF.",
   intro:
     "Ready-made HR letters for Indian employers, from the offer to the relieving letter. Open one in the free HR letter generator, add your company's details and download a signed PDF on your own letterhead.",
 };
@@ -84,9 +84,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "offer-letter",
     name: "Offer Letter",
     summary: "Offer a full-time job with the CTC and a salary annexure.",
-    metaTitle: "Offer Letter Format - Free Job Offer Letter Template (PDF)",
+    metaTitle: "Offer Letter Format (India) - Free Template (PDF)",
     metaDescription:
-      "A free offer letter format for Indian companies: designation, joining date, annual CTC, salary breakdown, probation, notice period and an acceptance block. Edit online and download a PDF.",
+      "A free offer letter format for India: designation, joining date, annual CTC, salary breakdown, probation, notice period and acceptance. Download a PDF.",
     heading: "Offer Letter Format",
     intro:
       "A clear job offer letter for a full-time hire: the role, the joining date, the annual CTC with a monthly breakdown, and the date by which the candidate should accept. Change the details and download it on your letterhead.",
@@ -172,9 +172,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "appointment-letter",
     name: "Appointment Letter",
     summary: "The formal terms of employment, signed on joining.",
-    metaTitle: "Appointment Letter Format - Free Template for Employees (PDF)",
+    metaTitle: "Appointment Letter Format (India) - Free Template",
     metaDescription:
-      "A free appointment letter format for India: designation, date of joining, salary annexure, probation, notice period, working hours and duties. Edit online and download a PDF.",
+      "A free appointment letter format for India: designation, joining date, salary annexure, probation, notice period, working hours and duties. Download a PDF.",
     heading: "Appointment Letter Format",
     intro:
       "An appointment letter confirms a new employee's appointment and sets out the terms they work under: salary, probation, notice period, working hours and duties. This example is for a staff nurse at a hospital, with a clause on shift duty.",
@@ -269,9 +269,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "experience-letter",
     name: "Experience Letter",
     summary: "Confirms someone's role and tenure after they leave.",
-    metaTitle: "Experience Letter Format - Free Experience Certificate Template (PDF)",
+    metaTitle: "Experience Letter Format - Experience Certificate",
     metaDescription:
-      "A free experience letter format for India: employee name, designation, dates of employment and a line on their conduct. Edit online and download an experience certificate as a PDF.",
+      "A free experience letter format for India: employee name, designation, dates of employment and a line on their conduct. Edit online and download a PDF.",
     heading: "Experience Letter Format",
     intro:
       "An experience letter, or experience certificate, confirms that someone worked with you, in what role and for how long. This example is for an audit associate leaving a chartered accountancy firm, with a short line on their work and conduct.",
@@ -354,9 +354,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "relieving-letter",
     name: "Relieving Letter",
     summary: "Confirms a resignation was accepted and duties handed over.",
-    metaTitle: "Relieving Letter Format - Free Template After Resignation (PDF)",
+    metaTitle: "Relieving Letter Format (India) - Free Template",
     metaDescription:
-      "A free relieving letter format for India: resignation date, last working day, confirmation of handover and a note on the full and final settlement. Edit online and download a PDF.",
+      "A free relieving letter format for India: resignation date, last working day, handover confirmation and a note on full and final settlement. Get a PDF.",
     heading: "Relieving Letter Format",
     intro:
       "A relieving letter confirms that an employee's resignation was accepted and that they have been relieved of their duties from their last working day. This example is for an operations manager at a logistics company who served a 60-day notice period.",
@@ -441,9 +441,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "internship-offer-letter",
     name: "Internship Offer Letter",
     summary: "Offer an internship with a monthly stipend and end date.",
-    metaTitle: "Internship Offer Letter Format - Free Template with Stipend (PDF)",
+    metaTitle: "Internship Offer Letter Format with Stipend - Free",
     metaDescription:
-      "A free internship offer letter format for India: role, start and end dates, monthly stipend, working hours and an acceptance block. Edit online and download a PDF.",
+      "A free internship offer letter format for India: role, start and end dates, monthly stipend, working hours and an acceptance block. Download a PDF.",
     heading: "Internship Offer Letter Format",
     intro:
       "An internship offer letter for a student or recent graduate: the role, the dates, the monthly stipend and who they'll work with. This example is a three-month marketing internship at a skincare brand.",
@@ -531,9 +531,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "internship-certificate",
     name: "Internship Certificate",
     summary: "Certifies an intern's role, dates and work.",
-    metaTitle: "Internship Certificate Format - Free Internship Completion Letter (PDF)",
+    metaTitle: "Internship Certificate Format - Completion Letter",
     metaDescription:
-      "A free internship certificate format for India: intern's name, role, start and end dates and a line on their work. Edit online and download an internship completion certificate as a PDF.",
+      "A free internship certificate format for India: intern's name, role, start and end dates and a line on their work. Edit online and download a PDF.",
     heading: "Internship Certificate Format",
     intro:
       "An internship certificate confirms that a student completed an internship with you, in what role and between which dates. This example is for a UI/UX design intern at a design studio, with a line on the work they did.",
@@ -612,9 +612,9 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "increment-letter",
     name: "Increment Letter",
     summary: "A salary revision with the new CTC and breakdown.",
-    metaTitle: "Increment Letter Format - Free Salary Revision Letter Template (PDF)",
+    metaTitle: "Increment Letter Format - Salary Revision Letter",
     metaDescription:
-      "A free increment letter format for India: previous and revised CTC, effective date and a revised salary breakdown. Edit online and download a salary increment letter as a PDF.",
+      "A free increment letter format for India: previous and revised CTC, effective date and a revised salary breakdown. Edit online and download a PDF.",
     heading: "Increment Letter Format",
     intro:
       "An increment letter tells an employee that their salary has been revised, by how much and from when. This example is a salary revision for a teacher at a school, with the old and new CTC and the revised monthly breakdown.",
@@ -697,7 +697,7 @@ export const HR_LETTER_EXAMPLES: UseCase<HrLetter>[] = [
     slug: "promotion-letter",
     name: "Promotion Letter",
     summary: "A promotion to a new title, with the revised CTC.",
-    metaTitle: "Promotion Letter Format - Free Promotion with Salary Increase Template (PDF)",
+    metaTitle: "Promotion Letter Format with Salary Increase",
     metaDescription:
       "A free promotion letter format for India: new designation, revised CTC, effective date and a revised salary breakdown. Edit online and download a PDF.",
     heading: "Promotion Letter Format",

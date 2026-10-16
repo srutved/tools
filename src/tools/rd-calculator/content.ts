@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const RD_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "RD Calculator - Recurring Deposit Maturity and Interest (Bank and Post Office)",
+  metaTitle: "RD Calculator - Bank & Post Office RD Maturity",
   metaDescription:
-    "Free RD calculator for India. See the maturity amount and interest on a recurring deposit with quarterly compounding, as banks and the post office calculate it, with a year-by-year table.",
+    "Free RD calculator for India. See the maturity amount and interest on a recurring deposit with quarterly compounding, as banks and the post office do.",
   heading: "Free RD Calculator",
   intro:
     "Enter how much you'll deposit each month, the interest rate and the tenure in months to see what your recurring deposit will be worth at maturity. Interest is compounded every quarter, the way banks and the post office work it out.",

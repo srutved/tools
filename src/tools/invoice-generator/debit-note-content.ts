@@ -2,9 +2,9 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the debit note generator, which runs on the invoice engine. */
 export const DEBIT_NOTE_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Debit Note Generator - GST Debit Notes for Extra Charges (PDF)",
+  metaTitle: "Free Debit Note Generator - GST, PDF Download",
   metaDescription:
-    "Create GST debit notes free when an invoice undercharged or extra charges apply. Reference the original invoice, add GST or VAT and download a PDF. No sign-up.",
+    "Create GST debit notes free when an invoice undercharged or extra charges apply. Link the original invoice, add GST or VAT and download a PDF. No sign-up.",
   heading: "Free Debit Note Generator",
   intro:
     "Bill the difference when an invoice came out too low. Reference the original invoice, explain the reason, add the extra amount with tax and download a professional debit note in any of 15 templates - free, with no sign-up and no watermark.",

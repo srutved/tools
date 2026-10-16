@@ -2,7 +2,7 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the purchase order generator, which runs on the invoice engine. */
 export const PURCHASE_ORDER_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Purchase Order Generator - Create POs with GST Online (PDF)",
+  metaTitle: "Free Purchase Order Generator - GST, PDF Download",
   metaDescription:
     "Create purchase orders free for your suppliers. 15 templates, any currency, GST or VAT, ship-to address, delivery date and terms. Free PDF with no sign-up.",
   heading: "Free Purchase Order Generator",

@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const SIP_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "SIP Calculator - Mutual Fund SIP Returns with Step-Up, Year by Year",
+  metaTitle: "SIP Calculator - Mutual Fund Returns with Step-Up",
   metaDescription:
-    "Free SIP calculator for India. See what a monthly SIP could grow to at an expected return, with an optional yearly step-up, the amount invested versus estimated returns and a year-by-year table.",
+    "Free SIP calculator for India. See what a monthly SIP could grow to, with a yearly step-up, invested amount versus returns and a year-by-year table.",
   heading: "Free SIP Calculator",
   intro:
     "Enter how much you plan to invest each month, an expected yearly return and for how long, and see what your SIP could be worth. Add a yearly step-up to see the effect of raising your SIP as your income grows. The figures are an illustration, not a promise: mutual fund returns go up and down.",

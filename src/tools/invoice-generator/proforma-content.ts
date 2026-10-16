@@ -2,9 +2,9 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the proforma invoice generator, which runs on the invoice engine. */
 export const PROFORMA_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Proforma Invoice Generator - GST, Export & Advance Payment (PDF)",
+  metaTitle: "Free Proforma Invoice Generator - GST & Export",
   metaDescription:
-    "Create proforma invoices free for advance payments and export orders. 15 templates, any currency, GST or VAT, UPI QR and PDF. Convert to an invoice in one click.",
+    "Create proforma invoices free for advance payments and export orders. 15 templates, any currency, GST or VAT and PDF. Convert to an invoice in one click.",
   heading: "Free Proforma Invoice Generator",
   intro:
     "Send a buyer a proforma invoice before you ship or start work, so they can pay an advance, open a letter of credit or get approvals. Pick from 15 templates, price in any currency with GST or VAT, download a PDF - and convert it into the final invoice once the order is confirmed.",

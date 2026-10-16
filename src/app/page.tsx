@@ -6,9 +6,9 @@ import { SITE, toolUrl } from "@/config/site";
 import { breadcrumbJsonLd, buildMetadata, collectionPageJsonLd } from "@/lib/seo";
 import { LIVE_TOOLS, toolsByCategory, type ToolDefinition } from "@/tools/registry";
 
-const title = "Free Business Tools - Invoices, Payslips, HR Letters, Resumes, Contracts & Calculators";
+const title = "Free Business Tools - Invoices, Payslips, Resumes & More";
 const description =
-  "25 free tools for freelancers, small businesses and job seekers: GST invoices, quotations, receipts, credit notes, delivery challans, purchase orders, payslips, HR letters, resumes and contracts, plus EMI, SIP, FD, GST, salary and gratuity calculators. No sign-up, no watermark.";
+  "25 free tools for freelancers and small businesses: GST invoices, quotations, payslips, HR letters, resumes, contracts and finance calculators. No sign-up.";
 
 export const metadata = buildMetadata({ title, description, url: toolUrl() });
 

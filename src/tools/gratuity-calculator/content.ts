@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const GRATUITY_CALCULATOR_CONTENT: ToolContent = {
-  metaTitle: "Gratuity Calculator India - New Labour Code Rules, 50% Wages and Fixed-Term Staff",
+  metaTitle: "Gratuity Calculator India - New Labour Code Rules",
   metaDescription:
-    "Free gratuity calculator under the Code on Social Security. Enter your dates and salary to see your gratuity, the years counted, the 50% wages rule, the one-year rule for fixed-term staff and how much is tax-free.",
+    "Free gratuity calculator under the Code on Social Security. See your gratuity, years counted, the 50% wages rule, fixed-term rules and the tax-free part.",
   heading: "Free Gratuity Calculator",
   intro:
     "Work out the gratuity you're owed when you leave a job. Enter your dates of joining and leaving and your last salary, and see the amount, the years of service that count and how much of it is tax-free, under the labour codes in force from 21 November 2025.",

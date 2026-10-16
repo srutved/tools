@@ -2,9 +2,9 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the credit note generator, which runs on the invoice engine. */
 export const CREDIT_NOTE_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Credit Note Generator - GST Credit Notes for Returns (PDF)",
+  metaTitle: "Free Credit Note Generator - GST, PDF Download",
   metaDescription:
-    "Create GST credit notes free for returned goods, overcharges and discounts. Link the original invoice, add CGST, SGST or IGST and download a PDF. No sign-up.",
+    "Create GST credit notes free for returned goods, overcharges and discounts. Link the invoice, add CGST, SGST or IGST and download a PDF. No sign-up.",
   heading: "Free Credit Note Generator",
   intro:
     "Reduce what a client owes on an invoice the right way. Reference the original invoice, give the reason, adjust the items and tax, and download a professional credit note in any of 15 templates - or create it from a saved invoice in one click.",

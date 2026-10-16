@@ -1,9 +1,9 @@
 import type { ToolContent } from "@/components/tool/tool-content";
 
 export const HR_LETTER_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free HR Letter Generator - Offer, Appointment, Experience & Relieving Letters",
+  metaTitle: "Free HR Letter Generator - Offer Letters & More",
   metaDescription:
-    "Create offer letters, appointment letters, experience certificates, relieving letters and increment letters free, on your own letterhead. Salary annexure, signature and instant PDF. No sign-up.",
+    "Create offer, appointment, experience, relieving and increment letters free on your own letterhead. Salary annexure, signature and instant PDF. No sign-up.",
   heading: "Free HR Letter Generator",
   intro:
     "Write the letters every employer needs, from the offer to the relieving letter, in clear and professional wording. Add your letterhead and signature, and download a ready-to-sign PDF in minutes.",

@@ -11,9 +11,9 @@ export const CONTRACT_TEMPLATES_COLLECTION: UseCaseCollection = {
   segment: "templates",
   title: "Contract Templates",
   noun: "contract",
-  metaTitle: "Free Contract Templates - Freelance Agreement, NDA & SOW (PDF)",
+  metaTitle: "Free Contract Templates - Plain English, PDF",
   metaDescription:
-    "Free contract templates in plain English: freelance, consulting, retainer and influencer agreements, website and social media contracts, NDAs and statements of work. Edit online and download a PDF.",
+    "Free contract templates in plain English: freelance, consulting and retainer agreements, NDAs and statements of work. Edit online and download a PDF.",
   intro:
     "Plain-English contract templates for freelancers and small businesses. Open one in the free contract generator, fill in your details and download a ready-to-sign PDF.",
 };
@@ -102,9 +102,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "freelance-contract",
     name: "Freelance Contract",
     summary: "A general services agreement for freelancers.",
-    metaTitle: "Freelance Contract Template - Free Freelance Agreement (PDF)",
+    metaTitle: "Freelance Contract Template - Free Agreement (PDF)",
     metaDescription:
-      "A free freelance contract template in plain English: scope, fees, revisions, IP, confidentiality, termination and signatures. Edit online and download a PDF.",
+      "A free freelance contract template in plain English: scope, fees, revisions, IP, confidentiality, termination and signatures. Edit online, download a PDF.",
     heading: "Freelance Contract Template",
     intro:
       "A balanced freelance agreement that protects you and reassures clients: what you'll deliver, what it costs, when you're paid, who owns the work and how either side can walk away.",
@@ -184,7 +184,7 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "website-development-agreement",
     name: "Website Development Agreement",
     summary: "Design and development of a business website.",
-    metaTitle: "Website Development Agreement Template - Free Contract (PDF)",
+    metaTitle: "Website Development Agreement Template - Free PDF",
     metaDescription:
       "A free website development agreement template: pages, features, milestones, hosting, revisions, ownership and support. Edit online and download a PDF.",
     heading: "Website Development Agreement",
@@ -276,9 +276,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "social-media-management-contract",
     name: "Social Media Management Contract",
     summary: "A monthly retainer for social media services.",
-    metaTitle: "Social Media Management Contract Template - Free (PDF)",
+    metaTitle: "Social Media Management Contract Template - Free",
     metaDescription:
-      "A free social media management contract template for monthly retainers: posts per month, platforms, approvals, ad spend, reporting and notice period. Edit online and download a PDF.",
+      "A free social media management contract for monthly retainers: posts per month, platforms, approvals, ad spend, reporting and notice. Edit and get a PDF.",
     heading: "Social Media Management Contract",
     intro:
       "Social media work is ongoing, so this contract is a monthly retainer: the platforms and number of posts, how approvals work, who pays for ads, and how either side can end it with notice.",
@@ -354,9 +354,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "nda",
     name: "NDA (One-Way)",
     summary: "Protect information you share with someone.",
-    metaTitle: "NDA Template - Free Non-Disclosure Agreement (One-Way, PDF)",
+    metaTitle: "NDA Template - One-Way Non-Disclosure Agreement",
     metaDescription:
-      "A free one-way NDA template in plain English: definition of confidential information, obligations, exclusions, duration and remedies. Edit online and download a PDF.",
+      "A free one-way NDA template in plain English: confidential information, obligations, exclusions, duration and remedies. Edit online and download a PDF.",
     heading: "Non-Disclosure Agreement (NDA) Template",
     intro:
       "A one-way NDA for when only you share confidential information - with a freelancer, a potential investor, a manufacturer or a new hire. Short, clear and balanced.",
@@ -415,9 +415,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "mutual-nda",
     name: "Mutual NDA",
     summary: "Both parties share confidential information.",
-    metaTitle: "Mutual NDA Template - Free Two-Way Non-Disclosure Agreement",
+    metaTitle: "Mutual NDA Template - Free Two-Way NDA (PDF)",
     metaDescription:
-      "A free mutual NDA template for partnerships, vendor discussions and joint projects, where both sides share confidential information. Edit online and download a PDF.",
+      "A free mutual NDA template for partnerships, vendor talks and joint projects where both sides share confidential information. Edit online, download a PDF.",
     heading: "Mutual NDA Template",
     intro:
       "When both sides share sensitive information - exploring a partnership, a joint venture or an acquisition - a mutual NDA protects each party equally.",
@@ -480,9 +480,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "statement-of-work",
     name: "Statement of Work",
     summary: "Scope, deliverables, timeline and fees for one project.",
-    metaTitle: "Statement of Work (SOW) Template - Free Example (PDF)",
+    metaTitle: "Statement of Work (SOW) Template - Free PDF",
     metaDescription:
-      "A free statement of work template: project overview, scope, deliverables with dates, out of scope, assumptions, acceptance criteria and milestone payments. Edit online and download a PDF.",
+      "A free SOW template: scope, deliverables with dates, out of scope, assumptions, acceptance criteria and milestone payments. Edit online and download a PDF.",
     heading: "Statement of Work (SOW) Template",
     intro:
       "A statement of work pins down one project in detail: what will be built, by when, what's not included, how it will be accepted and how it's paid. Use it on its own or under a master services agreement.",
@@ -573,9 +573,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "consulting-agreement",
     name: "Consulting Agreement",
     summary: "Hourly consulting with a cap on billable hours.",
-    metaTitle: "Consulting Agreement Template - Free Hourly Consultant Contract (PDF)",
+    metaTitle: "Consulting Agreement Template (Hourly) - Free PDF",
     metaDescription:
-      "A free consulting agreement template for hourly work: scope, hourly rate with an hours cap, monthly invoicing, deliverables, confidentiality and termination. Edit online and download a PDF.",
+      "A free hourly consulting agreement: scope, hourly rate with an hours cap, monthly invoicing, deliverables, confidentiality and termination. Download a PDF.",
     heading: "Consulting Agreement Template",
     intro:
       "A consulting agreement for advisers who bill by the hour: what you'll advise on, your hourly rate, a cap on hours the client must approve before you exceed it, and clear limits on what your advice promises.",
@@ -667,9 +667,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "retainer-agreement",
     name: "Retainer Agreement",
     summary: "A monthly fee for an agreed amount of ongoing work.",
-    metaTitle: "Retainer Agreement Template - Free Monthly Retainer Contract (PDF)",
+    metaTitle: "Retainer Agreement Template (Monthly) - Free PDF",
     metaDescription:
-      "A free retainer agreement template for ongoing monthly services: monthly fee in advance, hours included, extra hours, turnaround times, renewal and notice. Edit online and download a PDF.",
+      "A free monthly retainer agreement: fee paid in advance, hours included, extra hours, turnaround times, renewal and notice. Edit online and download a PDF.",
     heading: "Retainer Agreement Template",
     intro:
       "A retainer turns repeat work into a steady monthly income. This agreement sets the monthly fee, the hours it includes, what happens to unused or extra hours, how quickly requests are handled and how either side can end it.",
@@ -757,9 +757,9 @@ export const CONTRACT_EXAMPLES: UseCase<Contract>[] = [
     slug: "influencer-agreement",
     name: "Influencer Agreement",
     summary: "A brand collaboration with a content creator.",
-    metaTitle: "Influencer Agreement Template - Free Brand Collaboration Contract (PDF)",
+    metaTitle: "Influencer Agreement Template for Brand Collabs",
     metaDescription:
-      "A free influencer agreement template for brand collaborations: reels, posts and stories with dates, approvals, ad disclosure, usage rights, exclusivity and payment. Edit online and download a PDF.",
+      "A free influencer agreement for brand collaborations: reels, posts and stories, approvals, ad disclosure, usage rights, exclusivity and payment. Get a PDF.",
     heading: "Influencer Agreement Template",
     intro:
       "A brand collaboration agreement for creators and the brands that work with them: the reels, posts and stories to be published and when, how drafts are approved, how the partnership is disclosed, how the brand may reuse the content and when the creator is paid.",

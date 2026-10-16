@@ -22,9 +22,9 @@ export const RESUME_EXAMPLES_COLLECTION: UseCaseCollection = {
   segment: "examples",
   title: "Resume Examples",
   noun: "resume",
-  metaTitle: "Resume Examples for Every Job - Free Templates to Edit & Download",
+  metaTitle: "Resume Examples for Every Job - Free to Edit",
   metaDescription:
-    "Free resume examples for freshers, interns, software engineers, data analysts, accountants, HR managers, engineers, designers, teachers, nurses and more. Open any example, edit it and download a PDF.",
+    "Free resume examples for freshers, interns, software engineers, data analysts, accountants, teachers, nurses and more. Edit any example and download a PDF.",
   intro:
     "Real, complete resume examples written for specific jobs. Open one in the free resume builder, replace the details with yours and download a polished PDF - no sign-up, no watermark.",
 };
@@ -127,9 +127,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "fresher",
     name: "Fresher",
     summary: "For graduates with little or no work experience.",
-    metaTitle: "Resume Format for Freshers - Free Example & Template (PDF)",
+    metaTitle: "Resume Format for Freshers - Free Example (PDF)",
     metaDescription:
-      "A complete resume example for freshers and recent graduates: education and projects first, internships, skills and certifications. Edit it free and download a PDF.",
+      "A resume example for freshers and recent graduates: education and projects first, internships, skills and certifications. Edit it free and download a PDF.",
     heading: "Resume Format for Freshers",
     intro:
       "No work experience yet? This fresher resume leads with your education, projects and internships - the things recruiters actually look at for entry-level roles.",
@@ -224,7 +224,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "software-engineer",
     name: "Software Engineer",
     summary: "Backend, frontend and full-stack developers.",
-    metaTitle: "Software Engineer Resume Example - Free ATS-Friendly Template",
+    metaTitle: "Software Engineer Resume Example - ATS-Friendly",
     metaDescription:
       "A software engineer resume example with impact-driven bullets, a tech stack that ATS software reads, and projects. Edit it free and download a PDF.",
     heading: "Software Engineer Resume Example",
@@ -313,7 +313,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "data-analyst",
     name: "Data Analyst",
     summary: "SQL, Excel, Power BI and Python analysts.",
-    metaTitle: "Data Analyst Resume Example - Free Template with Skills (PDF)",
+    metaTitle: "Data Analyst Resume Example - Free Template (PDF)",
     metaDescription:
       "A data analyst resume example showing SQL, Python, Power BI and Excel skills with business impact. Edit it in the free resume builder and download a PDF.",
     heading: "Data Analyst Resume Example",
@@ -397,9 +397,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "product-manager",
     name: "Product Manager",
     summary: "PMs and associate product managers.",
-    metaTitle: "Product Manager Resume Example - Free Template & Tips (PDF)",
+    metaTitle: "Product Manager Resume Example - Free Template",
     metaDescription:
-      "A product manager resume example built around outcomes: launches, metrics and cross-functional leadership. Edit it free in the resume builder and download a PDF.",
+      "A product manager resume example built around outcomes: launches, metrics and cross-functional leadership. Edit it free and download a PDF.",
     heading: "Product Manager Resume Example",
     intro:
       "Product managers are judged on outcomes. This resume shows what was launched, which metric moved and how the team was led - in a polished executive layout.",
@@ -476,7 +476,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "digital-marketing",
     name: "Digital Marketing",
     summary: "SEO, performance and social media marketers.",
-    metaTitle: "Digital Marketing Resume Example - Free Template (PDF)",
+    metaTitle: "Digital Marketing Resume Example - Free Template",
     metaDescription:
       "A digital marketing resume example with campaign results, SEO and paid ads skills and tools. Edit it free in the resume builder and download a PDF.",
     heading: "Digital Marketing Resume Example",
@@ -560,7 +560,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "sales",
     name: "Sales Executive",
     summary: "Sales, business development and account managers.",
-    metaTitle: "Sales Executive Resume Example - Free Template (PDF)",
+    metaTitle: "Sales Executive Resume Example - Free Template",
     metaDescription:
       "A sales executive resume example with targets, quota attainment and deal sizes. Edit it free in the resume builder and download a PDF.",
     heading: "Sales Executive Resume Example",
@@ -635,9 +635,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "teacher",
     name: "Teacher",
     summary: "School teachers and educators.",
-    metaTitle: "Teacher Resume Example - Free Template for Teaching Jobs (PDF)",
+    metaTitle: "Teacher Resume Example - Free Template (PDF)",
     metaDescription:
-      "A teacher resume example with B.Ed, subjects, classes taught, results and certifications such as CTET. Edit it free in the resume builder and download a PDF.",
+      "A teacher resume example with B.Ed, subjects, classes taught, results and certifications such as CTET. Edit it free and download a PDF.",
     heading: "Teacher Resume Example",
     intro:
       "A teacher resume that shows schools what they need to see: your qualifications, the classes and subjects you teach, and how your students improved.",
@@ -714,7 +714,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "nurse",
     name: "Nurse",
     summary: "Staff nurses and nursing graduates.",
-    metaTitle: "Nurse Resume Example - Free Staff Nurse Resume Template (PDF)",
+    metaTitle: "Staff Nurse Resume Example - Free Template (PDF)",
     metaDescription:
       "A staff nurse resume example with registration, clinical experience, specialties and certifications such as BLS and ACLS. Edit it free and download a PDF.",
     heading: "Nurse Resume Example",
@@ -798,7 +798,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     summary: "HR managers, HR business partners and people operations.",
     metaTitle: "HR Manager Resume Example - Free Template (PDF)",
     metaDescription:
-      "An HR manager resume example with hiring, retention and HR operations results, compliance and HRMS skills. Edit it free in the resume builder and download a PDF.",
+      "An HR manager resume example with hiring, retention and HR operations results, compliance and HRMS skills. Edit it free and download a PDF.",
     heading: "HR Manager Resume Example",
     intro:
       "HR is a business function, and the best HR resumes prove it. This example shows attrition, time to hire and employee satisfaction moving in the right direction.",
@@ -891,7 +891,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "accountant",
     name: "Accountant",
     summary: "Accountants, accounts executives and CA Inter candidates.",
-    metaTitle: "Accountant Resume Example - Free Template with Tally & GST (PDF)",
+    metaTitle: "Accountant Resume Example (Tally & GST) - Free",
     metaDescription:
       "An accountant resume example with GST and TDS compliance, month-end closing, Tally and SAP skills. Edit it free in the resume builder and download a PDF.",
     heading: "Accountant Resume Example",
@@ -978,7 +978,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "civil-engineer",
     name: "Civil Engineer",
     summary: "Site, project and planning engineers.",
-    metaTitle: "Civil Engineer Resume Example - Free Template for Site Engineers (PDF)",
+    metaTitle: "Civil Engineer Resume Example - Free Template",
     metaDescription:
       "A civil engineer resume example with project scale, site execution, BOQ and billing, safety and software skills. Edit it free and download a PDF.",
     heading: "Civil Engineer Resume Example",
@@ -1074,9 +1074,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "graphic-designer",
     name: "Graphic Designer",
     summary: "Brand, social media and print designers.",
-    metaTitle: "Graphic Designer Resume Example - Free Creative Template (PDF)",
+    metaTitle: "Graphic Designer Resume Example - Free Template",
     metaDescription:
-      "A graphic designer resume example with a portfolio link, design results and tools such as Illustrator, Photoshop and Figma. Edit it free and download a PDF.",
+      "A graphic designer resume example with a portfolio link, design results and tools like Illustrator, Photoshop and Figma. Edit it free and download a PDF.",
     heading: "Graphic Designer Resume Example",
     intro:
       "A graphic designer resume with just enough personality: a portfolio link up top, the kinds of work you do, and results that show your designs work.",
@@ -1171,7 +1171,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "customer-support",
     name: "Customer Support",
     summary: "Support executives, specialists and team leads.",
-    metaTitle: "Customer Support Resume Example - Free Template (PDF)",
+    metaTitle: "Customer Support Resume Example - Free Template",
     metaDescription:
       "A customer support resume example with CSAT, response times, ticket volumes and tools like Zendesk and Freshdesk. Edit it free and download a PDF.",
     heading: "Customer Support Resume Example",
@@ -1261,7 +1261,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "business-analyst",
     name: "Business Analyst",
     summary: "Business, systems and functional analysts.",
-    metaTitle: "Business Analyst Resume Example - Free Template (PDF)",
+    metaTitle: "Business Analyst Resume Example - Free Template",
     metaDescription:
       "A business analyst resume example with requirements, process improvement, SQL and domain knowledge. Edit it free in the resume builder and download a PDF.",
     heading: "Business Analyst Resume Example",
@@ -1357,9 +1357,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "mechanical-engineer",
     name: "Mechanical Engineer",
     summary: "Production, quality and design engineers.",
-    metaTitle: "Mechanical Engineer Resume Example - Free Template (PDF)",
+    metaTitle: "Mechanical Engineer Resume Example - Free Template",
     metaDescription:
-      "A mechanical engineer resume example with production and quality results, lean tools and CAD software. Edit it free in the resume builder and download a PDF.",
+      "A mechanical engineer resume example with production and quality results, lean tools and CAD software. Edit it free and download a PDF.",
     heading: "Mechanical Engineer Resume Example",
     intro:
       "A mechanical engineer resume written in the language of the shop floor - OEE, rejection rates, cycle times and savings - plus the CAD and quality tools you use.",
@@ -1450,7 +1450,7 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "operations-manager",
     name: "Operations Manager",
     summary: "Operations, logistics and supply chain managers.",
-    metaTitle: "Operations Manager Resume Example - Free Template (PDF)",
+    metaTitle: "Operations Manager Resume Example - Free Template",
     metaDescription:
       "An operations manager resume example with scale, service levels, cost savings and launches. Edit it free in the resume builder and download a PDF.",
     heading: "Operations Manager Resume Example",
@@ -1539,9 +1539,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "content-writer",
     name: "Content Writer",
     summary: "SEO, B2B and marketing content writers.",
-    metaTitle: "Content Writer Resume Example - Free Template (PDF)",
+    metaTitle: "Content Writer Resume Example - Free Template",
     metaDescription:
-      "A content writer resume example with a portfolio, SEO skills and results like traffic, rankings and sign-ups. Edit it free in the resume builder and download a PDF.",
+      "A content writer resume example with a portfolio, SEO skills and results like traffic, rankings and sign-ups. Edit it free and download a PDF.",
     heading: "Content Writer Resume Example",
     intro:
       "A content writer resume that treats writing as a growth channel: published samples, the content you specialise in, and the traffic and sign-ups it earned.",
@@ -1628,9 +1628,9 @@ export const RESUME_EXAMPLES: UseCase<Resume>[] = [
     slug: "internship",
     name: "Internship",
     summary: "Students applying for their first internship.",
-    metaTitle: "Internship Resume Example - Free Resume Template for Students (PDF)",
+    metaTitle: "Internship Resume Example for Students - Free PDF",
     metaDescription:
-      "An internship resume example for students: education, projects, college societies and certifications first. Edit it free in the resume builder and download a PDF.",
+      "An internship resume example for students: education, projects, college societies and certifications first. Edit it free and download a PDF.",
     heading: "Resume for Internship",
     intro:
       "Applying for your first internship? This student resume leads with your course, projects and college roles - the experience you do have, presented the way recruiters want to see it.",

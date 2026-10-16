@@ -2,7 +2,7 @@ import type { ToolContent } from "@/components/tool/tool-content";
 
 /** Page copy for the delivery challan generator, which runs on the invoice engine. */
 export const DELIVERY_CHALLAN_GENERATOR_CONTENT: ToolContent = {
-  metaTitle: "Free Delivery Challan Generator - GST Challan for Job Work (PDF)",
+  metaTitle: "Free Delivery Challan Generator - GST & Job Work",
   metaDescription:
     "Create GST delivery challans free for job work, goods on approval and stock transfers. Add consignee, vehicle and transporter. 15 templates, free PDF.",
   heading: "Free Delivery Challan Generator",
